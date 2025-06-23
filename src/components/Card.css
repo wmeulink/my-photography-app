@@ -1,0 +1,29 @@
+.card {
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+  }
+  
+  /* Size variations */
+  .card--small {
+    width: 200px;
+    height: 140px;
+  }
+  
+  .card--medium {
+    width: 300px;
+    height: 200px;
+  }
+  
+  .card--large {
+    width: 400px;
+    height: 280px;
+  }
