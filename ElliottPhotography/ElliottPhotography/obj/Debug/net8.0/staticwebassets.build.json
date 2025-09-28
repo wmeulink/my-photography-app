@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "p6DIUcfWIt/fr7efvY6gmoIfaemtJ84dRNFsUyUGOAk=",
+  "Hash": "HcVzJF708c+LEGgLAPMWhyKWDMj13C7oRFJ3UzWqQgQ=",
   "Source": "ElliottPhotography",
   "BasePath": "_content/ElliottPhotography",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "ElliottPhotography\\wwwroot",
       "Source": "ElliottPhotography",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0634.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0634.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0634.JPG",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0634.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0679.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0679.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0679.JPG",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0679.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0705.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0705.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0705.JPG",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0705.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0721.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0721.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0721.JPG",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0721.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0725.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0725.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0725.JPG",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0725.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0733.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0733.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0733.JPG",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0733.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0807.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0807.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0807.JPG",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\images\\IMG_0807.JPG"
     },
     {
-      "Identity": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0810.JPG",
+      "Identity": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\images\\IMG_0810.JPG",
       "SourceId": "ElliottPhotography",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\wwwroot\\",
       "BasePath": "_content/ElliottPhotography",
       "RelativePath": "images/IMG_0810.JPG",
       "AssetKind": "All",

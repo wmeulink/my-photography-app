@@ -24,9 +24,16 @@ namespace ElliottPhotography.Controllers
         [HttpPost]
         public ActionResult<Photo> AddPhoto(Photo photo)
         {
-            _context.Photos.Add(photo);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(GetPhotos), new { id = photo.Id }, photo);
+            try
+            {
+                _context.Photos.Add(photo);
+                _context.SaveChanges();
+                return CreatedAtAction(nameof(GetPhotos), new { id = photo.Id }, photo);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.InnerException?.Message ?? ex.Message}");
+            }
         }
     }
-}
+    }

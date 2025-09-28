@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FTzQi+zzS7c=",
+  "dgSpecHash": "B1r4PXdMzYA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\wmeul\\source\\repos\\ElliottPhotography\\ElliottPhotography\\ElliottPhotography.csproj",
+  "projectFilePath": "C:\\Users\\wmeul\\source\\repos\\my-photography-app\\ElliottPhotography\\ElliottPhotography\\ElliottPhotography.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wmeul\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\wmeul\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

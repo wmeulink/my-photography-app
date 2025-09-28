@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElliottPhotography.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250625015340_InitialSqlMigration")]
-    partial class InitialSqlMigration
+    [Migration("20250706173005_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
