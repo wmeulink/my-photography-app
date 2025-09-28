@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 
-function PhotoGallery() {
-  const [photos, setPhotos] = useState(null); // null means not loaded
-  const [loading, setLoading] = useState(true);
+export default function PhotoGallery() {
+  const [photos, setPhotos] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     fetch('https://localhost:5000/api/photos')
       .then(res => res.json())
       .then(data => {
@@ -21,19 +23,18 @@ function PhotoGallery() {
   if (!photos || photos.length === 0) return <p>No photos found.</p>;
 
   return (
-    <div>
-      {photos.map(photo => (
-        <div key={photo.id}>
-          <h3>{photo.title}</h3>
+    <ImageList sx={{ width: 950, height: 'auto' }} cols={3} rowHeight={304}>
+      {photos.map((photo) => (
+        <ImageListItem key={photo.id}>
           <img
-            src={`https://localhost:5000${photo.fileName}`}
+            src={`${`https://localhost:5000${photo.fileName}`}?w=164&h=164&fit=crop&auto=format`}
+            srcSet={`${`https://localhost:5000${photo.fileName}`}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
             alt={photo.title}
-            style={{ maxWidth: '300px', borderRadius: '10px' }}
+            loading="lazy"
+            style={{ borderRadius: '10px' }}
           />
-        </div>
+        </ImageListItem>
       ))}
-    </div>
+    </ImageList>
   );
 }
-
-export default PhotoGallery;
