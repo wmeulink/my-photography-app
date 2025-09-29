@@ -1,0 +1,6 @@
+.navbar-container {
+ height: auto;
+ max-width: 1800px;
+ display: flex;
+ flex-direction: column;
+}

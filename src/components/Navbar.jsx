@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import './Navbar.css';
 import { AppBar, Toolbar, Button, Typography, Box } from "@mui/material";
 
 function Navbar() {
   return (
     <AppBar position="static" color="transparent" elevation={0}>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-around" }}>
         
         {/* Logo or Site Name */}
         <Typography
@@ -17,11 +18,11 @@ function Navbar() {
             fontWeight: "bold",
           }}
         >
-          My Photography
+          Elliott Photography
         </Typography>
 
         {/* Navigation Buttons */}
-        <Box sx={{ display: "flex", gap: 2 }}>
+        <Box className="navbar-buttons-container" sx={{ display: "flex", gap: 2 }}>
           <Button component={Link} to="/" color="inherit">
             Home
           </Button>

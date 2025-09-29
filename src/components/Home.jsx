@@ -1,10 +1,10 @@
 import React from "react";
 import PhotoGallery from "./PhotoGallery";
+import './Home.css';
 
 function Home() {
     return (
-      <div>
-        <h1>Welcome Home</h1>
+      <div className="home-container">
         <PhotoGallery />
       </div>
     );

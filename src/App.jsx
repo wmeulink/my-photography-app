@@ -6,12 +6,13 @@ import { Routes, Route } from 'react-router-dom';
 import Landscapes from './components/Landscapes';
 import Events from './components/Events';
 import Portraits from './components/Portraits';
+import "./App.css";
 
 function App() {
 
   return (
-    <>
-      <Navbar />
+    <div className="navbar-container">
+      <Navbar/>
       <Routes>
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -20,7 +21,7 @@ function App() {
         <Route path="/portraits" element={<Portraits />} />
         <Route path="/events" element={<Events />} />
       </Routes>
-    </>
+    </div>
   )
 }
 
