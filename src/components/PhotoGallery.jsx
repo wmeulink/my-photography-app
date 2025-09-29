@@ -26,7 +26,7 @@ export default function PhotoGallery() {
   if (!photos || photos.length === 0) return <p>No photos found.</p>;
 
   return (
-    <Box sx={{ display: 'flex', gap: 3 }}>
+    <Box sx={{ display: 'flex', gap: 3}}>
       {/* Left: Grid of images */}
       <ImageList sx={{ width: 700, height: 'auto' }} cols={3} rowHeight={250}>
         {photos.map((photo) => (

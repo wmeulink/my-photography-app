@@ -1,26 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import Card from './components/Card'
 import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import PhotoGallery from './components/PhotoGallery'
+import Navbar from './components/NavBar';
+import { Routes, Route } from 'react-router-dom';
+import Landscapes from './components/Landscapes';
+import Events from './components/Events';
+import Portraits from './components/Portraits';
 
 function App() {
 
   return (
     <>
-      <nav>
-        <Link to="/">Home</Link> |{" "}
-        <Link to="/about">About</Link> |{" "}
-        <Link to="/contact">Contact</Link>
-      </nav>
-       <Routes>
-       <Route index element={<Home />} />
-        <Route path="/about" element={<About />}/>
+      <Navbar />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/landscapes" element={<Landscapes />} />
+        <Route path="/portraits" element={<Portraits />} />
+        <Route path="/events" element={<Events />} />
       </Routes>
     </>
   )
