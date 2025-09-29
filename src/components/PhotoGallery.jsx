@@ -50,9 +50,9 @@ export default function PhotoGallery() {
               alt={selected.title}
               style={{ maxWidth: '100%', maxHeight: 500, borderRadius: '10px' }}
             />
-            {/* <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom>
               {selected.title}
-            </Typography> */}
+            </Typography>
           </>
         ) : (
           <Typography variant="body1" sx={{ mt: 10 }}>
