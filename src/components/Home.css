@@ -19,3 +19,7 @@
 .my-masonry-grid_column > img {
   margin-bottom: 30px;
 }
+
+.ril-spinner {
+  display: none !important;
+}
