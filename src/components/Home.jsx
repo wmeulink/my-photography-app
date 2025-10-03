@@ -42,7 +42,7 @@ export default function Home() {
 
       <Masonry
         breakpointCols={breakpoints}
-        className="my-masonry-grid"
+        className="my-masonry-grid masonry-item"
         columnClassName="my-masonry-grid_column"
       >
         {photos.map((photo, i) => (
