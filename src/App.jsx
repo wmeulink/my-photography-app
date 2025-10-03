@@ -25,6 +25,10 @@ function App() {
         <Route path="/portraits" element={<Portraits />} />
         <Route path="/events" element={<Events />} />
       </Routes>
+
+      <footer className='footer-container'>
+      <p>© 2025 Created & Designed by Whitney Elliott</p>
+    </footer>
     </div>
   )
 }
