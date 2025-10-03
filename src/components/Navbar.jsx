@@ -8,7 +8,7 @@ function Navbar() {
       <Toolbar sx={{ display: "flex", justifyContent: "space-around" }}>
         
         {/* Logo or Site Name */}
-        <Typography
+        {/* <Typography
           variant="h6"
           component={Link}
           to="/"
@@ -19,7 +19,7 @@ function Navbar() {
           }}
         >
           Elliott Photography
-        </Typography>
+        </Typography> */}
 
         {/* Navigation Buttons */}
         <Box className="navbar-buttons-container" sx={{ display: "flex", gap: 2 }}>

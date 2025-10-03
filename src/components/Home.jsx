@@ -35,6 +35,7 @@ export default function Home() {
   };
 
   return (
+    <div className="page-container">
     <div className="home-container">
       {error && <p style={{ color: "red" }}>Error: {error}</p>}
       {!error && photos.length === 0 && <p>No photos found.</p>}
@@ -67,6 +68,7 @@ export default function Home() {
           onNext={handleNext}
         />
       )}
+    </div>
     </div>
   );
 }

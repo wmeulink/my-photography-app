@@ -12,7 +12,11 @@ function App() {
 
   return (
     <div className="navbar-container">
-      <Navbar/>
+      <header className="site-header">
+        <h1>Elliott Photography Portfolio</h1>
+        <Navbar/>
+      </header>
+      
       <Routes>
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
