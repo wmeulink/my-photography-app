@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import "./Home.css";
-import CustomLightbox from "./CustomLightbox";
+import CustomLightbox from "./CustomLightBox";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
