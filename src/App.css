@@ -28,9 +28,9 @@
     background-color: #f4f0f5;
     text-align: center;
     padding: 2rem;
-    width: 94%;
-    max-width: 94%;
-    margin: 20px auto 0 auto;
+    width: 92.4%;
+    max-width: 93%;
+    margin-bottom: 20px;
     transition: padding 0.3s ease, width 0.3s ease;
 }
 
