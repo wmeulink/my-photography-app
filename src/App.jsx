@@ -23,7 +23,6 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/landscapes" element={<Landscapes />} />
         <Route path="/portraits" element={<Portraits />} />
-        <Route path="/events" element={<Events />} />
       </Routes>
 
       <footer className='footer-container'>

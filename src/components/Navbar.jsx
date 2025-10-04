@@ -32,9 +32,6 @@ function Navbar() {
           <Button component={Link} to="/portraits" color="inherit">
             Portraits
           </Button>
-          <Button component={Link} to="/events" color="inherit">
-            Events
-          </Button>
           <Button component={Link} to="/about" color="inherit">
             About
           </Button>
