@@ -54,7 +54,9 @@ export default function Landscapes() {
   if (error) return <div className="error">Error: {error}</div>;
 
   return (
-    <div className="landscapes-container">
+
+    <div className="page-container">
+      <div className="home-container">
       <h2>Landscapes Gallery</h2>
 
       {/* Category Filter */}
@@ -77,10 +79,12 @@ export default function Landscapes() {
         <p className="no-results">No landscapes found for this category.</p>
       ) : (
         <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid masonry-item"
-          columnClassName="my-masonry-grid_column"
-        >
+  breakpointCols={breakpointColumnsObj}
+  className={`my-masonry-grid masonry-item ${
+    landscapes.length === 1 ? "single-photo-grid" : ""
+  }`}
+  columnClassName="my-masonry-grid_column"
+>
           {landscapes.map((landscape, index) => (
             <img
               key={landscape.id}
@@ -113,6 +117,7 @@ export default function Landscapes() {
           }
         />
       )}
+    </div>
     </div>
   );
 }
