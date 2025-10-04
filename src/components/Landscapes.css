@@ -1,0 +1,49 @@
+.landscapes-container {
+  padding: 2rem;
+}
+
+select {
+  margin-bottom: 20px;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.my-masonry-grid {
+  display: flex;
+  border: 2px solid black;
+  
+  width: 1800px;
+}
+
+.single-image {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.my-masonry-grid_column > img {
+  width: 100%;
+  /* max-width: 400px; adjust to your preference */
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.my-masonry-grid_column {
+  padding-left: 20px; /* gutter space */
+}
+
+.my-masonry-grid_column > img {
+  width: 100%; /* make images fit column width */
+  height: auto; /* maintain aspect ratio */
+  display: flex;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.my-masonry-grid_column > img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
-// import "./Landscapes.css";
+import "./Landscapes.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -31,7 +31,7 @@ export default function Landscapes() {
   console.log("landscapes", landscapes);
   console.log("category", category)
   const images = landscapes.map((l) => `${API_URL}/images/${l.filename}`);
-
+  const isSingleImage = landscapes.length === 1;
   const breakpointColumnsObj = {
     default: 4,
     1100: 3,
@@ -52,6 +52,7 @@ export default function Landscapes() {
         <option value="">All</option>
         <option value="Trails">Trails</option>
         <option value="Flowers">Flowers</option>
+         <option value="Sunrise">Sunrise</option>
       </select>
 
       {/* Masonry Gallery */}
@@ -64,6 +65,7 @@ export default function Landscapes() {
   landscape.filename && (
     <img
       key={landscape.id}
+      className={isSingleImage ? "single-image" : ""}
       src={`${API_URL}/images/${landscape.filename}`}
       alt={landscape.title}
       onClick={() => openLightbox(index)}
