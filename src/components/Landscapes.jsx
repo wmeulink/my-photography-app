@@ -44,7 +44,7 @@ export default function Landscapes() {
   };
 
   const breakpointColumnsObj = {
-    default: 4,
+    default: 3,
     1100: 3,
     700: 2,
     500: 1,
@@ -67,6 +67,9 @@ export default function Landscapes() {
         <option value="Trails">Trails</option>
         <option value="Flowers">Flowers</option>
         <option value="Sunrise">Sunrise</option>
+        <option value="Sunset">Sunset</option>
+        <option value="Foggy">Foggy</option>
+        <option value="Ranch">Ranch</option>
       </select>
 
       {/* No Results */}

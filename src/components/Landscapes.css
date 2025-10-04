@@ -1,47 +1,36 @@
-.landscapes-container {
-  padding: 2rem;
+.home-container {
+  margin-top: 20px;
 }
 
-select {
-  margin-bottom: 20px;
-  padding: 0.5rem;
-  font-size: 1rem;
+.page-container {
+  background: #f4f0f5;
+  font-family: 'Segoe UI', sans-serif;
+  max-width: 100%; /* responsive width */
+  width: 100%;
+  padding: 0 20px; /* breathing room */
+  box-sizing: border-box;
 }
 
+/* Masonry grid */
 .my-masonry-grid {
   display: flex;
-  width: 1800px;
-}
-.masonry-image {
+  justify-content: center;
   width: 100%;
-  height: auto;
-  max-width: 400px; /* optional: keep thumbnails smaller */
-  object-fit: cover; /* keeps aspect ratio */
-}
-
-.single-image {
-  max-width: 500px;
   margin: 0 auto;
+  flex-wrap: wrap; /* allow columns to wrap */
 }
 
-.my-masonry-grid_column > img {
-  width: 100%;
-  /* max-width: 400px; adjust to your preference */
-  height: auto;
-  display: block;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
 .my-masonry-grid_column {
-  padding-left: 20px; /* gutter space */
+  flex: 1 1 300px; /* responsive columns */
+  padding: 20px;
+  background-clip: padding-box;
+  box-sizing: border-box;
 }
 
 .my-masonry-grid_column > img {
-  width: 100%; /* make images fit column width */
-  height: auto; /* maintain aspect ratio */
-  display: flex;
+  width: 100%; /* scale image to fit column */
+  height: auto;
+  margin-bottom: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -50,4 +39,23 @@ select {
 .my-masonry-grid_column > img:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ril-spinner {
+  display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .my-masonry-grid_column {
+    flex: 1 1 250px;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-masonry-grid_column {
+    flex: 1 1 100%; /* single column on mobile */
+    padding: 10px;
+  }
 }

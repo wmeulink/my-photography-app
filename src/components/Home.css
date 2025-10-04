@@ -5,29 +5,34 @@
 .page-container {
   background: #f4f0f5;
   font-family: 'Segoe UI', sans-serif;
-  max-width: 100%; /* responsive width */
+  max-width: 100%;
   width: 100%;
-  padding: 0 20px; /* breathing room */
+  padding: 0 20px; 
   box-sizing: border-box;
+}
+.masonry-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 /* Masonry grid */
 .my-masonry-grid {
   display: flex;
-  width: 100%;
+  justify-content: center; 
   margin: 0 auto;
-  flex-wrap: wrap; /* allow columns to wrap */
+  flex-wrap: wrap;
 }
 
 .my-masonry-grid_column {
-  flex: 1 1 300px; /* responsive columns */
+  flex: 0 1 auto;
   padding: 20px;
   background-clip: padding-box;
   box-sizing: border-box;
 }
 
 .my-masonry-grid_column > img {
-  width: 100%; /* scale image to fit column */
+  width: 100%;
   height: auto;
   margin-bottom: 30px;
   border-radius: 8px;

@@ -24,7 +24,11 @@ export default function Home() {
     })();
   }, []);
 
-  const breakpoints = { default: 3, 1100: 2, 700: 1 };
+  const breakpoints = {
+    default: 3,
+    1100: 2,
+    700: 1,
+  };
 
   const handlePrev = () => {
     setPhotoIndex((photoIndex + photos.length - 1) % photos.length);
@@ -36,39 +40,40 @@ export default function Home() {
 
   return (
     <div className="page-container">
-    <div className="home-container">
-      {error && <p style={{ color: "red" }}>Error: {error}</p>}
-      {!error && photos.length === 0 && <p>No photos found.</p>}
+      <div className="home-container">
+        {error && <p style={{ color: "red" }}>Error: {error}</p>}
+        {!error && photos.length === 0 && <p>No photos found.</p>}
 
-      <Masonry
-        breakpointCols={breakpoints}
-        className="my-masonry-grid masonry-item"
-        columnClassName="my-masonry-grid_column"
-      >
-        {photos.map((photo, i) => (
-          <img
-            key={photo.id}
-            src={photo.thumbnail}
-            alt={photo.title}
-            style={{ width: "100%", borderRadius: "8px", cursor: "pointer" }}
-            onClick={() => {
-              setPhotoIndex(i);
-              setLightboxOpen(true);
-            }}
+        <Masonry
+          breakpointCols={breakpoints}
+          className="my-masonry-grid masonry-item"
+          columnClassName="my-masonry-grid_column"
+        >
+          {photos.map((photo, i) => (
+            <img
+              key={photo.id}
+              src={photo.thumbnail}
+              alt={photo.title}
+              className="masonry-image"
+
+              onClick={() => {
+                setPhotoIndex(i);
+                setLightboxOpen(true);
+              }}
+            />
+          ))}
+        </Masonry>
+
+        {lightboxOpen && (
+          <CustomLightbox
+            photos={photos}
+            currentIndex={photoIndex}
+            onClose={() => setLightboxOpen(false)}
+            onPrev={handlePrev}
+            onNext={handleNext}
           />
-        ))}
-      </Masonry>
-
-      {lightboxOpen && (
-        <CustomLightbox
-          photos={photos}
-          currentIndex={photoIndex}
-          onClose={() => setLightboxOpen(false)}
-          onPrev={handlePrev}
-          onNext={handleNext}
-        />
-      )}
-    </div>
+        )}
+      </div>
     </div>
   );
 }
