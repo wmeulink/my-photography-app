@@ -10,9 +10,13 @@ select {
 
 .my-masonry-grid {
   display: flex;
-  border: 2px solid black;
-  
   width: 1800px;
+}
+.masonry-image {
+  width: 100%;
+  height: auto;
+  max-width: 400px; /* optional: keep thumbnails smaller */
+  object-fit: cover; /* keeps aspect ratio */
 }
 
 .single-image {

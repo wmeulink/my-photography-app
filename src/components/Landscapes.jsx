@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
-import Lightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css";
+import CustomLightbox from "./CustomLightBox";
 import "./Landscapes.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -10,82 +9,104 @@ export default function Landscapes() {
   const [landscapes, setLandscapes] = useState([]);
   const [category, setCategory] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isOpen, setIsOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    let url = `${API_URL}/api/Landscapes`;
-    if (category) {
-      url += `/category/${category}`;
-    }
-    fetch(url)
-      .then((res) => res.json())
-      .then(setLandscapes)
-      .catch(console.error);
+    const fetchLandscapes = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const url = category
+          ? `${API_URL}/api/Landscapes/category/${category}`
+          : `${API_URL}/api/Landscapes`;
+
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch landscapes");
+
+        const data = await res.json();
+        setLandscapes(data);
+      } catch (err) {
+        console.error(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLandscapes();
   }, [category]);
 
   const openLightbox = (index) => {
     setCurrentIndex(index);
-    setIsOpen(true);
+    setLightboxOpen(true);
   };
 
-  console.log("landscapes", landscapes);
-  console.log("category", category)
-  const images = landscapes.map((l) => `${API_URL}/images/${l.filename}`);
-  const isSingleImage = landscapes.length === 1;
   const breakpointColumnsObj = {
     default: 4,
     1100: 3,
     700: 2,
-    500: 1
+    500: 1,
   };
 
-  landscapes.map((landscape,index) => {
-    console.log("First image URL:", landscape.filename);
-  })
+  if (loading) return <div className="loading">Loading Landscapes...</div>;
+  if (error) return <div className="error">Error: {error}</div>;
 
   return (
     <div className="landscapes-container">
       <h2>Landscapes Gallery</h2>
 
       {/* Category Filter */}
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="category-select"
+      >
         <option value="">All</option>
         <option value="Trails">Trails</option>
         <option value="Flowers">Flowers</option>
-         <option value="Sunrise">Sunrise</option>
+        <option value="Sunrise">Sunrise</option>
       </select>
 
-      {/* Masonry Gallery */}
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
-        {landscapes.map((landscape, index) => (
-  landscape.filename && (
-    <img
-      key={landscape.id}
-      className={isSingleImage ? "single-image" : ""}
-      src={`${API_URL}/images/${landscape.filename}`}
-      alt={landscape.title}
-      onClick={() => openLightbox(index)}
-    />
-  )
-))}
-      </Masonry>
+      {/* No Results */}
+      {landscapes.length === 0 ? (
+        <p className="no-results">No landscapes found for this category.</p>
+      ) : (
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid masonry-item"
+          columnClassName="my-masonry-grid_column"
+        >
+          {landscapes.map((landscape, index) => (
+            <img
+              key={landscape.id}
+              src={landscape.thumbnail}
+              alt={landscape.title || "Landscape"}
+              onClick={() => openLightbox(index)}
+              loading="lazy"
+              className="masonry-image"
+            />
+          ))}
+        </Masonry>
+      )}
 
-      {/* Lightbox */}
-      {isOpen && (
-        <Lightbox
-          mainSrc={images[currentIndex]}
-          nextSrc={images[(currentIndex + 1) % images.length]}
-          prevSrc={images[(currentIndex + images.length - 1) % images.length]}
-          onCloseRequest={() => setIsOpen(false)}
-          onMovePrevRequest={() =>
-            setCurrentIndex((currentIndex + images.length - 1) % images.length)
+      {/* Custom Lightbox */}
+      {lightboxOpen && (
+        <CustomLightbox
+          photos={landscapes.map((l) => ({
+            ...l,
+            thumbnail: l.full, // Force lightbox to use full-size images
+          }))}
+          currentIndex={currentIndex}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={() =>
+            setCurrentIndex(
+              (currentIndex + landscapes.length - 1) % landscapes.length
+            )
           }
-          onMoveNextRequest={() =>
-            setCurrentIndex((currentIndex + 1) % images.length)
+          onNext={() =>
+            setCurrentIndex((currentIndex + 1) % landscapes.length)
           }
         />
       )}
