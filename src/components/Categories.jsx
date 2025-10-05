@@ -34,9 +34,10 @@ export default function Categories({ category, setCategory }) {
           </option>
         ))}
       </select>
-      <div className="info-icon" title="Choose a category to filter the gallery">
-        i
-      </div>
+      <div className="info-icon">
+    i
+    <div className="tooltip">Choose a category to filter the gallery</div>
+  </div>
     </div>
   );
 }
