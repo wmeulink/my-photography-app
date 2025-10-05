@@ -1,3 +1,4 @@
+/* --- basic layout --- */
 .home-container {
   margin-top: 20px;
 }
@@ -11,67 +12,148 @@
   box-sizing: border-box;
 }
 
-.single-photo-grid {
-  justify-content: center !important; /* Center the grid */
+.landscape-header {
+  margin-left: 0;
+  color: #52336c;
+  margin-bottom: 8px;
 }
 
-.single-photo-grid .my-masonry-grid_column {
-  flex: 0 0 auto; /* No stretching */
-  padding: 0; /* Remove extra padding */
+/* category UI */
+.category-dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
-.single-photo-grid img {
-  max-width: 80vw; /* Limit size for single photo */
-  height: auto;
-  display: block;
-  margin: 0 auto; /* Center image */
+.category-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
 }
 
-/* Masonry grid */
+.info-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #7d55a2;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: default;
+}
+
+/* --- masonry wrapper / layering --- */
+.masonry-wrapper {
+  position: relative;
+  width: 100%;
+  transition: min-height 300ms ease, opacity 300ms ease;
+}
+
+/* overlay effect while locked (optional) */
+.masonry-wrapper[style]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+}
+
+/* both layers occupy same space when we have prev layer */
+.grid-layer {
+  /* default is relative; will be absolute when has-prev via wrapper classes */
+  position: relative;
+  width: 100%;
+  transition: opacity 600ms ease, transform 600ms ease;
+  will-change: opacity, transform;
+}
+
+/* when we have previous data, stack the layers */
+.masonry-wrapper.has-prev .grid-layer.prev {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+.masonry-wrapper.has-prev .grid-layer.current {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* animate to show current and hide previous */
+.masonry-wrapper.animating .grid-layer.prev {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.masonry-wrapper.animating .grid-layer.current {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 3;
+}
+
+/* fallback when no prev layer: normal flow */
+.masonry-wrapper:not(.has-prev) .grid-layer.prev,
+.masonry-wrapper:not(.has-prev) .grid-layer.current {
+  position: relative;
+  opacity: 1;
+  transform: none;
+}
+
+/* masonry image styles */
 .my-masonry-grid {
   display: flex;
-  justify-content: center;
   width: 100%;
-  margin: 0 auto;
-  flex-wrap: wrap; /* allow columns to wrap */
 }
 
 .my-masonry-grid_column {
-  flex: 1 1 300px; /* responsive columns */
-  padding: 20px;
+  padding: 12px;
   background-clip: padding-box;
   box-sizing: border-box;
 }
 
-.my-masonry-grid_column > img {
-  width: 100%; /* scale image to fit column */
+.masonry-image {
+  width: 100%;
   height: auto;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.my-masonry-grid_column > img:hover {
+.masonry-image:hover {
   transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-.ril-spinner {
-  display: none !important;
+/* single-photo tweaks */
+.single-photo-grid {
+  justify-content: center !important;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .my-masonry-grid_column {
-    flex: 1 1 250px;
-    padding: 15px;
-  }
+.single-photo-grid .my-masonry-grid_column {
+  flex: 0 0 auto;
+  padding: 0;
 }
 
-@media (max-width: 768px) {
-  .my-masonry-grid_column {
-    flex: 1 1 100%; /* single column on mobile */
-    padding: 10px;
-  }
+.single-photo-grid img {
+  max-width: 80vw;
+  margin: 0 auto;
+  display: block;
 }

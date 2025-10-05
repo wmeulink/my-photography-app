@@ -15,8 +15,53 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.select-container {
+    margin-left:25px;
+    display: flex;
+    align-items: center;
+  gap: 8px;
+}
+
+.info-icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: #52336c;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+}
+
+.info-icon:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tooltip {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background:white;
+  color: #52336c;
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
 .category-select:hover {
   border-color: #888;
+  cursor: pointer;
 }
 
 .category-select:focus {
