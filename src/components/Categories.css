@@ -1,0 +1,31 @@
+/* Categories.css */
+
+.category-select {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 12px;
+  margin: 20px 0;
+  font-size: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.category-select:hover {
+  border-color: #888;
+}
+
+.category-select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+}
+
+.category-select option {
+  padding: 8px;
+  font-size: 1rem;
+}
