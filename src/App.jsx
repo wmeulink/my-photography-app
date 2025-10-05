@@ -26,7 +26,7 @@ function App() {
       </Routes>
 
       <footer className='footer-container'>
-      <p>© 2025 Created & Designed by Whitney Elliott</p>
+      <p>© 2025 Developed & Designed by Whitney Elliott</p>
     </footer>
     </div>
   )

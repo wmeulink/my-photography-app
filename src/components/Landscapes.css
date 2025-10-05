@@ -35,11 +35,31 @@
   background: #fff;
 }
 
+.no-results-message {
+  padding: 20px;
+  font-size: 1.2rem;
+  color: #555;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
 /* --- masonry wrapper / layering --- */
 .masonry-wrapper {
   position: relative;
   width: 100%;
-  transition: min-height 300ms ease, opacity 300ms ease;
+  min-height: 45vh; 
+  transition: opacity 0.4s ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.hidden {
+  opacity: 0;
+  height: 400px; /* Keeps page height so footer doesn’t jump */
 }
 
 /* overlay effect while locked (optional) */

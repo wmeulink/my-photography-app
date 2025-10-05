@@ -13,7 +13,6 @@ export default function Landscapes() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const wrapperRef = useRef(null);
 
   const breakpointColumnsObj = {
@@ -24,35 +23,49 @@ export default function Landscapes() {
   };
 
   useEffect(() => {
-    const fetchLandscapes = async () => {
-      setError(null);
-      setLoading(true);
+  let loadingTimeout;
 
-      const wrapper = wrapperRef.current;
-      if (wrapper) wrapper.style.minHeight = `${wrapper.offsetHeight}px`;
+  const fetchLandscapes = async () => {
+    setError(null);
 
-      try {
-        const url = category
-          ? `${API_URL}/api/Landscapes/category/${category}`
-          : `${API_URL}/api/Landscapes`;
+    const wrapper = wrapperRef.current;
+    if (wrapper) wrapper.style.minHeight = `${wrapper.offsetHeight}px`;
 
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("Failed to fetch landscapes");
+    loadingTimeout = setTimeout(() => setLoading(true), 200); // delay loading
 
-        const data = await res.json();
-        setLandscapes(data);
-      } catch (err) {
-        console.error(err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
+    try {
+      const url = category
+        ? `${API_URL}/api/Landscapes/category/${category}`
+        : `${API_URL}/api/Landscapes`;
+
+      console.log("Fetching:", url);
+
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error(`Failed to fetch landscapes`);
       }
-    };
 
-    // Clear grid instantly before loading new data
-    setLandscapes([]);
-    fetchLandscapes();
-  }, [category]);
+      const data = await res.json();
+      setLandscapes(data);
+
+      if (data.length === 0) {
+        setError(`No landscapes found for category "${category || "All"}".`);
+      }
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Failed to fetch landscapes");
+      setLandscapes([]);
+    } finally {
+      clearTimeout(loadingTimeout); // cancel delayed loading if fetch finishes fast
+      setLoading(false);
+      setTimeout(() => setPrevLandscapes(null), 500);
+    }
+  };
+
+  fetchLandscapes();
+
+  return () => clearTimeout(loadingTimeout); // cleanup
+}, [category]);
 
   const openLightbox = (index) => {
     setCurrentIndex(index);
@@ -64,18 +77,23 @@ export default function Landscapes() {
       <div className="home-container">
         <h2>Landscapes Gallery</h2>
 
-        {/* Categories Component */}
         <Categories category={category} setCategory={setCategory} />
 
-        {error && <div className="error">Error: {error}</div>}
-        {loading && <div className="loading">Loading Landscapes...</div>}
+        {loading && (
+          <div className="loading">Loading Landscapes...</div>
+        )}
 
-        <div ref={wrapperRef} className="masonry-wrapper">
-          {!loading && landscapes.length === 0 && (
-            <p className="no-results">No landscapes found for this category.</p>
-          )}
+        {!loading && error && (
+          <div className="error-message">{error}</div>
+        )}
 
-          {!loading && landscapes.length > 0 && (
+        <div
+          ref={wrapperRef}
+          className={`masonry-wrapper fade-in ${loading ? "hidden" : ""}`}
+        >
+          {landscapes.length === 0 && !error ? (
+            <p className="no-results">No landscapes to display.</p>
+          ) : (
             <Masonry
               breakpointCols={breakpointColumnsObj}
               className="my-masonry-grid masonry-item"
@@ -101,9 +119,13 @@ export default function Landscapes() {
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={() =>
-              setCurrentIndex((currentIndex + landscapes.length - 1) % landscapes.length)
+              setCurrentIndex(
+                (currentIndex + landscapes.length - 1) % landscapes.length
+              )
             }
-            onNext={() => setCurrentIndex((currentIndex + 1) % landscapes.length)}
+            onNext={() =>
+              setCurrentIndex((currentIndex + 1) % landscapes.length)
+            }
           />
         )}
       </div>
