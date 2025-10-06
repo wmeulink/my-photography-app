@@ -17,6 +17,29 @@ export default function Landscapes() {
   const [error, setError] = useState(null);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const wrapperRef = useRef(null);
+  const sharedButtonStyles = {
+    cursor: "pointer",
+    height: "40px",
+    fontFamily: "'Montserrat', sans-serif",
+    fontWeight: 600,
+    fontSize: "0.95rem",
+    color: "#0c0a0aff",
+    backgroundColor: "#f4f0f5",
+    borderRadius: "6px",
+    border: "none",
+    boxShadow: "0px 2px 8px rgba(69, 46, 69, 0.936)",
+    transition: "all 0.2s ease-in-out",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: "0px 4px 12px rgba(69, 46, 69, 0.936)",
+      backgroundColor: "#ebe6ec",
+    },
+    "&:active": {
+      transform: "translateY(0px)",
+      boxShadow: "0px 2px 8px rgba(69, 46, 69, 0.936)",
+    },
+  };
+
 
   const breakpointColumnsObj = {
     default: 3,
@@ -67,14 +90,22 @@ export default function Landscapes() {
     <div className="page-container">
       <div className="home-container">
         <div className="category-container">
-          <div className="category-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span>Explore Landscapes</span>
-            <Button variant="contained" color="primary" onClick={() => setUploadModalOpen(true)}>
+          {/* <span>Explore Landscapes</span> */}
+          <div className="button-container">
+            <Button
+              variant="contained"
+              onClick={() => setUploadModalOpen(true)}
+              sx={{
+                ...sharedButtonStyles,
+                textTransform: "none",
+              }}
+            >
               Upload Photo
             </Button>
           </div>
-
-          <Categories category={category} setCategory={setCategory} />
+          <div className="category-header">
+            <Categories category={category} setCategory={setCategory} />
+          </div>
         </div>
 
         {loading && <div className="loading">Loading Landscapes...</div>}
