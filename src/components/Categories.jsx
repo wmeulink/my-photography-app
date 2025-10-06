@@ -1,43 +1,59 @@
 import React, { useEffect, useState } from "react";
+import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import "./Categories.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Categories({ category, setCategory }) {
-  const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await fetch(`${API_URL}/api/Landscapes/categories`);
-        if (!res.ok) throw new Error("Failed to fetch categories");
-        const data = await res.json();
-        setCategories(data);
-      } catch (err) {
-        console.error(err);
+    useEffect(() => {
+        let mounted = true;
+        const fetchCategories = async () => {
+            try {
+                const res = await fetch(`${API_URL}/api/Landscapes/categories`);
+                if (!res.ok) throw new Error("Failed to fetch categories");
+                const data = await res.json();
+                if (mounted) setCategories(data);
+            } catch (err) {
+                console.error("Categories fetch error:", err);
+            }
+        };
+        fetchCategories();
+        return () => (mounted = false);
+    }, []);
+
+    return (
+        <Box className="category-dropdown-container" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <FormControl size="small" sx={{ minWidth: 180 }}>
+  <Select
+    value={category || ""}
+    onChange={(e) => setCategory(e.target.value)}
+    displayEmpty
+    renderValue={(selected) => {
+      if (!selected) {
+        return <em style={{ color: "#888" }}>All Categories</em>;
       }
-    };
-    fetchCategories();
-  }, []);
+      return selected;
+    }}
+    sx={{ cursor: "pointer" }}
+  >
+    <MenuItem value="">
+      <em>All Categories</em>
+    </MenuItem>
+    {categories.map((c) => (
+      <MenuItem key={c.id} value={c.name}>
+        {c.name}
+      </MenuItem>
+    ))}
+  </Select>
+</FormControl>
 
-  return (
-    <div className="category-dropdown-container">
-      <select
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        className="category-select"
-      >
-        <option value="">Select a category</option>
-        {categories.map((c) => (
-          <option key={c.id} value={c.name}>
-            {c.name}
-          </option>
-        ))}
-      </select>
-      <div className="info-icon">
-    i
-    <div className="tooltip">Choose a category to filter the gallery</div>
-  </div>
-    </div>
-  );
+
+            <div className="info-icon">
+                i
+                <div className="tooltip">Choose a category to filter the gallery</div>
+            </div>
+        </Box>
+    );
 }

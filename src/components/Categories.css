@@ -11,16 +11,22 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   background-color: #fff;
+  cursor: pointer;
   color: #333;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.select-container {
-    margin-left:25px;
-    display: flex;
-    align-items: center;
-  gap: 8px;
+.category-dropdown-container { display:flex; align-items:center; gap:8px; }
+
+/* style for menu items if you want to customize them */
+.category-menuitem {
+  /* example: bold odd ones, or add padding */
+  padding-top:6px;
+  padding-bottom:6px;
 }
+
+/* pointer for closed native fallback if used elsewhere */
+.category-select { cursor: pointer; }
 
 .info-icon {
   display: inline-flex;
@@ -44,12 +50,12 @@
 
 .tooltip {
   position: absolute;
-  top: 30px;
+  top: 46px;
   left: 50%;
   transform: translateX(-50%);
-  background:#f4f0f5;
+  background:#f0e7f2;
   color: #52336c;
-  box-shadow: 0px 2px 8px rgba(57, 54, 57, 0.936);
+  box-shadow: 0px 2px 8px rgba(69, 46, 69, 0.936);
   padding: 6px 8px;
   border-radius: 4px;
   font-size: 13px;
@@ -58,20 +64,4 @@
   visibility: hidden;
   transition: opacity 0.2s ease;
   z-index: 10;
-}
-
-.category-select:hover {
-  border-color: #888;
-  cursor: pointer;
-}
-
-.category-select:focus {
-  outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
-}
-
-.category-select option {
-  padding: 8px;
-  font-size: 1rem;
 }
