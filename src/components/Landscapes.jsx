@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Masonry from "react-masonry-css";
 import CustomLightbox from "./CustomLightBox";
 import Categories from "./Categories";
+import UploadPhoto from "./UploadPhoto";
 import "./Landscapes.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -23,50 +24,50 @@ export default function Landscapes() {
   };
 
   useEffect(() => {
-  let loadingTimeout;
+    let loadingTimeout;
 
-  const fetchLandscapes = async () => {
-    setError(null);
+    const fetchLandscapes = async () => {
+      setError(null);
 
-    const wrapper = wrapperRef.current;
-    if (wrapper) wrapper.style.minHeight = `${wrapper.offsetHeight}px`;
+      const wrapper = wrapperRef.current;
+      if (wrapper) wrapper.style.minHeight = `${wrapper.offsetHeight}px`;
 
-    loadingTimeout = setTimeout(() => setLoading(true), 200); // delay loading
+      loadingTimeout = setTimeout(() => setLoading(true), 200); // delay loading
 
-    try {
-      const url = category
-        ? `${API_URL}/api/Landscapes/category/${category}`
-        : `${API_URL}/api/Landscapes`;
+      try {
+        const url = category
+          ? `${API_URL}/api/Landscapes/category/${category}`
+          : `${API_URL}/api/Landscapes`;
 
-      console.log("Fetching:", url);
+        console.log("Fetching:", url);
 
-      const res = await fetch(url);
-      if (!res.ok) {
-        throw new Error(`Failed to fetch landscapes`);
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`Failed to fetch landscapes`);
+        }
+
+        const data = await res.json();
+        setLandscapes(data);
+
+        if (data.length === 0) {
+          setError(`No landscapes found for category "${category || "All"}".`);
+        }
+      } catch (err) {
+        console.error(err);
+        setError(err.message || "Failed to fetch landscapes");
+        setLandscapes([]);
+      } finally {
+        clearTimeout(loadingTimeout); // cancel delayed loading if fetch finishes fast
+        setLoading(false);
+        setTimeout(() => setPrevLandscapes(null), 500);
       }
+    };
 
-      const data = await res.json();
-      setLandscapes(data);
+    fetchLandscapes();
 
-      if (data.length === 0) {
-        setError(`No landscapes found for category "${category || "All"}".`);
-      }
-    } catch (err) {
-      console.error(err);
-      setError(err.message || "Failed to fetch landscapes");
-      setLandscapes([]);
-    } finally {
-      clearTimeout(loadingTimeout); // cancel delayed loading if fetch finishes fast
-      setLoading(false);
-      setTimeout(() => setPrevLandscapes(null), 500);
-    }
-  };
-
-  fetchLandscapes();
-
-  return () => clearTimeout(loadingTimeout); // cleanup
-}, [category]);
-
+    return () => clearTimeout(loadingTimeout); // cleanup
+  }, [category]);
+  console.log(landscapes);
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
@@ -76,9 +77,14 @@ export default function Landscapes() {
     <div className="page-container">
       <div className="home-container">
         <div className="category-container">
-        <div className="category-header">Explore Landscapes</div>
+          <div className="category-header">Explore Landscapes</div>
 
-        <Categories category={category} setCategory={setCategory} />
+          <Categories category={category} setCategory={setCategory} />
+
+          <UploadPhoto onUploadSuccess={() => {
+            // re-fetch landscapes after a successful upload
+            setCategory(""); // or call your fetch function again
+          }} />
         </div>
 
         {loading && (
