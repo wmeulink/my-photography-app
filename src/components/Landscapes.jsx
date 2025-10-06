@@ -3,6 +3,7 @@ import Masonry from "react-masonry-css";
 import CustomLightbox from "./CustomLightBox";
 import Categories from "./Categories";
 import UploadPhoto from "./UploadPhoto";
+import { sharedButtonStyles } from "../helpers/helpers";
 import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
 import "./Landscapes.css";
 
@@ -17,30 +18,6 @@ export default function Landscapes() {
   const [error, setError] = useState(null);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const wrapperRef = useRef(null);
-  const sharedButtonStyles = {
-    cursor: "pointer",
-    height: "40px",
-    fontFamily: "'Montserrat', sans-serif",
-    fontWeight: 600,
-    fontSize: "0.95rem",
-    color: "#0c0a0aff",
-    backgroundColor: "#f4f0f5",
-    borderRadius: "6px",
-    border: "none",
-    boxShadow: "0px 2px 8px rgba(69, 46, 69, 0.936)",
-    transition: "all 0.2s ease-in-out",
-    "&:hover": {
-      transform: "translateY(-2px)",
-      boxShadow: "0px 4px 12px rgba(69, 46, 69, 0.936)",
-      backgroundColor: "#ebe6ec",
-    },
-    "&:active": {
-      transform: "translateY(0px)",
-      boxShadow: "0px 2px 8px rgba(69, 46, 69, 0.936)",
-    },
-  };
-
-
   const breakpointColumnsObj = {
     default: 3,
     1100: 3,
