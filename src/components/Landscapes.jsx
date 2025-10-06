@@ -14,6 +14,7 @@ export default function Landscapes() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [reloadFlag, setReloadFlag] = useState(false); // NEW
   const wrapperRef = useRef(null);
 
   const breakpointColumnsObj = {
@@ -23,51 +24,43 @@ export default function Landscapes() {
     500: 1,
   };
 
-  useEffect(() => {
-    let loadingTimeout;
+  const fetchLandscapes = async () => {
+    setError(null);
 
-    const fetchLandscapes = async () => {
-      setError(null);
+    const wrapper = wrapperRef.current;
+    if (wrapper) wrapper.style.minHeight = `${wrapper.offsetHeight}px`;
 
-      const wrapper = wrapperRef.current;
-      if (wrapper) wrapper.style.minHeight = `${wrapper.offsetHeight}px`;
+    setLoading(true);
 
-      loadingTimeout = setTimeout(() => setLoading(true), 200); // delay loading
+    try {
+      const url = category
+        ? `${API_URL}/api/Landscapes/category/${category}`
+        : `${API_URL}/api/Landscapes`;
 
-      try {
-        const url = category
-          ? `${API_URL}/api/Landscapes/category/${category}`
-          : `${API_URL}/api/Landscapes`;
+      console.log("Fetching:", url);
 
-        console.log("Fetching:", url);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch landscapes");
 
-        const res = await fetch(url);
-        if (!res.ok) {
-          throw new Error(`Failed to fetch landscapes`);
-        }
+      const data = await res.json();
+      setLandscapes(data);
 
-        const data = await res.json();
-        setLandscapes(data);
-
-        if (data.length === 0) {
-          setError(`No landscapes found for category "${category || "All"}".`);
-        }
-      } catch (err) {
-        console.error(err);
-        setError(err.message || "Failed to fetch landscapes");
-        setLandscapes([]);
-      } finally {
-        clearTimeout(loadingTimeout); // cancel delayed loading if fetch finishes fast
-        setLoading(false);
-        setTimeout(() => setPrevLandscapes(null), 500);
+      if (data.length === 0) {
+        setError(`No landscapes found for category "${category || "All"}".`);
       }
-    };
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Failed to fetch landscapes");
+      setLandscapes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchLandscapes();
+  }, [category, reloadFlag]); // Added reloadFlag so we can trigger re-fetch
 
-    return () => clearTimeout(loadingTimeout); // cleanup
-  }, [category]);
-  console.log(landscapes);
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
@@ -81,19 +74,17 @@ export default function Landscapes() {
 
           <Categories category={category} setCategory={setCategory} />
 
-          <UploadPhoto onUploadSuccess={() => {
-            // re-fetch landscapes after a successful upload
-            setCategory(""); // or call your fetch function again
-          }} />
+          {/* Upload Photo Component */}
+          <UploadPhoto
+            onUploadSuccess={() => {
+              setReloadFlag((prev) => !prev); // Trigger re-fetch
+            }}
+          />
         </div>
 
-        {loading && (
-          <div className="loading">Loading Landscapes...</div>
-        )}
+        {loading && <div className="loading">Loading Landscapes...</div>}
 
-        {!loading && error && (
-          <div className="error-message">{error}</div>
-        )}
+        {!loading && error && <div className="error-message">{error}</div>}
 
         <div
           ref={wrapperRef}
