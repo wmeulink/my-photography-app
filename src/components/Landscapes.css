@@ -5,11 +5,26 @@
 
 .page-container {
   background: #f4f0f5;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   max-width: 94%;
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
+}
+
+.category-container {
+  max-width: 94%;
+  margin-left:10px;
+}
+
+.category-header {
+  font-family: 'Montserrat', sans-serif;
+  height:35px;
+  display: flex;
+  margin-left: 2px;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bolder;
 }
 
 .landscape-header {
@@ -31,7 +46,7 @@
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   background: #fff;
 }
 

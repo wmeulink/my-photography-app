@@ -75,9 +75,11 @@ export default function Landscapes() {
   return (
     <div className="page-container">
       <div className="home-container">
-        <h2>Landscapes Gallery</h2>
+        <div className="category-container">
+        <div className="category-header">Explore Landscapes</div>
 
         <Categories category={category} setCategory={setCategory} />
+        </div>
 
         {loading && (
           <div className="loading">Loading Landscapes...</div>
