@@ -7,6 +7,7 @@ function Navbar() {
 
   const navLinks = [
     { to: "/", label: "Home" },
+    { to: "/albums", label: "Albums" },
     { to: "/landscapes", label: "Landscapes" },
     { to: "/portraits", label: "Portraits" },
     { to: "/about", label: "About" },
