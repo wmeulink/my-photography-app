@@ -164,7 +164,6 @@
 .landscape-container .masonry-image {
   width: 100%;
   height: auto;
-  margin-bottom: 24px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
