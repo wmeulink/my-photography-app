@@ -1,9 +1,9 @@
 /* --- basic layout --- */
-.home-container {
+.landscape-container {
   margin-top: 20px;
 }
 
-.page-container {
+.home-container {
   background: #f4f0f5;
   font-family: 'Montserrat', sans-serif;
   max-width: 94%;
@@ -161,7 +161,7 @@
   box-sizing: border-box;
 }
 
-.masonry-image {
+.landscape-container .masonry-image {
   width: 100%;
   height: auto;
   margin-bottom: 24px;
