@@ -44,7 +44,7 @@
 /* Masonry layout */
 .portraits-container .my-masonry-grid {
   display: flex;
-  margin-left:5px;
+  /* margin-left:5px; */
   width: auto;
 }
 
@@ -67,8 +67,8 @@
   cursor: pointer;
   width: 85%;          /* smaller width */
   max-width: 280px;    /* limits how large they get */
-  margin-left: auto;
-  margin-right: auto;
+  /* margin-left: auto;
+  margin-right: 25px; */
 }
 
 .portraits-container .polaroid:hover {
@@ -79,9 +79,9 @@
 /* Image inside the polaroid */
 .portraits-container .polaroid img {
   width: 100%;
-  height: auto;
+  height: 250px;
   border-radius: 4px;
-  aspect-ratio: 3 / 4;
+  
   object-fit: cover;
   background-color: #fafafa;
 }
