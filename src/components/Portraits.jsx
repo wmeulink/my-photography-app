@@ -54,7 +54,8 @@ export default function Portraits() {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
-
+  console.log("categories", category);
+  console.log("portraits", portraits)
   return (
     <div className="portraits-container">
       <Box sx={{ p: 4 }} className="page-container">

@@ -5,11 +5,13 @@
   align-items: center;
   justify-content: center;
   width: 94%;
+  flex-wrap: wrap;
 }
 
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   padding: 20px;
+  
 }
 
 .portraits-container .header-container {
@@ -126,4 +128,44 @@
 
 .no-results {
   font-style: italic;
+}
+
+@media (max-width: 1024px) {
+  .portraits-container {
+    padding: 1.5rem;
+  }
+
+  .portraits-container .polaroid {
+    max-width: 220px;
+  }
+
+  .portraits-container .page-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portraits-container .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .portraits-container .polaroid {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portraits-container {
+    padding: 1rem;
+  }
+
+  .portraits-container .polaroid {
+    max-width: 100%;
+  }
+
+  .portraits-container .polaroid img {
+    aspect-ratio: 3 / 4;
+    height: auto;
+  }
 }
