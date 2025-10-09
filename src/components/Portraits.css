@@ -5,22 +5,16 @@
   align-items: center;
   justify-content: center;
   width: 94%;
-  flex-wrap: wrap;
 }
 
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   padding: 20px;
-  
 }
 
 .portraits-container .header-container {
     display: flex;
     height: 50px;
-<<<<<<< HEAD
-    margin-top:20px;
-=======
->>>>>>> restore-landscapes-stable
     flex-wrap: wrap;
 }
 
@@ -37,7 +31,6 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-  
 }
 
 .portraits-container .masonry-image:hover {
@@ -49,7 +42,7 @@
 /* Masonry layout */
 .portraits-container .my-masonry-grid {
   display: flex;
-  /* margin-left:5px; */
+  margin-left: -16px; /* gutter offset */
   width: auto;
 }
 
@@ -71,10 +64,6 @@
   margin-bottom: 16px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
-  width: 85%;          /* smaller width */
-  max-width: 280px;    /* limits how large they get */
-  /* margin-left: auto;
-  margin-right: 25px; */
 }
 
 .portraits-container .polaroid:hover {
@@ -129,46 +118,6 @@
   margin-top: 2rem;
 }
 
-.no-results {
+.portraits-container .no-results {
   font-style: italic;
-}
-
-@media (max-width: 1024px) {
-  .portraits-container {
-    padding: 1.5rem;
-  }
-
-  .portraits-container .polaroid {
-    max-width: 220px;
-  }
-
-  .portraits-container .page-container {
-    padding: 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  .portraits-container .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .portraits-container .polaroid {
-    max-width: 200px;
-  }
-}
-
-@media (max-width: 480px) {
-  .portraits-container {
-    padding: 1rem;
-  }
-
-  .portraits-container .polaroid {
-    max-width: 100%;
-  }
-
-  .portraits-container .polaroid img {
-    aspect-ratio: 3 / 4;
-    height: auto;
-  }
 }
