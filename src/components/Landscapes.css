@@ -17,7 +17,6 @@
   margin-left: 10px;
   display: flex;
   align-items: center;
-  
   gap: 12px;
   height: 100px;
 }
@@ -106,8 +105,8 @@
   /* default is relative; will be absolute when has-prev via wrapper classes */
   position: relative;
   width: 100%;
-  transition: opacity 600ms ease, transform 600ms ease;
-  will-change: opacity, transform;
+  transition: "opacity 600ms ease, transform 600ms ease";
+  will-change: "opacity, transform";
 }
 
 /* when we have previous data, stack the layers */

@@ -8,6 +8,7 @@
     backgroundColor: "#f4f0f5",
     borderRadius: "6px",
     border: "none",
+    width: "180px",
     boxShadow: "0px 2px 8px rgba(69, 46, 69, 0.936)",
     transition: "all 0.2s ease-in-out",
     "&:hover": {

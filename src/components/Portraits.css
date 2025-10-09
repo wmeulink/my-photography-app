@@ -1,0 +1,125 @@
+.portraits-container {
+  margin-top: 20px;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 94%;
+}
+
+.portraits-container .page-container {
+  font-family: 'Montserrat', sans-serif;
+  padding: 20px;
+}
+
+.portraits-container .header-container {
+    display: flex;
+    height: 100px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.portraits-container .category-dropdown-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 20px;
+}
+
+.portraits-container .masonry-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.portraits-container .masonry-image:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* Masonry layout */
+.portraits-container .my-masonry-grid {
+  display: flex;
+  margin-left: -16px; /* gutter offset */
+  width: auto;
+}
+
+.portraits-container .my-masonry-grid_column {
+  padding-left: 16px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Polaroid card */
+.portraits-container .polaroid {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 6px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  padding: 10px 10px 25px;
+  margin-bottom: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.portraits-container .polaroid:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+}
+
+/* Image inside the polaroid */
+.portraits-container .polaroid img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  background-color: #fafafa;
+}
+
+/* Title under image */
+.portraits-container .polaroid .label {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  color: #4a3b58;
+  letter-spacing: 0.3px;
+}
+
+/* Upload button section */
+.portraits-container .button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.portraits-container .upload-button {
+  border-radius: 20px;
+  text-transform: none;
+}
+
+.portraits-container .dialog-title {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.portraits-container .dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.portraits-container .loading, .no-results, .error-message {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.portraits-container .no-results {
+  font-style: italic;
+}
