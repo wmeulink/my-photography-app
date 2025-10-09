@@ -78,8 +78,8 @@ export default function Landscapes() {
   };
 
   return (
-    <div className="landscape-container home-container">
-      <div className="landscape-container">
+    <div className="landscape-container page-container">
+      <div className="home-container">
         <div className="category-container">
           <div className="button-container">
             <Button

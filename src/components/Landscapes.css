@@ -155,7 +155,7 @@
   width: 100%;
 }
 
-.my-masonry-grid_column {
+.landscape-container .my-masonry-grid_column {
   padding: 12px;
   background-clip: padding-box;
   box-sizing: border-box;
@@ -169,7 +169,7 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.masonry-image:hover {
+.landscape-container .masonry-image:hover {
   transform: scale(1.03);
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
