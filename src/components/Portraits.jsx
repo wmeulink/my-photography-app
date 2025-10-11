@@ -59,10 +59,10 @@ export default function Portraits() {
     <div className="portraits-container">
       <Box sx={{ p: 4 }} className="page-container">
         <Box>
-          <Typography variant="h4" fontWeight="500">
-            Portraits
-          </Typography>
-          <div className="header-container">
+          <div className="portrait-header">
+            Polaroid portraits
+          </div>
+          <div className="portrait-buttons-container">
           <Button
             variant="contained"
             onClick={() => setUploadModalOpen(true)}
