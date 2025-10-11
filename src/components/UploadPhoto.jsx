@@ -60,6 +60,14 @@ export default function Upload({ onUploadSuccess }) {
 
     return (
         <div className="upload-section">
+            <button
+                type="button"
+                className="upload-exit-btn"
+                onClick={onUploadSuccess} // or a closeModal() handler
+                aria-label="Close upload form"
+            >
+                &times;
+            </button>
             <h3 className="upload-title">Upload New Photo</h3>
 
             <form onSubmit={handleSubmit} className="upload-form">
