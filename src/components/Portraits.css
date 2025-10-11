@@ -106,11 +106,6 @@
 }
 
 /* Upload button section */
-.portraits-container .button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-}
 
 .portraits-container .upload-button {
   border-radius: 20px;

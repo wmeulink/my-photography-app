@@ -1,9 +1,12 @@
 /* --- basic layout --- */
 .landscape-container {
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.home-container {
+.landscapes {
   background: #f4f0f5;
   font-family: 'Montserrat', sans-serif;
   max-width: 94%;
@@ -42,10 +45,6 @@
   color: #52336c;
   margin-bottom: 8px;
 }
-
-.modal-button {
-}
-
 /* category UI */
 .category-dropdown-container {
   display: flex;
@@ -165,6 +164,7 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
+  margin-top: 18px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -173,20 +173,4 @@
   transform: scale(1.03);
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
-}
-
-/* single-photo tweaks */
-.single-photo-grid {
-  justify-content: center !important;
-}
-
-.single-photo-grid .my-masonry-grid_column {
-  flex: 0 0 auto;
-  padding: 0;
-}
-
-.single-photo-grid img {
-  max-width: 80vw;
-  margin: 0 auto;
-  display: block;
 }
