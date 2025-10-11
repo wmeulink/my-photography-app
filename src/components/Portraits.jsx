@@ -93,12 +93,14 @@ export default function Portraits() {
             columns={{ xs: 1, sm: 2, md: 3 }}
             spacing={2}
           >
+            <div className="grid-container">
             {portraits.map((item, index) => (
               <div className="polaroid" key={index} onClick={() => openLightbox(index)}>
                 <img src={item.thumbnail} alt={item.title} loading="lazy" />
                 <div className="label">{item.title || "Untitled"}</div>
               </div>
             ))}
+            </div>
           </Masonry>
 
         )}

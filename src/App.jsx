@@ -15,26 +15,22 @@ function App() {
     <div className="navbar-container">
       <header className="site-header">
         <h1>Elliott Photography Co.</h1>
-        <Navbar/>
+        <Navbar />
       </header>
-      
-   
-
-        
-<Routes>
-  <Route path="/" element={<Home />} />
-  <Route path="/albums" element={<LandscapeAlbums />} />
-  <Route path="/landscapes" element={<Landscapes />} />
-  <Route path="/landscapes/:category" element={<Landscapes />} />
-  <Route path="/portraits" element={<Portraits />} />
-  <Route path="/about" element={<About />} />
-  <Route path="/contact" element={<Contact />} />
-</Routes>
-      
-
-      <footer className='footer-container'>
-      <p>© 2025 Developed & Designed by Whitney Elliott</p>
-    </footer>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/albums" element={<LandscapeAlbums />} />
+        <Route path="/landscapes" element={<Landscapes />} />
+        <Route path="/landscapes/:category" element={<Landscapes />} />
+        <Route path="/portraits" element={<Portraits />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+      <div className='footer-container'>
+      <footer className='footer'>
+        <p>© 2025 Developed & Designed by Whitney Elliott</p>
+      </footer>
+      </div>
     </div>
   )
 }

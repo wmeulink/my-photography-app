@@ -7,8 +7,16 @@
   width: 94%;
 }
 
+.portraits-container .grid-container {
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+  display: flex;
+}
+
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
+  width:100%;
   padding: 20px;
 }
 
@@ -23,32 +31,38 @@
   align-items: center;
   gap: 8px;
   margin-left: 20px;
+  
 }
 
-.portraits-container .masonry-image {
+/* /* .portraits-container .masonry-image {
   width: 100%;
   height: auto;
+  border:2px solid fuchsia;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+} 
 
 .portraits-container .masonry-image:hover {
   transform: scale(1.03);
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
+  */
 
-/* Masonry layout */
 .portraits-container .my-masonry-grid {
-  display: flex;
-  margin-left: -16px; /* gutter offset */
+   display:flex;
+  justify-content: center;
+  align-items: center;
+  
   width: auto;
 }
 
-.portraits-container .my-masonry-grid_column {
-  padding-left: 16px; /* gutter size */
-  background-clip: padding-box;
+
+ .portraits-container .my-masonry-grid_column {
+  padding-left: 25px;
+  background-clip: padding-box; 
+  border:2px solid black; 
 }
 
 /* Polaroid card */
@@ -58,6 +72,7 @@
   flex-direction: column;
   align-items: center;
   border-radius: 6px;
+  
   width: 200px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
   padding: 10px 10px 25px;
