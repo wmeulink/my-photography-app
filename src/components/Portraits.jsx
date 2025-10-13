@@ -59,28 +59,30 @@ export default function Portraits() {
     <div className="portraits-container">
       <Box sx={{ p: 4 }} className="page-container">
         <Box>
-          <div className="portrait-header">
-            Polaroid portraits
-          </div>
-          <div className="portrait-buttons-container">
-          <Button
-            variant="contained"
-            onClick={() => setUploadModalOpen(true)}
-            sx={{ ...sharedButtonStyles, textTransform: "none", marginLeft: "4px" }}
-          >
-            Upload Portrait
-          </Button>
-
-           <Box sx={{ mb: 3 }}>
+          <div className="portrait-upload-container">
+            <div className="portrait-header">
+              Polaroid portraits
+            </div>
+            <div className="portrait-buttons-container">
+              <Button
+                variant="contained"
+                onClick={() => setUploadModalOpen(true)}
+                sx={{ ...sharedButtonStyles, textTransform: "none", marginLeft: "4px" }}
+              >
+                Upload Portrait
+              </Button>
             
-          <Categories category={category} setCategory={setCategory} apiEndpoint="/api/Portraits/categories" />
-          </Box>
+            <Box sx={{ mb: 3 }}>
+
+              <Categories category={category} setCategory={setCategory} apiEndpoint="/api/Portraits/categories" />
+            </Box>
           </div>
-        
+          </div>
+
         </Box>
 
         {/* Category Filter */}
-       
+
 
         {loading ? (
           <Typography>Loading portraits...</Typography>
@@ -94,12 +96,12 @@ export default function Portraits() {
             spacing={2}
           >
             <div className="grid-container">
-            {portraits.map((item, index) => (
-              <div className="polaroid" key={index} onClick={() => openLightbox(index)}>
-                <img src={item.thumbnail} alt={item.title} loading="lazy" />
-                <div className="label">{item.title || "Untitled"}</div>
-              </div>
-            ))}
+              {portraits.map((item, index) => (
+                <div className="polaroid" key={index} onClick={() => openLightbox(index)}>
+                  <img src={item.thumbnail} alt={item.title} loading="lazy" />
+                  <div className="label">{item.title || "Untitled"}</div>
+                </div>
+              ))}
             </div>
           </Masonry>
 
@@ -121,6 +123,7 @@ export default function Portraits() {
           <DialogTitle>Upload New Portrait</DialogTitle>
           <DialogContent>
             <UploadPhoto
+              type="portrait"
               onUploadSuccess={() => {
                 fetchPortraits();
                 setUploadModalOpen(false);

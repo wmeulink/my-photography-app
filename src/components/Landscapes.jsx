@@ -80,7 +80,11 @@ export default function Landscapes() {
   return (
     <div className="landscape-container page-container">
       <div className="landscapes">
+        
         <div className="category-container">
+          <div>
+          Lanscapes
+        </div>
           <div className="button-container">
             <Button
               variant="contained"
@@ -92,9 +96,6 @@ export default function Landscapes() {
             >
               Upload Photo
             </Button>
-          </div>
-
-          <div className="category-header">
             <Categories category={category} setCategory={handleCategoryChange} />
           </div>
         </div>
@@ -152,6 +153,7 @@ export default function Landscapes() {
           <DialogTitle>Upload New Landscape</DialogTitle>
           <DialogContent>
             <UploadPhoto
+              type="landscape"
               onUploadSuccess={() => {
                 fetchLandscapes(); // Refresh gallery
                 setUploadModalOpen(false); // Close modal

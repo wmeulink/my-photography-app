@@ -19,6 +19,7 @@
   max-width: 98.5%;
   margin-left: 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 12px;
   height: 100px;
@@ -27,17 +28,10 @@
 .button-container {
   height: 50px;
   display: flex;
+  gap: 12px;
   align-items: center;
   justify-content: center;
-}
-
-.category-header {
-  font-family: 'Montserrat', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: bolder;
+  width:100%;
 }
 
 .landscape-header {
