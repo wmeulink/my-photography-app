@@ -16,17 +16,20 @@
 }
 
 .category-container {
-  max-width: 98.5%;
-  margin-left: 10px;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  height: 100px;
+  height: 150px;
+}
+
+.landscape-container .landscape-title {
+   text-align: center;
+  font-weight: 700;
+  color: #52336c;
 }
 
 .button-container {
-  height: 50px;
   display: flex;
   gap: 12px;
   align-items: center;

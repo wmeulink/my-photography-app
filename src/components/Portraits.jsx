@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Box, Paper, Typography, Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
 import { styled } from "@mui/material/styles";
 import UploadPhoto from "./UploadPhoto";
 import CustomLightbox from "./CustomLightBox";
-import Categories from "./Categories"; // Add this
+import Categories from "./Categories";
 import { sharedButtonStyles } from "../helpers/helpers";
 import "./Portraits.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
-const Label = styled(Paper)(({ theme }) => ({
+const Label = styled("div")(({ theme }) => ({
   backgroundColor: "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(0.5),
@@ -34,10 +41,25 @@ export default function Portraits() {
       const url = category
         ? `${API_URL}/api/Portraits/category/${category}`
         : `${API_URL}/api/Portraits`;
+
       const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to fetch portraits");
+
       const data = await res.json();
-      setPortraits(data);
+
+      // Convert backend binary (Base64) into displayable format
+      const converted = data.map((p) => ({
+        ...p,
+        thumbnailSrc: p.thumbnail
+          ? `data:image/jpeg;base64,${p.thumbnail}`
+          : null,
+        fullSrc: p.full
+          ? `data:image/jpeg;base64,${p.full}`
+          : null,
+      }));
+
+
+      setPortraits(converted);
     } catch (err) {
       console.error(err);
       setPortraits([]);
@@ -58,31 +80,30 @@ export default function Portraits() {
   return (
     <div className="portraits-container">
       <Box sx={{ p: 4 }} className="page-container">
-        <Box>
-          <div className="portrait-upload-container">
-            <div className="portrait-header">
-              Polaroid portraits
-            </div>
-            <div className="portrait-buttons-container">
-              <Button
-                variant="contained"
-                onClick={() => setUploadModalOpen(true)}
-                sx={{ ...sharedButtonStyles, textTransform: "none", marginLeft: "4px" }}
-              >
-                Upload Portrait
-              </Button>
-            
-            <Box sx={{ mb: 3 }}>
+        <div className="portrait-upload-container">
+          <h2 className="portrait-header">Portraits</h2>
+          <div className="portrait-buttons-container">
+            <Button
+              variant="contained"
+              onClick={() => setUploadModalOpen(true)}
+              sx={{
+                ...sharedButtonStyles,
+                textTransform: "none",
+                marginLeft: "4px",
+              }}
+            >
+              Upload Portrait
+            </Button>
 
-              <Categories category={category} setCategory={setCategory} apiEndpoint="/api/Portraits/categories" />
+            <Box sx={{ mb: 3 }}>
+              <Categories
+                category={category}
+                setCategory={setCategory}
+                apiEndpoint="/api/categories"
+              />
             </Box>
           </div>
-          </div>
-
-        </Box>
-
-        {/* Category Filter */}
-
+        </div>
 
         {loading ? (
           <Typography>Loading portraits...</Typography>
@@ -90,36 +111,53 @@ export default function Portraits() {
           <Typography>No portraits found for "{category || "All"}".</Typography>
         ) : (
           <Masonry
-            className="my-masonry-grid"
-            columnClassName="my-masonry-grid_column"
             columns={{ xs: 1, sm: 2, md: 3 }}
             spacing={2}
+            className="my-masonry-grid"
           >
-            <div className="grid-container">
-              {portraits.map((item, index) => (
-                <div className="polaroid" key={index} onClick={() => openLightbox(index)}>
-                  <img src={item.thumbnail} alt={item.title} loading="lazy" />
-                  <div className="label">{item.title || "Untitled"}</div>
-                </div>
-              ))}
-            </div>
+            {portraits.map((item, index) => (
+              <div
+                className="polaroid"
+                key={index}
+                onClick={() => openLightbox(index)}
+              >
+                <img
+                  src={item.thumbnailSrc}
+                  alt={item.title}
+                  loading="lazy"
+                  className="portrait-img"
+                />
+                <div className="label">{item.title || "Untitled"}</div>
+              </div>
+            ))}
           </Masonry>
-
         )}
 
-        {/* Lightbox */}
         {lightboxOpen && (
           <CustomLightbox
-            photos={portraits.map((p) => ({ ...p, thumbnail: p.full }))}
+            photos={portraits.map((p) => ({
+              src: p.fullSrc,
+              title: p.title,
+            }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
-            onPrev={() => setCurrentIndex((currentIndex + portraits.length - 1) % portraits.length)}
-            onNext={() => setCurrentIndex((currentIndex + 1) % portraits.length)}
+            onPrev={() =>
+              setCurrentIndex(
+                (currentIndex + portraits.length - 1) % portraits.length
+              )
+            }
+            onNext={() =>
+              setCurrentIndex((currentIndex + 1) % portraits.length)
+            }
           />
         )}
 
-        {/* Upload Modal */}
-        <Dialog open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} maxWidth="sm" fullWidth>
+        <Dialog
+          open={uploadModalOpen}
+          onClose={() => setUploadModalOpen(false)}
+          maxWidth="sm"
+          fullWidth
+        >
           <DialogTitle>Upload New Portrait</DialogTitle>
           <DialogContent>
             <UploadPhoto

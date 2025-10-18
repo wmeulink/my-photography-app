@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Box, FormControl, Select, MenuItem } from "@mui/material";
 import { sharedButtonStyles } from "../helpers/helpers";
 import "./Categories.css";
 
@@ -7,11 +7,13 @@ const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Categories({ category, setCategory }) {
   const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     let mounted = true;
+
     const fetchCategories = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/Landscapes/categories`);
+        const res = await fetch(`${API_URL}/api/categories`);
         if (!res.ok) throw new Error("Failed to fetch categories");
         const data = await res.json();
         if (mounted) setCategories(data);
@@ -19,6 +21,7 @@ export default function Categories({ category, setCategory }) {
         console.error("Categories fetch error:", err);
       }
     };
+
     fetchCategories();
     return () => (mounted = false);
   }, []);
@@ -31,10 +34,9 @@ export default function Categories({ category, setCategory }) {
           onChange={(e) => setCategory(e.target.value)}
           displayEmpty
           renderValue={(selected) => {
-            if (!selected) {
-              return <span style={{ color: "black", fontStyle: "normal" }}>All Categories</span>;
-            }
-            return selected;
+            if (!selected) return <span style={{ color: "black" }}>All Categories</span>;
+            const found = categories.find((c) => c.id === selected);
+            return found ? found.name : selected;
           }}
           sx={{
             ...sharedButtonStyles,
@@ -46,13 +48,13 @@ export default function Categories({ category, setCategory }) {
             <em>All Categories</em>
           </MenuItem>
           {categories.map((c) => (
-            <MenuItem key={c.id} value={c.name}>
+            <MenuItem key={c.id} value={c.id}>
               {c.name}
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
 
+      </FormControl>
 
       <div className="info-icon">
         i

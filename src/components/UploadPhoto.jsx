@@ -1,42 +1,32 @@
 import React, { useEffect, useState } from "react";
 import "./UploadPhoto.css";
+import Categories from "./Categories"; // <- import the reusable Categories component
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
-export default function Upload({ type = "landscape", onUploadSuccess }) {
-  const [categories, setCategories] = useState([]);
+export default function UploadPhoto({ type = "landscape", onUploadSuccess }) {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [file, setFile] = useState(null);
-  const [categoryId, setCategoryId] = useState("");
+  const [category, setCategory] = useState(""); // For Category component
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
   const [preview, setPreview] = useState(null);
 
-  // Fetch categories and tags dynamically
+  // Fetch tags
   useEffect(() => {
-    const categoriesEndpoint =
-      type === "portrait"
-        ? `${API_URL}/api/Portraits/categories`
-        : `${API_URL}/api/Landscapes/categories`;
-
-    fetch(categoriesEndpoint)
-      .then((res) => res.json())
-      .then(setCategories)
-      .catch((err) => console.error("Error fetching categories:", err));
-
     fetch(`${API_URL}/api/Tags`)
       .then((res) => res.json())
       .then(setTags)
       .catch((err) => console.error("Error fetching tags:", err));
-  }, [type]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!file || !title || !categoryId) {
+    if (!file || !title || !category) {
       setMessage("Please fill out all required fields.");
       return;
     }
@@ -46,22 +36,21 @@ export default function Upload({ type = "landscape", onUploadSuccess }) {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("categoryId", categoryId);
+    formData.append("categoryId", category); // category ID from Category component
     formData.append("title", title);
     formData.append("description", description);
-    formData.append("tagNames", selectedTags.join(",")); // send comma-separated
+    formData.append("tagNames", selectedTags.join(",")); // comma-separated
 
-    const endpoint =
-      type === "portrait"
-        ? `${API_URL}/api/Portraits/upload`
-        : `${API_URL}/api/Landscapes/upload`;
+    // Correct endpoint based on type
+// Correct endpoint based on type
+const endpoint =
+  type === "portrait"
+    ? `${API_URL}/api/Portraits/upload`
+    : `${API_URL}/api/Landscapes/upload`;
+
 
     try {
-      const res = await fetch(endpoint, {
-        method: "POST",
-        body: formData,
-      });
-
+      const res = await fetch(endpoint, { method: "POST", body: formData });
       if (!res.ok) {
         const errData = await res.json();
         console.error("Upload failed:", errData);
@@ -76,7 +65,7 @@ export default function Upload({ type = "landscape", onUploadSuccess }) {
       setFile(null);
       setTitle("");
       setDescription("");
-      setCategoryId("");
+      setCategory("");
       setSelectedTags([]);
       setPreview(null);
     } catch (err) {
@@ -120,19 +109,12 @@ export default function Upload({ type = "landscape", onUploadSuccess }) {
             className="upload-textarea"
           />
 
-          <select
-            value={categoryId}
-            onChange={(e) => setCategoryId(e.target.value)}
-            className="upload-select"
-            required
-          >
-            <option value="">Select category</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
+          {/* Use Category component for dropdown */}
+          <Categories category={category} setCategory={setCategory} apiEndpoint={
+            type === "portrait"
+              ? "/api/Portraits/categories"
+              : "/api/Landscapes/categories"
+          } />
 
           <select
             multiple

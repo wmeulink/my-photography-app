@@ -49,9 +49,21 @@ export default function Landscapes() {
       if (!res.ok) throw new Error("Failed to fetch landscapes");
 
       const data = await res.json();
-      setLandscapes(data);
 
-      if (data.length === 0) {
+      // Convert Base64 to displayable images
+      const converted = data.map((l) => ({
+        ...l,
+        thumbnailSrc: l.thumbnail.startsWith("data:")
+          ? l.thumbnail
+          : `data:image/jpeg;base64,${l.thumbnail}`,
+        fullSrc: l.full.startsWith("data:")
+          ? l.full
+          : `data:image/jpeg;base64,${l.full}`,
+      }));
+
+      setLandscapes(converted);
+
+      if (converted.length === 0) {
         setError(`No landscapes found for category "${category || "All"}".`);
       }
     } catch (err) {
@@ -80,11 +92,8 @@ export default function Landscapes() {
   return (
     <div className="landscape-container page-container">
       <div className="landscapes">
-        
         <div className="category-container">
-          <div>
-          Lanscapes
-        </div>
+          <h2 className="landscape-title">Landscapes</h2>
           <div className="button-container">
             <Button
               variant="contained"
@@ -96,7 +105,11 @@ export default function Landscapes() {
             >
               Upload Photo
             </Button>
-            <Categories category={category} setCategory={handleCategoryChange} />
+            <Categories
+              category={category}
+              setCategory={setCategory}
+              apiEndpoint="/api/categories"
+            />
           </div>
         </div>
 
@@ -118,7 +131,7 @@ export default function Landscapes() {
               {landscapes.map((l, index) => (
                 <img
                   key={`cur-${l.id}-${index}`}
-                  src={l.thumbnail}
+                  src={l.thumbnailSrc}
                   alt={l.title || "Landscape"}
                   onClick={() => openLightbox(index)}
                   loading="lazy"
@@ -131,7 +144,7 @@ export default function Landscapes() {
 
         {lightboxOpen && (
           <CustomLightbox
-            photos={landscapes.map((l) => ({ ...l, thumbnail: l.full }))}
+            photos={landscapes.map((l) => ({ src: l.fullSrc, title: l.title }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={() =>
