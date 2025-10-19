@@ -11,24 +11,36 @@ export default function LandscapeAlbums() {
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/Landscapes/categories`);
-        const data = await res.json();
-        const withCovers = await Promise.all(
-          data.map(async (cat) => {
-            try {
-              const imgRes = await fetch(`${API_URL}/api/Landscapes/category/${cat.name}`);
-              const images = await imgRes.json();
-              return { ...cat, cover: images[0]?.thumbnail || "/default-cover.jpg" };
-            } catch {
-              return { ...cat, cover: "/default-cover.jpg" };
-            }
-          })
+        // Fetch all categories
+        const catRes = await fetch(`${API_URL}/api/Categories`);
+        const categories = await catRes.json();
+
+        // Fetch all landscapes
+        const landscapeRes = await fetch(`${API_URL}/api/Landscapes`);
+        const landscapes = await landscapeRes.json();
+
+        // Keep only categories that have at least one landscape
+        const landscapeCategories = categories.filter(cat =>
+          landscapes.some(l => l.categoryId === cat.id)
         );
+
+        // For each category, pick the first landscape as cover
+        const withCovers = landscapeCategories.map(cat => {
+          const firstLandscape = landscapes.find(l => l.categoryId === cat.id);
+          return {
+            ...cat,
+            cover: firstLandscape
+              ? `data:image/jpeg;base64,${firstLandscape.thumbnail}`
+              : "/default-cover.jpg",
+          };
+        });
+
         setAlbums(withCovers);
       } catch (err) {
-        console.error(err);
+        console.error("Failed to fetch landscape albums:", err);
       }
     };
+
     fetchAlbums();
   }, []);
 
@@ -36,14 +48,16 @@ export default function LandscapeAlbums() {
     <div className="album-page">
       <h1 className="album-title">Landscape Albums</h1>
       <div className="album-grid">
-        {albums.map((a) => (
+        {albums.map(album => (
           <div
-            key={a.id}
+            key={album.id}
             className="album-card"
-            onClick={() => navigate(`/landscapes/${a.name}`)}
+            onClick={() => navigate(`/landscapes/${album.name}`)}
           >
-            <img src={a.cover} alt={a.name} className="album-cover" />
-            <div className="album-label">{a.name}</div>
+            <div className="album-cover-wrapper">
+              <img src={album.cover} alt={album.name} className="album-cover" />
+            </div>
+            <div className="album-label">{album.name}</div>
           </div>
         ))}
       </div>

@@ -1,28 +1,74 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useMemo } from "react";
+import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, Chip } from "@mui/material";
 import Masonry from "react-masonry-css";
-import CustomLightbox from "./CustomLightBox";
-import Categories from "./Categories";
 import UploadPhoto from "./UploadPhoto";
+import CustomLightbox from "./CustomLightBox";
 import { sharedButtonStyles } from "../helpers/helpers";
-import { Button, Dialog, DialogTitle, DialogContent } from "@mui/material";
-import "./Landscapes.css";
+import './Landscapes.css'
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Landscapes() {
-  const { category: categoryParam } = useParams();
-  const navigate = useNavigate();
-
   const [landscapes, setLandscapes] = useState([]);
-  const [category, setCategory] = useState(categoryParam || "");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
-  const wrapperRef = useRef(null);
+  // Fetch landscapes
+  const fetchLandscapes = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/api/Landscapes`);
+      const data = await res.json();
+      const converted = data.map((l) => ({
+        ...l,
+        thumbnailSrc: l.thumbnail ? `data:image/jpeg;base64,${l.thumbnail}` : null,
+        fullSrc: l.full ? `data:image/jpeg;base64,${l.full}` : null,
+      }));
+      setLandscapes(converted);
+    } catch (err) {
+      console.error(err);
+      setLandscapes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch all tags
+  const fetchTags = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/Tags`);
+      const data = await res.json();
+      setTags(data.map((t) => t.name));
+    } catch (err) {
+      console.error("Failed to fetch tags:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchLandscapes();
+    fetchTags();
+  }, []);
+
+  // Filter landscapes by selected tags
+  const filteredLandscapes = useMemo(() => {
+    if (!selectedTags.length) return landscapes;
+    return landscapes.filter((l) => selectedTags.every((tag) => l.tags.includes(tag)));
+  }, [selectedTags, landscapes]);
+
+  const toggleTag = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const openLightbox = (index) => {
+    setCurrentIndex(index);
+    setLightboxOpen(true);
+  };
 
   const breakpointColumnsObj = {
     default: 3,
@@ -31,150 +77,82 @@ export default function Landscapes() {
     500: 1,
   };
 
-  // Update category when URL param changes
-  useEffect(() => {
-    setCategory(categoryParam || "");
-  }, [categoryParam]);
-
-  const fetchLandscapes = async () => {
-    setError(null);
-    setLoading(true);
-
-    try {
-      const url = category
-        ? `${API_URL}/api/Landscapes/category/${category}`
-        : `${API_URL}/api/Landscapes`;
-
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Failed to fetch landscapes");
-
-      const data = await res.json();
-
-      // Convert Base64 to displayable images
-      const converted = data.map((l) => ({
-        ...l,
-        thumbnailSrc: l.thumbnail.startsWith("data:")
-          ? l.thumbnail
-          : `data:image/jpeg;base64,${l.thumbnail}`,
-        fullSrc: l.full.startsWith("data:")
-          ? l.full
-          : `data:image/jpeg;base64,${l.full}`,
-      }));
-
-      setLandscapes(converted);
-
-      if (converted.length === 0) {
-        setError(`No landscapes found for category "${category || "All"}".`);
-      }
-    } catch (err) {
-      console.error(err);
-      setError(err.message || "Failed to fetch landscapes");
-      setLandscapes([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchLandscapes();
-  }, [category]);
-
-  const openLightbox = (index) => {
-    setCurrentIndex(index);
-    setLightboxOpen(true);
-  };
-
-  const handleCategoryChange = (newCategory) => {
-    setCategory(newCategory);
-    navigate(newCategory ? `/landscapes/${newCategory}` : "/landscapes");
-  };
-
   return (
-    <div className="landscape-container page-container">
-      <div className="landscapes">
-        <div className="category-container">
-          <h2 className="landscape-title">Landscapes</h2>
-          <div className="button-container">
-            <Button
-              variant="contained"
-              onClick={() => setUploadModalOpen(true)}
-              sx={{
-                ...sharedButtonStyles,
-                textTransform: "none",
-              }}
-            >
-              Upload Photo
-            </Button>
-            <Categories
-              category={category}
-              setCategory={setCategory}
-              apiEndpoint="/api/categories"
-            />
-          </div>
-        </div>
-
-        {loading && <div className="loading">Loading Landscapes...</div>}
-        {!loading && error && <div className="error-message">{error}</div>}
-
-        <div
-          ref={wrapperRef}
-          className={`masonry-wrapper fade-in ${loading ? "hidden" : ""}`}
+    <div className="landscape-container">
+      {/* Toolbar */}
+      <Box className="landscape-toolbar">
+        <Button
+          variant="contained"
+          onClick={() => setUploadModalOpen(true)}
+          sx={{ ...sharedButtonStyles, textTransform: "none" }}
         >
-          {landscapes.length === 0 && !error ? (
-            <p className="no-results">No landscapes to display.</p>
-          ) : (
-            <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid masonry-item"
-              columnClassName="my-masonry-grid_column"
-            >
-              {landscapes.map((l, index) => (
-                <img
-                  key={`cur-${l.id}-${index}`}
-                  src={l.thumbnailSrc}
-                  alt={l.title || "Landscape"}
-                  onClick={() => openLightbox(index)}
-                  loading="lazy"
-                  className="masonry-image"
-                />
-              ))}
-            </Masonry>
-          )}
-        </div>
+          Upload Photo
+        </Button>
 
-        {lightboxOpen && (
-          <CustomLightbox
-            photos={landscapes.map((l) => ({ src: l.fullSrc, title: l.title }))}
-            currentIndex={currentIndex}
-            onClose={() => setLightboxOpen(false)}
-            onPrev={() =>
-              setCurrentIndex(
-                (currentIndex + landscapes.length - 1) % landscapes.length
-              )
-            }
-            onNext={() => setCurrentIndex((currentIndex + 1) % landscapes.length)}
+        {tags.map((tag) => (
+          <Chip
+            key={tag}
+            label={tag}
+            onClick={() => toggleTag(tag)}
+            color={selectedTags.includes(tag) ? "primary" : "default"}
+            variant={selectedTags.includes(tag) ? "filled" : "outlined"}
+            sx={{ cursor: "pointer" }}
           />
-        )}
+        ))}
+      </Box>
 
-        {/* Upload Modal */}
-        <Dialog
-          open={uploadModalOpen}
-          onClose={() => setUploadModalOpen(false)}
-          maxWidth="sm"
-          fullWidth
+      {/* Gallery */}
+      {loading ? (
+        <Typography className="loading">Loading landscapes...</Typography>
+      ) : filteredLandscapes.length === 0 ? (
+        <Typography className="error-message">No landscapes match selected tags.</Typography>
+      ) : (
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="masonry-wrapper"
+          columnClassName=""
         >
-          <DialogTitle>Upload New Landscape</DialogTitle>
-          <DialogContent>
-            <UploadPhoto
-              type="landscape"
-              onUploadSuccess={() => {
-                fetchLandscapes(); // Refresh gallery
-                setUploadModalOpen(false); // Close modal
-              }}
+          {filteredLandscapes.map((l, index) => (
+            <img
+              key={l.id}
+              src={l.thumbnailSrc}
+              alt={l.title || "Landscape"}
+              onClick={() => openLightbox(index)}
+              loading="lazy"
+              className="masonry-image"
             />
-          </DialogContent>
-        </Dialog>
-      </div>
+          ))}
+        </Masonry>
+      )}
+
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <CustomLightbox
+          photos={filteredLandscapes.map((l) => ({ src: l.fullSrc, title: l.title }))}
+          currentIndex={currentIndex}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={() =>
+            setCurrentIndex((currentIndex + filteredLandscapes.length - 1) % filteredLandscapes.length)
+          }
+          onNext={() =>
+            setCurrentIndex((currentIndex + 1) % filteredLandscapes.length)
+          }
+        />
+      )}
+
+      {/* Upload Modal */}
+      <Dialog open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Upload New Landscape</DialogTitle>
+        <DialogContent>
+          <UploadPhoto
+            type="landscape"
+            onUploadSuccess={() => {
+              fetchLandscapes();
+              setUploadModalOpen(false);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

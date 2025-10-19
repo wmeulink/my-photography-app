@@ -1,173 +1,62 @@
-/* --- basic layout --- */
+/* --- container --- */
 .landscape-container {
   margin-top: 20px;
   display: flex;
-  align-items: center;
   justify-content: center;
-}
-
-.landscapes {
-  background: #f4f0f5;
-  font-family: 'Montserrat', sans-serif;
-  max-width: 94%;
   width: 100%;
-  padding: 0 20px;
-  box-sizing: border-box;
-}
-
-.category-container {
-  
-  display: flex;
   flex-direction: column;
   align-items: center;
-  height: 150px;
 }
 
-.landscape-container .landscape-title {
-   text-align: center;
-  font-weight: 700;
-  color: #52336c;
-}
-
-.button-container {
+/* --- toolbar --- */
+.landscape-toolbar {
   display: flex;
-  gap: 12px;
-  align-items: center;
-  justify-content: center;
-  width:100%;
-}
-
-.landscape-header {
-  margin-left: 0;
-  color: #52336c;
-  margin-bottom: 8px;
-}
-/* category UI */
-.category-dropdown-container {
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
+  margin-bottom: 16px;
+  width:100%;
+  align-items: center;
+  height:50px;
+  justify-content: center;
 }
 
-.category-select {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-  background: #fff;
-}
-
-.no-results-message {
-  padding: 20px;
-  font-size: 1.2rem;
-  color: #555;
-  text-align: center;
-  background: #f9f9f9;
-  border-radius: 6px;
-  margin-bottom: 20px;
-}
-
-/* --- masonry wrapper / layering --- */
+/* --- masonry / gallery --- */
 .masonry-wrapper {
-  position: relative;
-  width: 100%;
-  min-height: 45vh; 
+  width: 90%;
+  min-height: 45vh;
+  display: flex;
+  justify-content: center;
+  gap:30px;
   transition: opacity 0.4s ease-in-out;
 }
 
-.fade-in {
-  opacity: 1;
-}
-
-.hidden {
-  opacity: 0;
-  height: 400px; /* Keeps page height so footer doesn’t jump */
-}
-
-/* overlay effect while locked (optional) */
-.masonry-wrapper[style]::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-  z-index: 5;
-  opacity: 0;
-}
-
-/* both layers occupy same space when we have prev layer */
-.grid-layer {
-  /* default is relative; will be absolute when has-prev via wrapper classes */
-  position: relative;
-  width: 100%;
-  transition: "opacity 600ms ease, transform 600ms ease";
-  will-change: "opacity, transform";
-}
-
-/* when we have previous data, stack the layers */
-.masonry-wrapper.has-prev .grid-layer.prev {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 2;
-}
-
-.masonry-wrapper.has-prev .grid-layer.current {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  opacity: 0;
-  transform: translateY(8px);
-}
-
-/* animate to show current and hide previous */
-.masonry-wrapper.animating .grid-layer.prev {
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-}
-
-.masonry-wrapper.animating .grid-layer.current {
-  opacity: 1;
-  transform: translateY(0);
-  z-index: 3;
-}
-
-/* fallback when no prev layer: normal flow */
-.masonry-wrapper:not(.has-prev) .grid-layer.prev,
-.masonry-wrapper:not(.has-prev) .grid-layer.current {
-  position: relative;
-  opacity: 1;
-  transform: none;
-}
-
-/* masonry image styles */
-.my-masonry-grid {
-  display: flex;
-  width: 100%;
-}
-
-.landscape-container .my-masonry-grid_column {
-  padding: 12px;
-  background-clip: padding-box;
-  box-sizing: border-box;
-}
-
-.landscape-container .masonry-image {
+.masonry-image {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  margin-top: 18px;
+  
+  margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.landscape-container .masonry-image:hover {
+.masonry-image:hover {
   transform: scale(1.03);
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* --- text --- */
+.landscape-title {
+  text-align: center;
+  font-weight: 700;
+  color: #52336c;
+  margin-bottom: 12px;
+}
+
+.loading,
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 20px 0;
 }

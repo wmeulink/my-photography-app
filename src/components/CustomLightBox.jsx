@@ -31,8 +31,8 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
         &times;
       </span>
       <img
-        src={photo.full}
-        alt={photo.title}
+        src={photo.src}         
+        alt={photo.title || "Photo"}
         className={`lightbox-image ${closing ? "slide-out" : "fade-in"}`}
       />
       <button className="prev" onClick={onPrev}>
