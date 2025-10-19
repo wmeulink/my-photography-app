@@ -1,29 +1,41 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Box, Typography, Button, Dialog, DialogTitle, DialogContent, Chip } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { Box, Chip, Dialog, DialogTitle, DialogContent, Typography } from "@mui/material";
 import Masonry from "react-masonry-css";
 import UploadPhoto from "./UploadPhoto";
 import CustomLightbox from "./CustomLightBox";
-import { sharedButtonStyles } from "../helpers/helpers";
-import './Landscapes.css'
+import './Landscapes.css';
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Landscapes() {
+  const { category: categoryParam } = useParams();
+
   const [landscapes, setLandscapes] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam || "");
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [newlyUploadedId, setNewlyUploadedId] = useState(null);
 
-  // Fetch landscapes
+  // Update category if URL changes
+  useEffect(() => {
+    setSelectedCategory(categoryParam || "");
+  }, [categoryParam]);
+
+  // Fetch landscapes (optionally filtered by category)
   const fetchLandscapes = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/Landscapes`);
+      const url = selectedCategory
+        ? `${API_URL}/api/Landscapes/category/${selectedCategory}`
+        : `${API_URL}/api/Landscapes`;
+      const res = await fetch(url);
       const data = await res.json();
-      const converted = data.map((l) => ({
+      const converted = data.map(l => ({
         ...l,
         thumbnailSrc: l.thumbnail ? `data:image/jpeg;base64,${l.thumbnail}` : null,
         fullSrc: l.full ? `data:image/jpeg;base64,${l.full}` : null,
@@ -42,7 +54,7 @@ export default function Landscapes() {
     try {
       const res = await fetch(`${API_URL}/api/Tags`);
       const data = await res.json();
-      setTags(data.map((t) => t.name));
+      setTags(data.map(t => ({ name: t.name })));
     } catch (err) {
       console.error("Failed to fetch tags:", err);
     }
@@ -51,17 +63,17 @@ export default function Landscapes() {
   useEffect(() => {
     fetchLandscapes();
     fetchTags();
-  }, []);
+  }, [selectedCategory]);
 
-  // Filter landscapes by selected tags
+  // Filter by selected tags
   const filteredLandscapes = useMemo(() => {
     if (!selectedTags.length) return landscapes;
-    return landscapes.filter((l) => selectedTags.every((tag) => l.tags.includes(tag)));
+    return landscapes.filter(l => selectedTags.every(tag => l.tags.includes(tag)));
   }, [selectedTags, landscapes]);
 
   const toggleTag = (tag) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    setSelectedTags(prev =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
   };
 
@@ -77,35 +89,74 @@ export default function Landscapes() {
     500: 1,
   };
 
+  // Reset newly uploaded highlight after animation
+  useEffect(() => {
+    if (newlyUploadedId) {
+      const timer = setTimeout(() => setNewlyUploadedId(null), 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [newlyUploadedId]);
+
   return (
     <div className="landscape-container">
       {/* Toolbar */}
       <Box className="landscape-toolbar">
-        <Button
-          variant="contained"
-          onClick={() => setUploadModalOpen(true)}
-          sx={{ ...sharedButtonStyles, textTransform: "none" }}
-        >
-          Upload Photo
-        </Button>
 
-        {tags.map((tag) => (
+        {/* Album / Category */}
+        {selectedCategory && (
+          <Box className="filter-group">
+            <Typography
+              variant="caption"
+              color="textSecondary"
+              sx={{ mb: 0.5 }}
+            >
+              Album:
+            </Typography>
+            <Chip
+              label={selectedCategory}
+              color="secondary"
+              variant="filled"
+              onDelete={() => setSelectedCategory("")}
+            />
+          </Box>
+        )}
+
+
+        {/* Tags */}
+        <Box className="filter-group">
+          {tags.length > 0 && (
+            <Typography variant="caption" color="textSecondary" sx={{ mb: 0.5 }}>
+              Tags
+            </Typography>
+          )}
+          {tags.map(tagObj => (
+            <Chip
+              key={tagObj.name}
+              label={tagObj.name}
+              onClick={() => toggleTag(tagObj.name)}
+              color={selectedTags.includes(tagObj.name) ? "primary" : "secondary"}
+              variant={selectedTags.includes(tagObj.name) ? "filled" : "outlined"}
+              onDelete={selectedTags.includes(tagObj.name) ? () => toggleTag(tagObj.name) : undefined}
+              sx={{ cursor: "pointer", mb: 0.5, mr: 0.5 }}
+            />
+          ))}
+
+          {/* Upload Photo Chip */}
           <Chip
-            key={tag}
-            label={tag}
-            onClick={() => toggleTag(tag)}
-            color={selectedTags.includes(tag) ? "primary" : "default"}
-            variant={selectedTags.includes(tag) ? "filled" : "outlined"}
-            sx={{ cursor: "pointer" }}
+            label="Upload"
+            color="secondary"
+            variant="outlined"
+            onClick={() => setUploadModalOpen(true)}
+            sx={{ cursor: "pointer", fontWeight: "bold", ml: 1 }}
           />
-        ))}
+        </Box>
       </Box>
 
       {/* Gallery */}
       {loading ? (
         <Typography className="loading">Loading landscapes...</Typography>
       ) : filteredLandscapes.length === 0 ? (
-        <Typography className="error-message">No landscapes match selected tags.</Typography>
+        <Typography className="error-message">No landscapes match selected filters.</Typography>
       ) : (
         <Masonry
           breakpointCols={breakpointColumnsObj}
@@ -119,7 +170,7 @@ export default function Landscapes() {
               alt={l.title || "Landscape"}
               onClick={() => openLightbox(index)}
               loading="lazy"
-              className="masonry-image"
+              className={`masonry-image ${l.id === newlyUploadedId ? 'highlight' : ''}`}
             />
           ))}
         </Masonry>
@@ -128,7 +179,7 @@ export default function Landscapes() {
       {/* Lightbox */}
       {lightboxOpen && (
         <CustomLightbox
-          photos={filteredLandscapes.map((l) => ({ src: l.fullSrc, title: l.title }))}
+          photos={filteredLandscapes.map(l => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
           onClose={() => setLightboxOpen(false)}
           onPrev={() =>
@@ -141,13 +192,19 @@ export default function Landscapes() {
       )}
 
       {/* Upload Modal */}
-      <Dialog open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} maxWidth="sm" fullWidth>
+      <Dialog
+        open={uploadModalOpen}
+        onClose={() => setUploadModalOpen(false)}
+        maxWidth="sm"
+        fullWidth
+      >
         <DialogTitle>Upload New Landscape</DialogTitle>
         <DialogContent>
           <UploadPhoto
             type="landscape"
-            onUploadSuccess={() => {
+            onUploadSuccess={(uploadedPhoto) => {
               fetchLandscapes();
+              if (uploadedPhoto?.id) setNewlyUploadedId(uploadedPhoto.id);
               setUploadModalOpen(false);
             }}
           />

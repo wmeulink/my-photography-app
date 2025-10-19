@@ -14,10 +14,33 @@
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 16px;
-  width:100%;
+  width: 100%;
   align-items: center;
-  height:50px;
+  height: 50px;
   justify-content: center;
+}
+
+/* --- category / tag chips --- */
+/* Selected album / category chip */
+.landscape-category-chip {
+  background-color: #52336c;
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border-radius: 16px;
+  padding: 4px 12px;
+}
+
+/* Tag chips */
+.landscape-tag-chip {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Selected tag overrides */
+.landscape-tag-chip.MuiChip-colorPrimary {
+  background-color: #1976d2;
+  color: white;
 }
 
 /* --- masonry / gallery --- */
@@ -26,7 +49,8 @@
   min-height: 45vh;
   display: flex;
   justify-content: center;
-  gap:30px;
+  margin-bottom: 20px;
+  gap: 30px;
   transition: opacity 0.4s ease-in-out;
 }
 
@@ -34,7 +58,6 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
-  
   margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -59,4 +82,28 @@
   text-align: center;
   font-size: 1.2rem;
   margin: 20px 0;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  
+}
+
+.filter-label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #52336c;
+}
+
+.tag-chip {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.upload-chip-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }
