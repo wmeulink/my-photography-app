@@ -104,42 +104,48 @@ export default function Landscapes() {
 
         {/* Album / Category */}
         {selectedCategory && (
-          <Box className="filter-group">
+          <div className="album-category">
             <Typography
               variant="caption"
               color="textSecondary"
-              sx={{ mb: 0.5 }}
+              className="filter-label"
             >
-              Album:
+              Album
             </Typography>
             <Chip
               label={selectedCategory}
               color="secondary"
               variant="filled"
               onDelete={() => setSelectedCategory("")}
+              className="tag-chip"
             />
-          </Box>
+          </div>
         )}
-
-
         {/* Tags */}
-        <Box className="filter-group">
+        
+        <div className="test-styles">
           {tags.length > 0 && (
-            <Typography variant="caption" color="textSecondary" sx={{ mb: 0.5 }}>
+            <Typography
+              variant="caption"
+              color="textSecondary"
+              className="tags-label"
+            >
               Tags
             </Typography>
           )}
+
           {tags.map(tagObj => (
             <Chip
               key={tagObj.name}
               label={tagObj.name}
               onClick={() => toggleTag(tagObj.name)}
-              color={selectedTags.includes(tagObj.name) ? "primary" : "secondary"}
+              color="secondary"
               variant={selectedTags.includes(tagObj.name) ? "filled" : "outlined"}
               onDelete={selectedTags.includes(tagObj.name) ? () => toggleTag(tagObj.name) : undefined}
-              sx={{ cursor: "pointer", mb: 0.5, mr: 0.5 }}
+              className="tag-chip"
             />
           ))}
+          </div>
 
           {/* Upload Photo Chip */}
           <Chip
@@ -147,9 +153,9 @@ export default function Landscapes() {
             color="secondary"
             variant="outlined"
             onClick={() => setUploadModalOpen(true)}
-            sx={{ cursor: "pointer", fontWeight: "bold", ml: 1 }}
+            className="upload-chip"
           />
-        </Box>
+      
       </Box>
 
       {/* Gallery */}
