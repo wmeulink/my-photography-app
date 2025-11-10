@@ -4,7 +4,7 @@ import { Box, Chip, Dialog, DialogTitle, DialogContent, Typography } from "@mui/
 import Masonry from "react-masonry-css";
 import UploadPhoto from "./UploadPhoto";
 import CustomLightbox from "./CustomLightBox";
-import './Landscapes.css';
+import "./Landscapes.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -35,10 +35,11 @@ export default function Landscapes() {
         : `${API_URL}/api/Landscapes`;
       const res = await fetch(url);
       const data = await res.json();
-      const converted = data.map(l => ({
+      // Only use thumbnail endpoint for gallery
+      const converted = data.map((l) => ({
         ...l,
-        thumbnailSrc: l.thumbnail ? `data:image/jpeg;base64,${l.thumbnail}` : null,
-        fullSrc: l.full ? `data:image/jpeg;base64,${l.full}` : null,
+        thumbnailSrc: `${API_URL}/api/Landscapes/${l.id}/thumb`,
+        fullSrc: `${API_URL}/api/Landscapes/${l.id}/full`, // full image for lightbox
       }));
       setLandscapes(converted);
     } catch (err) {
@@ -54,7 +55,7 @@ export default function Landscapes() {
     try {
       const res = await fetch(`${API_URL}/api/Tags`);
       const data = await res.json();
-      setTags(data.map(t => ({ name: t.name })));
+      setTags(data.map((t) => ({ name: t.name })));
     } catch (err) {
       console.error("Failed to fetch tags:", err);
     }
@@ -65,20 +66,20 @@ export default function Landscapes() {
     fetchTags();
   }, [selectedCategory]);
 
-  // Filter by selected tags
-  const filteredLandscapes = useMemo(() => {
-    if (!selectedTags.length) return landscapes;
-    return landscapes.filter(l => selectedTags.every(tag => l.tags.includes(tag)));
-  }, [selectedTags, landscapes]);
-
   const toggleTag = (tag) => {
-    setSelectedTags(prev =>
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
     );
   };
 
-  const openLightbox = (index) => {
-    setCurrentIndex(index);
+  // Determine visible landscapes
+  const visibleLandscapes = useMemo(() => {
+    if (!selectedTags.length) return landscapes;
+    return landscapes.filter((l) => selectedTags.every((tag) => l.tags.includes(tag)));
+  }, [selectedTags, landscapes]);
+
+  const openLightbox = (visibleIndex) => {
+    setCurrentIndex(visibleIndex);
     setLightboxOpen(true);
   };
 
@@ -89,7 +90,7 @@ export default function Landscapes() {
     500: 1,
   };
 
-  // Reset newly uploaded highlight after animation
+  // Reset highlight after upload
   useEffect(() => {
     if (newlyUploadedId) {
       const timer = setTimeout(() => setNewlyUploadedId(null), 2500);
@@ -101,15 +102,9 @@ export default function Landscapes() {
     <div className="landscape-container">
       {/* Toolbar */}
       <Box className="landscape-toolbar">
-
-        {/* Album / Category */}
         {selectedCategory && (
           <div className="album-category">
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              className="filter-label"
-            >
+            <Typography variant="caption" color="textSecondary" className="filter-label">
               Album
             </Typography>
             <Chip
@@ -121,89 +116,91 @@ export default function Landscapes() {
             />
           </div>
         )}
+
         {/* Tags */}
-        
         <div className="test-styles">
           {tags.length > 0 && (
-            <Typography
-              variant="caption"
-              color="textSecondary"
-              className="tags-label"
-            >
+            <Typography variant="caption" color="textSecondary" className="tags-label">
               Tags
             </Typography>
           )}
-
-          {tags.map(tagObj => (
+          {tags.map((tagObj) => (
             <Chip
               key={tagObj.name}
               label={tagObj.name}
               onClick={() => toggleTag(tagObj.name)}
               color="secondary"
               variant={selectedTags.includes(tagObj.name) ? "filled" : "outlined"}
-              onDelete={selectedTags.includes(tagObj.name) ? () => toggleTag(tagObj.name) : undefined}
+              onDelete={
+                selectedTags.includes(tagObj.name) ? () => toggleTag(tagObj.name) : undefined
+              }
               className="tag-chip"
             />
           ))}
-          </div>
+        </div>
 
-          {/* Upload Photo Chip */}
-          <Chip
-            label="Upload"
-            color="secondary"
-            variant="outlined"
-            onClick={() => setUploadModalOpen(true)}
-            className="upload-chip"
-          />
-      
+        {/* Upload Photo Chip */}
+        <Chip
+          label="Upload"
+          color="secondary"
+          variant="outlined"
+          onClick={() => setUploadModalOpen(true)}
+          className="upload-chip"
+        />
       </Box>
 
       {/* Gallery */}
       {loading ? (
         <Typography className="loading">Loading landscapes...</Typography>
-      ) : filteredLandscapes.length === 0 ? (
+      ) : visibleLandscapes.length === 0 ? (
         <Typography className="error-message">No landscapes match selected filters.</Typography>
       ) : (
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="masonry-wrapper"
-          columnClassName=""
-        >
-          {filteredLandscapes.map((l, index) => (
-            <img
-              key={l.id}
-              src={l.thumbnailSrc}
-              alt={l.title || "Landscape"}
-              onClick={() => openLightbox(index)}
-              loading="lazy"
-              className={`masonry-image ${l.id === newlyUploadedId ? 'highlight' : ''}`}
-            />
-          ))}
+        <Masonry breakpointCols={breakpointColumnsObj} className="masonry-wrapper" columnClassName="">
+          {landscapes.map((l) => {
+            const visible =
+              selectedTags.length === 0 || selectedTags.every((tag) => l.tags.includes(tag));
+            const visibleIndex = visibleLandscapes.indexOf(l);
+
+            return (
+              <img
+                key={l.id}
+                src={l.thumbnailSrc} // only load thumbnail
+                alt={l.title || "Landscape"}
+                onClick={() => (visible ? openLightbox(visibleIndex) : null)}
+                loading="lazy"
+                className={`masonry-image ${l.id === newlyUploadedId ? "highlight" : ""}`}
+                style={{
+                  display: visible ? "block" : "none",
+                  opacity: visible ? 1 : 0,
+                  transition: "opacity 0.3s ease",
+                  backgroundColor: "#eee", // placeholder while thumbnail loads
+                }}
+              />
+            );
+          })}
         </Masonry>
       )}
 
       {/* Lightbox */}
       {lightboxOpen && (
         <CustomLightbox
-          photos={filteredLandscapes.map(l => ({ src: l.fullSrc, title: l.title }))}
+          photos={visibleLandscapes.map((l) => ({
+            src: l.fullSrc, // fetch full image on demand
+            title: l.title,
+          }))}
           currentIndex={currentIndex}
           onClose={() => setLightboxOpen(false)}
           onPrev={() =>
-            setCurrentIndex((currentIndex + filteredLandscapes.length - 1) % filteredLandscapes.length)
+            setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)
           }
           onNext={() =>
-            setCurrentIndex((currentIndex + 1) % filteredLandscapes.length)
+            setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)
           }
         />
       )}
 
       {/* Upload Modal */}
-      <Dialog
-        open={uploadModalOpen}
-        onClose={() => setUploadModalOpen(false)}
-        maxWidth="sm"
-        fullWidth
-      >
+      <Dialog open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Upload New Landscape</DialogTitle>
         <DialogContent>
           <UploadPhoto
