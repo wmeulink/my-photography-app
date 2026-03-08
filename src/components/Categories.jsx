@@ -13,18 +13,27 @@ export default function Categories({ category, setCategory }) {
 
     const fetchCategories = async () => {
       try {
-        const res = await fetch(`${API_URL}/api/categories`);
-        if (!res.ok) throw new Error("Failed to fetch categories");
-        const data = await res.json();
+        const response = await fetch(`${API_URL}/api/categories`);
+        if (!response.ok) throw new Error("Failed to fetch categories");
+        const data = await response.json();
         if (mounted) setCategories(data);
-      } catch (err) {
-        console.error("Categories fetch error:", err);
+      } catch (error) {
+        console.error("Categories fetch error:", error);
       }
     };
 
     fetchCategories();
-    return () => (mounted = false);
+
+    return () => {
+      mounted = false;
+    };
   }, []);
+
+  const renderValue = (selected) => {
+    if (!selected) return <span style={{ color: "black" }}>All Categories</span>;
+    const found = categories.find((c) => c.id === selected);
+    return found ? found.name : selected;
+  };
 
   return (
     <Box className="category-dropdown-container" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -33,11 +42,7 @@ export default function Categories({ category, setCategory }) {
           value={category || ""}
           onChange={(e) => setCategory(e.target.value)}
           displayEmpty
-          renderValue={(selected) => {
-            if (!selected) return <span style={{ color: "black" }}>All Categories</span>;
-            const found = categories.find((c) => c.id === selected);
-            return found ? found.name : selected;
-          }}
+          renderValue={renderValue}
           sx={{
             ...sharedButtonStyles,
             width: "180px",
@@ -53,7 +58,6 @@ export default function Categories({ category, setCategory }) {
             </MenuItem>
           ))}
         </Select>
-
       </FormControl>
 
       <div className="info-icon">

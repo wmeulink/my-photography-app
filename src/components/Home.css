@@ -1,72 +1,72 @@
-.home-page .home-container {
-  margin-top: 20px;
-}
-
-.home-page {
-  /*parent container*/
-  display:flex;
-  justify-content: center;
-}
-
-.home-page .page-container {
+/* Home Page Container */
+.page-container {
   background: #f4f0f5;
   font-family: 'Montserrat', sans-serif;
-  max-width: 100%;
   width: 100%;
-  padding: 0 20px; 
-  box-sizing: border-box;
-}
-.home-page .masonry-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Masonry grid */
-.home-page .my-masonry-grid {
-  display: flex;
-  justify-content: center; 
-  margin: 0 auto;
-  flex-wrap: wrap;
-}
-
-.home-page .my-masonry-grid_column {
-  flex: 0 1 auto;
   padding: 20px;
-  background-clip: padding-box;
+  display: block; /* ensure Masonry can expand naturally */
   box-sizing: border-box;
 }
 
-.home-page .my-masonry-grid_column > img {
+/* Masonry grid wrapper */
+.my-masonry-grid {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
   width: 100%;
-  height: auto;
-  margin-bottom: 30px;
-  cursor: pointer;
+}
+
+/* Masonry columns */
+.my-masonry-grid_column {
+  flex: 1 1 300px; /* minimum width for each column, grows to fill space */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Individual image wrapper inside Masonry column */
+.masonry-item-wrapper {
+  position: relative;
+  width: 100%;
+   /* same as Portraits polaroids */
+  margin-bottom: 16px;
+  overflow: hidden;
+  
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
 }
 
-.home-page .my-masonry-grid_column > img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+.masonry-item-wrapper:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.25);
 }
 
-.home-page .ril-spinner {
+/* Images inside Masonry wrapper */
+.home .masonry-image {
+  width: 100%;
+  height: auto; /* consistent with Portraits polaroids */
+  object-fit: cover;
+  display: block;
+  border-radius: 8px;
+}
+
+/* Lightbox spinner fix */
+.ril-spinner {
   display: none !important;
 }
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
-  .home-page .my-masonry-grid_column {
+  .my-masonry-grid_column {
     flex: 1 1 250px;
-    padding: 15px;
+    padding: 8px;
   }
 }
 
 @media (max-width: 768px) {
-  .home-page .my-masonry-grid_column {
+  .my-masonry-grid_column {
     flex: 1 1 100%; /* single column on mobile */
-    padding: 10px;
+    padding: 5px;
   }
 }

@@ -64,8 +64,12 @@
   color: white;
 }
 
+.landscape {
+  
+}
+
 /* --- masonry / gallery --- */
-.masonry-wrapper {
+.landscape .masonry-wrapper {
   width: 90%;
   min-height: 45vh;
   display: flex;
@@ -75,7 +79,7 @@
   transition: opacity 0.4s ease-in-out;
 }
 
-.masonry-image {
+.landscape .masonry-image {
   width: 100%;
   height: auto;
   border-radius: 8px;

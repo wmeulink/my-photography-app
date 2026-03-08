@@ -1,9 +1,20 @@
+import React from "react";
 import { Box, Typography, Button, Card, CardMedia, CardContent, IconButton } from "@mui/material";
-import { LinkedIn, GitHub, Instagram } from "@mui/icons-material";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import SEO from "./SEO";
 
 export default function About() {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+      <SEO
+        title="Elliott Photography Co. | Whitney Elliott (Meulink) | Washougal Photographer"
+        description="Browse professional photography by Whitney Elliott (Meulink), featuring landscapes, portraits, and event photos across Washougal, Camas, Vancouver, and Portland."
+        keywords="Whitney Elliott, Whitney Meulink, Elliott Photography, Washougal photographer, Camas, Vancouver, Portland, portrait photography, landscape photography, event photography"
+        url="https://elliottphotographyco.com/about"
+        image="/images/whitney-profile.jpg"
+      />
       <Card
         sx={{
           display: "flex",
@@ -33,7 +44,7 @@ export default function About() {
           </Typography>
 
           <Typography variant="body1" color="text.secondary" paragraph>
-            This site is where my two worlds meet: creativity and technology: reflecting the same care, precision, and curiosity that I bring to every project I build.
+            This site is where my two worlds meet: creativity and technology, reflecting the same care, precision, and curiosity that I bring to every project I build.
           </Typography>
 
           <Box display="flex" alignItems="center" gap={1.5} mt={2}>
@@ -44,7 +55,7 @@ export default function About() {
               rel="noopener noreferrer"
               color="primary"
             >
-              <LinkedIn />
+              <LinkedInIcon />
             </IconButton>
 
             <IconButton
@@ -54,7 +65,7 @@ export default function About() {
               rel="noopener noreferrer"
               color="primary"
             >
-              <GitHub />
+              <GitHubIcon />
             </IconButton>
 
             <IconButton
@@ -64,7 +75,7 @@ export default function About() {
               rel="noopener noreferrer"
               color="primary"
             >
-              <Instagram />
+              <InstagramIcon />
             </IconButton>
           </Box>
 

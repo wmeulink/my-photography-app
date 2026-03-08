@@ -13,6 +13,7 @@ import UploadPhoto from "./UploadPhoto";
 import CustomLightbox from "./CustomLightBox";
 import { sharedButtonStyles } from "../helpers/helpers";
 import "./Portraits.css";
+import SEO from "./SEO.jsx";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -89,6 +90,13 @@ export default function Portraits() {
   return (
     <div className="portraits-container">
       <Box sx={{ p: 4 }} className="page-container">
+        <SEO
+          title="Portraits | Elliott Photography Co."
+          description="Professional portrait photography by Whitney Elliott. Capture family, engagement, and personal moments in Washougal and nearby cities."
+          keywords="Portrait photography, family portraits, engagement photography, Washougal photographer, Camas, Vancouver, Portland"
+          url="https://elliottphotographyco.com/portraits"
+          image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
+        />
         {/* Toolbar */}
         <Box
           sx={{
@@ -99,15 +107,12 @@ export default function Portraits() {
             mb: 3,
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => setUploadModalOpen(true)}
-            sx={{ ...sharedButtonStyles, textTransform: "none" }}
-          >
-            Upload Portrait
-          </Button>
-
           {/* Tag filter chips */}
+          {tags.length > 0 && (
+            <Typography variant="caption" color="textSecondary" className="tags-label">
+              Tags
+            </Typography>
+          )}
           {tags.map((tag) => (
             <Chip
               key={tag}
@@ -163,7 +168,7 @@ export default function Portraits() {
             onPrev={() =>
               setCurrentIndex(
                 (currentIndex + filteredPortraits.length - 1) %
-                  filteredPortraits.length
+                filteredPortraits.length
               )
             }
             onNext={() =>
@@ -172,7 +177,7 @@ export default function Portraits() {
           />
         )}
 
-        {/* Upload Modal */}
+        {/* Upload Modal
         <Dialog
           open={uploadModalOpen}
           onClose={() => setUploadModalOpen(false)}
@@ -189,7 +194,7 @@ export default function Portraits() {
               }}
             />
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </Box>
     </div>
   );

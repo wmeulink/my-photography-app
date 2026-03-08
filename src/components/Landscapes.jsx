@@ -5,6 +5,7 @@ import Masonry from "react-masonry-css";
 import UploadPhoto from "./UploadPhoto";
 import CustomLightbox from "./CustomLightBox";
 import "./Landscapes.css";
+import SEO from "./SEO.jsx";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -100,6 +101,13 @@ export default function Landscapes() {
 
   return (
     <div className="landscape-container">
+      <SEO
+        title={`Landscapes | Elliott Photography Co.${selectedCategory ? ` - ${selectedCategory}` : ""}`}
+        description="Explore Whitney Elliott's landscape photography portfolio featuring the Pacific Northwest."
+        keywords={`Landscape photography, Pacific Northwest photography, Washougal, Camas, Vancouver, Portland, ${selectedCategory || ""}`}
+        url={`https://elliottphotographyco.com/landscapes${selectedCategory ? `/${selectedCategory}` : ""}`}
+        image={landscapes[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
+      />
       {/* Toolbar */}
       <Box className="landscape-toolbar">
         {selectedCategory && (
@@ -140,13 +148,13 @@ export default function Landscapes() {
         </div>
 
         {/* Upload Photo Chip */}
-        <Chip
+        {/* <Chip
           label="Upload"
           color="secondary"
           variant="outlined"
           onClick={() => setUploadModalOpen(true)}
           className="upload-chip"
-        />
+        /> */}
       </Box>
 
       {/* Gallery */}
@@ -198,9 +206,7 @@ export default function Landscapes() {
           }
         />
       )}
-
-      {/* Upload Modal */}
-      <Dialog open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} maxWidth="sm" fullWidth>
+      {/* <Dialog open={uploadModalOpen} onClose={() => setUploadModalOpen(false)} maxWidth="sm" fullWidth>
         <DialogTitle>Upload New Landscape</DialogTitle>
         <DialogContent>
           <UploadPhoto
@@ -212,7 +218,7 @@ export default function Landscapes() {
             }}
           />
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }
