@@ -9,8 +9,10 @@ export default function PhotoGallery() {
   const [loading, setLoading] = React.useState(true);
   const [selected, setSelected] = React.useState(null);
 
+  const API_URL = window.location.origin;
+
   React.useEffect(() => {
-    fetch('https://localhost:5000/api/photos')
+    fetch(`${API_URL}/api/photos`)
       .then(res => res.json())
       .then(data => {
         setPhotos(data);
@@ -26,13 +28,13 @@ export default function PhotoGallery() {
   if (!photos || photos.length === 0) return <p>No photos found.</p>;
 
   return (
-    <Box sx={{ display: 'flex', gap: 3}}>
+    <Box sx={{ display: 'flex', gap: 3 }}>
       {/* Left: Grid of images */}
       <ImageList sx={{ width: 700, height: 'auto' }} cols={3} rowHeight={250}>
         {photos.map((photo) => (
           <ImageListItem key={photo.id} onClick={() => setSelected(photo)}>
             <img
-              src={`https://localhost:5000${photo.fileName}`}
+              src={`${API_URL}${photo.fileName}`}
               alt={photo.title}
               loading="lazy"
               style={{ borderRadius: '10px', cursor: 'pointer' }}
@@ -46,7 +48,7 @@ export default function PhotoGallery() {
         {selected ? (
           <>
             <img
-              src={`https://localhost:5000${selected.fileName}`}
+              src={`${API_URL}${selected.fileName}`}
               alt={selected.title}
               style={{ maxWidth: '100%', maxHeight: 500, borderRadius: '10px' }}
             />
