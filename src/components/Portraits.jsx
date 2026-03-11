@@ -2,17 +2,10 @@ import React, { useEffect, useState, useMemo } from "react";
 import {
   Box,
   Typography,
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
   Chip,
 } from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
-import UploadPhoto from "./UploadPhoto";
 import CustomLightbox from "./CustomLightBox";
-import { sharedButtonStyles } from "../helpers/helpers";
-import "./Portraits.css";
 import SEO from "./SEO.jsx";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -24,23 +17,18 @@ export default function Portraits() {
   const [loading, setLoading] = useState(true);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
-  // Fetch portraits
   const fetchPortraits = async () => {
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/api/Portraits`);
       const data = await res.json();
 
+      // Use URLs directly
       const converted = data.map((p) => ({
         ...p,
-        thumbnailSrc: p.thumbnail
-          ? `data:image/jpeg;base64,${p.thumbnail}`
-          : null,
-        fullSrc: p.full
-          ? `data:image/jpeg;base64,${p.full}`
-          : null,
+        thumbnailSrc: p.thumbnail || null,
+        fullSrc: p.full || null,
       }));
 
       setPortraits(converted);
@@ -52,7 +40,6 @@ export default function Portraits() {
     }
   };
 
-  // Fetch all available tags
   const fetchTags = async () => {
     try {
       const res = await fetch(`${API_URL}/api/Tags`);
@@ -68,7 +55,6 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Filter portraits by selected tags (AND logic)
   const filteredPortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter((p) =>
@@ -97,22 +83,9 @@ export default function Portraits() {
           url="https://elliottphotographyco.com/portraits"
           image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
         />
-        {/* Toolbar */}
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            gap: 1,
-            mb: 3,
-          }}
-        >
-          {/* Tag filter chips */}
-          {tags.length > 0 && (
-            <Typography variant="caption" color="textSecondary" className="tags-label">
-              Tags
-            </Typography>
-          )}
+
+        {/* Tag filters */}
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}>
           {tags.map((tag) => (
             <Chip
               key={tag}
@@ -129,28 +102,18 @@ export default function Portraits() {
         {loading ? (
           <Typography>Loading portraits...</Typography>
         ) : filteredPortraits.length === 0 ? (
-          <Typography>
-            No portraits match selected tags.
-          </Typography>
+          <Typography>No portraits match selected tags.</Typography>
         ) : (
-          <Masonry
-            columns={{ xs: 1, sm: 2, md: 3 }}
-            spacing={2}
-            className="my-masonry-grid"
-          >
-            {filteredPortraits.map((item, index) => (
-              <div
-                className="polaroid"
-                key={index}
-                onClick={() => openLightbox(index)}
-              >
+          <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2}>
+            {filteredPortraits.map((p, i) => (
+              <div key={i} className="polaroid" onClick={() => openLightbox(i)}>
                 <img
-                  src={item.thumbnailSrc}
-                  alt={item.title}
+                  src={p.thumbnailSrc}
+                  alt={p.title}
                   loading="lazy"
                   className="portrait-img"
                 />
-                <div className="label">{item.title || "Untitled"}</div>
+                <div className="label">{p.title || "Untitled"}</div>
               </div>
             ))}
           </Masonry>
@@ -159,42 +122,20 @@ export default function Portraits() {
         {/* Lightbox */}
         {lightboxOpen && (
           <CustomLightbox
-            photos={filteredPortraits.map((l) => ({
-              src: l.fullSrc,
-              title: l.title,
+            photos={filteredPortraits.map((p) => ({
+              src: p.fullSrc,
+              title: p.title,
             }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={() =>
-              setCurrentIndex(
-                (currentIndex + filteredPortraits.length - 1) %
-                filteredPortraits.length
-              )
+              setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)
             }
             onNext={() =>
               setCurrentIndex((currentIndex + 1) % filteredPortraits.length)
             }
           />
         )}
-
-        {/* Upload Modal
-        <Dialog
-          open={uploadModalOpen}
-          onClose={() => setUploadModalOpen(false)}
-          maxWidth="sm"
-          fullWidth
-        >
-          <DialogTitle>Upload New Portrait</DialogTitle>
-          <DialogContent>
-            <UploadPhoto
-              type="portrait"
-              onUploadSuccess={() => {
-                fetchPortraits();
-                setUploadModalOpen(false);
-              }}
-            />
-          </DialogContent>
-        </Dialog> */}
       </Box>
     </div>
   );
