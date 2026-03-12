@@ -1,7 +1,7 @@
 import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar';
 import { Routes, Route } from 'react-router-dom';
 import Landscapes from './components/Landscapes';
 import Events from './components/Events';
