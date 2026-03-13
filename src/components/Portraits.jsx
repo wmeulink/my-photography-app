@@ -22,8 +22,8 @@ export default function Portraits() {
 
       const converted = data.map((p) => ({
   ...p,
-  thumbnailSrc: p.id ? `${API_URL}/api/photos/${p.id}/thumb` : null,
-  fullSrc: p.id ? `${API_URL}/api/photos/${p.id}/full` : null,
+  thumbnailSrc: p.id ? `${API_URL}/api/Portraits/${p.id}/thumb` : null,
+  fullSrc: p.id ? `${API_URL}/api/Portraits/${p.id}/full` : null,
 }));
 
       setPortraits(converted);

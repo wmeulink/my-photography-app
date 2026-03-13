@@ -28,7 +28,7 @@ export default function LandscapeAlbums() {
   return {
     ...cat,
     cover: firstLandscape?.id
-      ? `${API_URL}/api/photos/${firstLandscape.id}/thumb`
+      ? `${API_URL}/api/Landscapes/${firstLandscape.id}/thumb`
       : "/default-cover.jpg",
   };
 });

@@ -32,8 +32,8 @@ export default function Landscapes() {
 
     const converted = data.map((l) => ({
   ...l,
-  thumbnailSrc: l.id ? `${API_URL}/api/photos/${l.id}/thumb` : null,
-  fullSrc: l.id ? `${API_URL}/api/photos/${l.id}/full` : null,
+  thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
+  fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
 }));
 
       setLandscapes(converted);
