@@ -26,13 +26,14 @@ export default function Landscapes() {
       const url = selectedCategory
         ? `${API_URL}/api/Landscapes/category/${selectedCategory}`
         : `${API_URL}/api/Landscapes`;
+
       const res = await fetch(url);
       const data = await res.json();
 
       const converted = data.map((l) => ({
         ...l,
-        thumbnailSrc: l.thumbnail || null,
-        fullSrc: l.full || null,
+        thumbnailSrc: l.thumbnail ? `${API_URL}${l.thumbnail}` : null,
+        fullSrc: l.full ? `${API_URL}${l.full}` : null,
       }));
 
       setLandscapes(converted);
@@ -67,7 +68,9 @@ export default function Landscapes() {
 
   const visibleLandscapes = useMemo(() => {
     if (!selectedTags.length) return landscapes;
-    return landscapes.filter((l) => selectedTags.every((tag) => l.tags.includes(tag)));
+    return landscapes.filter((l) =>
+      selectedTags.every((tag) => l.tags.includes(tag))
+    );
   }, [selectedTags, landscapes]);
 
   const openLightbox = (index) => {
@@ -87,7 +90,6 @@ export default function Landscapes() {
         image={landscapes[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
       />
 
-      {/* Toolbar */}
       <Box className="landscape-toolbar">
         {selectedCategory && (
           <Chip
@@ -109,7 +111,6 @@ export default function Landscapes() {
         ))}
       </Box>
 
-      {/* Gallery */}
       {loading ? (
         <Typography>Loading landscapes...</Typography>
       ) : visibleLandscapes.length === 0 ? (
@@ -134,7 +135,6 @@ export default function Landscapes() {
         </Masonry>
       )}
 
-      {/* Lightbox */}
       {lightboxOpen && (
         <CustomLightbox
           photos={visibleLandscapes.map((l) => ({
@@ -144,7 +144,10 @@ export default function Landscapes() {
           currentIndex={currentIndex}
           onClose={() => setLightboxOpen(false)}
           onPrev={() =>
-            setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)
+            setCurrentIndex(
+              (currentIndex + visibleLandscapes.length - 1) %
+                visibleLandscapes.length
+            )
           }
           onNext={() =>
             setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)

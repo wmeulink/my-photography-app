@@ -27,8 +27,8 @@ export default function Portraits() {
       // Use URLs directly
       const converted = data.map((p) => ({
         ...p,
-        thumbnailSrc: p.thumbnail || null,
-        fullSrc: p.full || null,
+        thumbnailSrc: p.thumbnail ? `${API_URL}${p.thumbnail}` : null,
+        fullSrc: p.full ? `${API_URL}${p.full}` : null,
       }));
 
       setPortraits(converted);

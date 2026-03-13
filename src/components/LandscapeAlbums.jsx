@@ -11,26 +11,23 @@ export default function LandscapeAlbums() {
   useEffect(() => {
     const fetchAlbums = async () => {
       try {
-        // Fetch all categories
         const catRes = await fetch(`${API_URL}/api/Categories`);
         const categories = await catRes.json();
 
-        // Fetch all landscapes
         const landscapeRes = await fetch(`${API_URL}/api/Landscapes`);
         const landscapes = await landscapeRes.json();
 
-        // Keep only categories that have at least one landscape
         const landscapeCategories = categories.filter(cat =>
           landscapes.some(l => l.categoryId === cat.id)
         );
 
-        // For each category, pick the first landscape as cover
         const withCovers = landscapeCategories.map(cat => {
           const firstLandscape = landscapes.find(l => l.categoryId === cat.id);
+
           return {
             ...cat,
-            cover: firstLandscape
-              ? `data:image/jpeg;base64,${firstLandscape.thumbnail}`
+            cover: firstLandscape?.thumbnail
+              ? `${API_URL}${firstLandscape.thumbnail}`
               : "/default-cover.jpg",
           };
         });

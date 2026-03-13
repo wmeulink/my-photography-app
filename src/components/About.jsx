@@ -27,7 +27,7 @@ export default function About() {
         <CardMedia
           component="img"
           sx={{ width: 300, objectFit: "cover" }}
-          image="/public/IMG_6509.JPG"
+          image="/images/IMG_6509.JPG"
           alt="Whitney Elliott"
         />
         <CardContent sx={{ flex: 1, p: 4 }}>
