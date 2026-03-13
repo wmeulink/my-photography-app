@@ -34,11 +34,11 @@ export default function Landscapes() {
         ...l,
         // Construct correct URLs to backend wwwroot folders
         thumbnailSrc: l.thumbnail
-          ? `${API_URL}/images/landscapes/thumbs/${l.thumbnail}`
-          : null,
-        fullSrc: l.full
-          ? `${API_URL}/images/landscapes/full/${l.full}`
-          : null,
+  ? `${API_URL}/images/thumbs/${l.thumbnail}`
+  : null,
+fullSrc: l.full
+  ? `${API_URL}/images/full/${l.full}`
+  : null,
       }));
 
       setLandscapes(converted);

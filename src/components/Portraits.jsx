@@ -24,9 +24,11 @@ export default function Portraits() {
         ...p,
         // Updated URLs to point to backend wwwroot
         thumbnailSrc: p.thumbnail
-          ? `${API_URL}/portraits/thumbs/${p.thumbnail}`
-          : null,
-        fullSrc: p.full ? `${API_URL}/portraits/full/${p.full}` : null,
+  ? `${API_URL}/images/portraits/thumbs/${p.thumbnail}`
+  : null,
+fullSrc: p.full
+  ? `${API_URL}/images/portraits/full/${p.full}`
+  : null,
       }));
 
       setPortraits(converted);
@@ -129,7 +131,7 @@ export default function Portraits() {
             onPrev={() =>
               setCurrentIndex(
                 (currentIndex + filteredPortraits.length - 1) %
-                  filteredPortraits.length
+                filteredPortraits.length
               )
             }
             onNext={() =>
