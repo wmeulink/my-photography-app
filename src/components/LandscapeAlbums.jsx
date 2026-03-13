@@ -23,16 +23,13 @@ export default function LandscapeAlbums() {
         );
 
         // For each category, pick the first landscape as cover
-      const withCovers = landscapeCategories.map(cat => {
+   const withCovers = landscapeCategories.map(cat => {
   const firstLandscape = landscapes.find(l => l.categoryId === cat.id);
   return {
     ...cat,
-    coverThumbnail: firstLandscape?.thumbnail
-      ? `${API_URL}/landscapes/thumbs/${firstLandscape.thumbnail}`
-      : null,
-    coverFull: firstLandscape?.full
-      ? `${API_URL}/landscapes/full/${firstLandscape.full}`
-      : null,
+    cover: firstLandscape?.id
+      ? `${API_URL}/api/photos/${firstLandscape.id}/thumb`
+      : "/default-cover.jpg",
   };
 });
 

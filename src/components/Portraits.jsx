@@ -21,15 +21,10 @@ export default function Portraits() {
       const data = await res.json();
 
       const converted = data.map((p) => ({
-        ...p,
-        // Updated URLs to point to backend wwwroot
-        thumbnailSrc: p.thumbnail
-  ? `${API_URL}/images/portraits/thumbs/${p.thumbnail}`
-  : null,
-fullSrc: p.full
-  ? `${API_URL}/images/portraits/full/${p.full}`
-  : null,
-      }));
+  ...p,
+  thumbnailSrc: p.id ? `${API_URL}/api/photos/${p.id}/thumb` : null,
+  fullSrc: p.id ? `${API_URL}/api/photos/${p.id}/full` : null,
+}));
 
       setPortraits(converted);
     } catch (err) {

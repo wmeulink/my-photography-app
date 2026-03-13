@@ -30,16 +30,11 @@ export default function Landscapes() {
       const res = await fetch(url);
       const data = await res.json();
 
-      const converted = data.map((l) => ({
-        ...l,
-        // Construct correct URLs to backend wwwroot folders
-        thumbnailSrc: l.thumbnail
-  ? `${API_URL}/images/thumbs/${l.thumbnail}`
-  : null,
-fullSrc: l.full
-  ? `${API_URL}/images/full/${l.full}`
-  : null,
-      }));
+    const converted = data.map((l) => ({
+  ...l,
+  thumbnailSrc: l.id ? `${API_URL}/api/photos/${l.id}/thumb` : null,
+  fullSrc: l.id ? `${API_URL}/api/photos/${l.id}/full` : null,
+}));
 
       setLandscapes(converted);
     } catch (err) {
