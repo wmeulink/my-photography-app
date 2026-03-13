@@ -1,9 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  Box,
-  Typography,
-  Chip,
-} from "@mui/material";
+import { Box, Typography, Chip } from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
@@ -24,16 +20,18 @@ export default function Portraits() {
       const res = await fetch(`${API_URL}/api/Portraits`);
       const data = await res.json();
 
-      // Use URLs directly
       const converted = data.map((p) => ({
         ...p,
-        thumbnailSrc: p.thumbnail ? `${API_URL}${p.thumbnail}` : null,
-        fullSrc: p.full ? `${API_URL}${p.full}` : null,
+        // Updated URLs to point to backend wwwroot
+        thumbnailSrc: p.thumbnail
+          ? `${API_URL}/portraits/thumbs/${p.thumbnail}`
+          : null,
+        fullSrc: p.full ? `${API_URL}/portraits/full/${p.full}` : null,
       }));
 
       setPortraits(converted);
     } catch (err) {
-      console.error(err);
+      console.error("Failed to fetch portraits:", err);
       setPortraits([]);
     } finally {
       setLoading(false);
@@ -109,7 +107,7 @@ export default function Portraits() {
               <div key={i} className="polaroid" onClick={() => openLightbox(i)}>
                 <img
                   src={p.thumbnailSrc}
-                  alt={p.title}
+                  alt={p.title || "Portrait"}
                   loading="lazy"
                   className="portrait-img"
                 />
@@ -129,7 +127,10 @@ export default function Portraits() {
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={() =>
-              setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)
+              setCurrentIndex(
+                (currentIndex + filteredPortraits.length - 1) %
+                  filteredPortraits.length
+              )
             }
             onNext={() =>
               setCurrentIndex((currentIndex + 1) % filteredPortraits.length)

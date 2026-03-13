@@ -32,13 +32,18 @@ export default function Landscapes() {
 
       const converted = data.map((l) => ({
         ...l,
-        thumbnailSrc: l.thumbnail ? `${API_URL}${l.thumbnail}` : null,
-        fullSrc: l.full ? `${API_URL}${l.full}` : null,
+        // Construct correct URLs to backend wwwroot folders
+        thumbnailSrc: l.thumbnail
+          ? `${API_URL}/images/landscapes/thumbs/${l.thumbnail}`
+          : null,
+        fullSrc: l.full
+          ? `${API_URL}/images/landscapes/full/${l.full}`
+          : null,
       }));
 
       setLandscapes(converted);
     } catch (err) {
-      console.error(err);
+      console.error("Failed to fetch landscapes:", err);
       setLandscapes([]);
     } finally {
       setLoading(false);
@@ -51,7 +56,7 @@ export default function Landscapes() {
       const data = await res.json();
       setTags(data.map((t) => ({ name: t.name })));
     } catch (err) {
-      console.error(err);
+      console.error("Failed to fetch tags:", err);
     }
   };
 
@@ -90,6 +95,7 @@ export default function Landscapes() {
         image={landscapes[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
       />
 
+      {/* Toolbar */}
       <Box className="landscape-toolbar">
         {selectedCategory && (
           <Chip
@@ -111,6 +117,7 @@ export default function Landscapes() {
         ))}
       </Box>
 
+      {/* Gallery */}
       {loading ? (
         <Typography>Loading landscapes...</Typography>
       ) : visibleLandscapes.length === 0 ? (
@@ -135,6 +142,7 @@ export default function Landscapes() {
         </Masonry>
       )}
 
+      {/* Lightbox */}
       {lightboxOpen && (
         <CustomLightbox
           photos={visibleLandscapes.map((l) => ({
@@ -145,8 +153,7 @@ export default function Landscapes() {
           onClose={() => setLightboxOpen(false)}
           onPrev={() =>
             setCurrentIndex(
-              (currentIndex + visibleLandscapes.length - 1) %
-                visibleLandscapes.length
+              (currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length
             )
           }
           onNext={() =>

@@ -17,17 +17,18 @@ export default function LandscapeAlbums() {
         const landscapeRes = await fetch(`${API_URL}/api/Landscapes`);
         const landscapes = await landscapeRes.json();
 
+        // Keep only categories that have at least one landscape
         const landscapeCategories = categories.filter(cat =>
           landscapes.some(l => l.categoryId === cat.id)
         );
 
+        // For each category, pick the first landscape as cover
         const withCovers = landscapeCategories.map(cat => {
           const firstLandscape = landscapes.find(l => l.categoryId === cat.id);
-
           return {
             ...cat,
             cover: firstLandscape?.thumbnail
-              ? `${API_URL}${firstLandscape.thumbnail}`
+              ? `${API_URL}/images/landscapes/thumbs/${firstLandscape.thumbnail}`
               : "/default-cover.jpg",
           };
         });
@@ -52,7 +53,11 @@ export default function LandscapeAlbums() {
             onClick={() => navigate(`/landscapes/${album.name}`)}
           >
             <div className="album-cover-wrapper">
-              <img src={album.cover} alt={album.name} className="album-cover" />
+              <img
+                src={album.cover}
+                alt={album.name}
+                className="album-cover"
+              />
             </div>
             <div className="album-label">{album.name}</div>
           </div>
