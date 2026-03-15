@@ -1,13 +1,18 @@
-/* --- Landscape Container --- */
+/* ===============================================
+   LANDSCAPES
+   =============================================== */
+
+/* --- Container --- */
 .landscape-container {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
 }
 
-/* Toolbar / Filters */
+/* --- Toolbar / Filters --- */
 .landscape-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -16,18 +21,11 @@
   margin-bottom: 1rem;
 }
 
-.filter-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
+.filter-group,
 .album-category {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-right: 8px;
-  margin-top: 1.4px;
 }
 
 .filter-label,
@@ -37,7 +35,7 @@
   margin-right: 0.3rem;
 }
 
-/* Chips */
+/* --- Chips --- */
 .tag-chip,
 .upload-chip {
   display: flex;
@@ -46,7 +44,7 @@
 }
 
 .upload-chip {
-  font-weight: bolder;
+  font-weight: bold;
 }
 
 .landscape-tag-chip.MuiChip-colorPrimary {
@@ -56,20 +54,23 @@
 
 /* --- Masonry / Gallery --- */
 .landscape .masonry-wrapper {
-  width: 90%;             /* leaves padding on sides */
-  max-width: 1200px;      /* prevents giant stretching on huge screens */
+  width: 100%;             /* full container width */
+  max-width: 1200px;       /* prevents giant stretching */
   display: flex;
   flex-wrap: wrap;         /* allows multiple rows */
   justify-content: center; /* centers rows */
   gap: 20px;               /* spacing between images */
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
+  box-sizing: border-box;
   transition: opacity 0.4s ease-in-out;
 }
 
+/* --- Images --- */
 .landscape .masonry-image {
-  width: 300px;       /* fixed width on desktop */
-  max-width: 100%;    /* never exceeds container width */
+  width: 300px;       /* fixed desktop width */
+  max-width: 100%;    /* never exceed container width */
   height: auto;
+  display: block;     /* prevents inline flex stretching */
   border-radius: 8px;
   margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -77,42 +78,35 @@
   cursor: pointer;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-  .landscape .masonry-image {
-    width: 250px;     /* mid-sized screens */
-  }
-}
-
-@media (max-width: 768px) {
-  .landscape .masonry-image {
-    width: 90%;       /* mobile screens: fill most of container */
-  }
-}
-
 .landscape .masonry-image:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* --- Text / Titles --- */
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .landscape .masonry-image {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .landscape .masonry-image {
+    width: 90%;       /* fill most of container on mobile */
+  }
+}
+
+/* --- Titles --- */
 .landscape-title {
   text-align: center;
   color: #52336c;
   margin-bottom: 12px;
 }
 
-/* --- Loading / Error --- */
+/* --- Loading / Error Messages --- */
 .loading,
 .error-message {
   text-align: center;
   font-size: 1.2rem;
   margin: 20px 0;
-}
-
-/* --- Responsive --- */
-@media (max-width: 768px) {
-  .landscape .masonry-image {
-    width: 90%; /* small screens: images take most of container */
-  }
 }
