@@ -19,11 +19,13 @@ export default function Portraits() {
     try {
       const res = await fetch(`${API_URL}/api/Portraits`);
       const data = await res.json();
+
       const converted = data.map((p) => ({
         ...p,
-        thumbnailSrc: p.id ? `${API_URL}/api/Portraits/${p.id}/thumb` : null,
-        fullSrc: p.id ? `${API_URL}/api/Portraits/${p.id}/full` : null,
+        thumbnailSrc: p.id ? `${API_URL}/api/portraits/${p.id}/thumb` : null,
+        fullSrc: p.id ? `${API_URL}/api/portraits/${p.id}/full` : null,
       }));
+
       setPortraits(converted);
     } catch (err) {
       console.error("Failed to fetch portraits:", err);
@@ -48,18 +50,18 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  const toggleTag = (tag) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-    );
-  };
-
   const filteredPortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter((p) =>
       selectedTags.every((tag) => p.tags.includes(tag))
     );
   }, [selectedTags, portraits]);
+
+  const toggleTag = (tag) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
 
   const openLightbox = (index) => {
     setCurrentIndex(index);
@@ -68,56 +70,65 @@ export default function Portraits() {
 
   return (
     <div className="portraits-container">
-      <SEO
-        title="Portraits | Elliott Photography Co."
-        description="Professional portrait photography by Whitney Elliott. Capture family, engagement, and personal moments in Washougal and nearby cities."
-        keywords="Portrait photography, family portraits, engagement photography, Washougal, Camas, Vancouver, Portland"
-        url="https://elliottphotographyco.com/portraits"
-        image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
-      />
-
-      {/* Tag Filters */}
-      <Box className="portrait-tags">
-        {tags.map((tag) => (
-          <Chip
-            key={tag}
-            label={tag}
-            onClick={() => toggleTag(tag)}
-            color={selectedTags.includes(tag) ? "primary" : "default"}
-            variant={selectedTags.includes(tag) ? "filled" : "outlined"}
-            sx={{ cursor: "pointer" }}
-          />
-        ))}
-      </Box>
-
-      {/* Gallery */}
-      {loading ? (
-        <Typography className="loading">Loading portraits...</Typography>
-      ) : filteredPortraits.length === 0 ? (
-        <Typography className="no-results">No portraits match selected tags.</Typography>
-      ) : (
-        <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2} className="portrait-masonry">
-          {filteredPortraits.map((p, i) => (
-            <div key={i} className="polaroid" onClick={() => openLightbox(i)}>
-              <img src={p.thumbnailSrc} alt={p.title || "Portrait"} loading="lazy" />
-              <div className="label">{p.title || "Untitled"}</div>
-            </div>
-          ))}
-        </Masonry>
-      )}
-
-      {/* Lightbox */}
-      {lightboxOpen && (
-        <CustomLightbox
-          photos={filteredPortraits.map((p) => ({ src: p.fullSrc, title: p.title }))}
-          currentIndex={currentIndex}
-          onClose={() => setLightboxOpen(false)}
-          onPrev={() =>
-            setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)
-          }
-          onNext={() => setCurrentIndex((currentIndex + 1) % filteredPortraits.length)}
+      <Box className="page-container">
+        <SEO
+          title="Portraits | Elliott Photography Co."
+          description="Professional portrait photography by Whitney Elliott. Capture family, engagement, and personal moments in Washougal and nearby cities."
+          keywords="Portrait photography, family portraits, engagement photography, Washougal photographer, Camas, Vancouver, Portland"
+          url="https://elliottphotographyco.com/portraits"
+          image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
         />
-      )}
+
+        {/* Tag filters */}
+        <Box className="portrait-buttons-container">
+          {tags.map((tag) => (
+            <Chip
+              key={tag}
+              label={tag}
+              onClick={() => toggleTag(tag)}
+              color={selectedTags.includes(tag) ? "primary" : "default"}
+              variant={selectedTags.includes(tag) ? "filled" : "outlined"}
+              className="upload-chip"
+            />
+          ))}
+        </Box>
+
+        {/* Gallery */}
+        {loading ? (
+          <Typography className="loading">Loading portraits...</Typography>
+        ) : filteredPortraits.length === 0 ? (
+          <Typography className="no-results">No portraits match selected tags.</Typography>
+        ) : (
+          <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={2} className="my-masonry-grid">
+            {filteredPortraits.map((p, i) => (
+              <div key={i} className="polaroid" onClick={() => openLightbox(i)}>
+                <img
+                  src={p.thumbnailSrc}
+                  alt={p.title || "Portrait"}
+                  loading="lazy"
+                  className="portrait-img"
+                />
+                <div className="label">{p.title || "Untitled"}</div>
+              </div>
+            ))}
+          </Masonry>
+        )}
+
+        {/* Lightbox */}
+        {lightboxOpen && (
+          <CustomLightbox
+            photos={filteredPortraits.map((p) => ({ src: p.fullSrc, title: p.title }))}
+            currentIndex={currentIndex}
+            onClose={() => setLightboxOpen(false)}
+            onPrev={() =>
+              setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)
+            }
+            onNext={() =>
+              setCurrentIndex((currentIndex + 1) % filteredPortraits.length)
+            }
+          />
+        )}
+      </Box>
     </div>
   );
 }

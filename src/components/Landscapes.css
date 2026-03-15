@@ -1,39 +1,93 @@
+/* --- container --- */
 .landscape-container {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  margin-top: 20px;
 }
 
 .landscape-toolbar {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1rem;
   gap: 8px;
-  margin-bottom: 20px;
 }
 
-.masonry-wrapper {
+.album-category,
+.filter-group,
+.filter-label,
+.tags-label,
+.test-styles {
+  display: flex;
+  align-items: center;
+}
+
+.album-category {
+  flex-direction: row;
+  gap: 10px;
+  margin-right: 8px;
+  margin-top: 1.4px;
+}
+
+.tag-chip,
+.upload-chip {
+  display: flex;
+  align-items: center;
+  height: 32px; /* MUI Chip height */
+}
+
+.landscape-tag-chip.MuiChip-colorPrimary {
+  background-color: #1976d2;
+  color: white;
+}
+
+/* --- masonry / gallery --- */
+.landscape .masonry-wrapper {
   width: 90%;
   display: flex;
+  justify-content: center;
   gap: 20px;
+  margin-bottom: 20px;
+  min-height: 45vh;
+  transition: opacity 0.4s ease-in-out;
 }
 
-.masonry-image {
+.landscape .masonry-image {
   width: 100%;
+  max-height: 300px; /* consistent height */
+  object-fit: cover; /* crop without stretching */
   border-radius: 8px;
   margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.masonry-image:hover {
+.landscape .masonry-image:hover {
   transform: scale(1.03);
+  cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-.loading, .no-results {
+/* --- text --- */
+.landscape-title {
+  text-align: center;
+  color: #52336c;
+  margin-bottom: 12px;
+}
+
+.loading,
+.error-message,
+.no-results {
   text-align: center;
   font-size: 1.2rem;
   margin: 20px 0;
+}
+
+/* --- upload container --- */
+.upload-chip-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
 }

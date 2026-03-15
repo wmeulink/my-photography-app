@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Chip, Typography } from "@mui/material";
-import Masonry from "react-masonry-css";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
 
@@ -9,6 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Landscapes() {
   const { category: categoryParam } = useParams();
+
   const [landscapes, setLandscapes] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -27,11 +27,14 @@ export default function Landscapes() {
         : `${API_URL}/api/Landscapes`;
       const res = await fetch(url);
       const data = await res.json();
-      setLandscapes(data.map((l) => ({
+
+      const converted = data.map((l) => ({
         ...l,
         thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
         fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
-      })));
+      }));
+
+      setLandscapes(converted);
     } catch (err) {
       console.error("Failed to fetch landscapes:", err);
       setLandscapes([]);
@@ -73,14 +76,12 @@ export default function Landscapes() {
     setLightboxOpen(true);
   };
 
-  const breakpointColumnsObj = { default: 3, 1100: 3, 700: 2, 500: 1 };
-
   return (
     <div className="landscape-container">
       <SEO
         title={`Landscapes | Elliott Photography Co.${selectedCategory ? ` - ${selectedCategory}` : ""}`}
-        description="Explore Whitney Elliott's landscape photography portfolio featuring the Pacific Northwest."
-        keywords={`Landscape photography, Pacific Northwest photography, Washougal, Camas, Vancouver, Portland, ${selectedCategory || ""}`}
+        description="Explore Whitney Elliott's landscape photography portfolio."
+        keywords={`Landscape photography, ${selectedCategory || ""}`}
         url={`https://elliottphotographyco.com/landscapes${selectedCategory ? `/${selectedCategory}` : ""}`}
         image={landscapes[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
       />
@@ -93,6 +94,7 @@ export default function Landscapes() {
             color="secondary"
             variant="filled"
             onDelete={() => setSelectedCategory("")}
+            className="upload-chip"
           />
         )}
         {tags.map((tag) => (
@@ -102,7 +104,7 @@ export default function Landscapes() {
             onClick={() => toggleTag(tag)}
             color={selectedTags.includes(tag) ? "secondary" : "default"}
             variant={selectedTags.includes(tag) ? "filled" : "outlined"}
-            sx={{ cursor: "pointer", margin: "0 4px" }}
+            className="tag-chip"
           />
         ))}
       </Box>
@@ -113,11 +115,7 @@ export default function Landscapes() {
       ) : visibleLandscapes.length === 0 ? (
         <Typography className="no-results">No landscapes match selected filters.</Typography>
       ) : (
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="masonry-wrapper"
-          columnClassName=""
-        >
+        <div className="masonry-wrapper">
           {visibleLandscapes.map((l, i) => (
             <img
               key={l.id}
@@ -128,7 +126,7 @@ export default function Landscapes() {
               className="masonry-image"
             />
           ))}
-        </Masonry>
+        </div>
       )}
 
       {/* Lightbox */}
@@ -137,8 +135,12 @@ export default function Landscapes() {
           photos={visibleLandscapes.map((l) => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
           onClose={() => setLightboxOpen(false)}
-          onPrev={() => setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)}
-          onNext={() => setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)}
+          onPrev={() =>
+            setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)
+          }
+          onNext={() =>
+            setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)
+          }
         />
       )}
     </div>
