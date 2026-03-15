@@ -9,7 +9,6 @@ const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Landscapes() {
   const { category: categoryParam } = useParams();
-
   const [landscapes, setLandscapes] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -26,17 +25,13 @@ export default function Landscapes() {
       const url = selectedCategory
         ? `${API_URL}/api/Landscapes/category/${selectedCategory}`
         : `${API_URL}/api/Landscapes`;
-
       const res = await fetch(url);
       const data = await res.json();
-
-    const converted = data.map((l) => ({
-  ...l,
-  thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
-  fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
-}));
-
-      setLandscapes(converted);
+      setLandscapes(data.map((l) => ({
+        ...l,
+        thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
+        fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
+      })));
     } catch (err) {
       console.error("Failed to fetch landscapes:", err);
       setLandscapes([]);
@@ -49,7 +44,7 @@ export default function Landscapes() {
     try {
       const res = await fetch(`${API_URL}/api/Tags`);
       const data = await res.json();
-      setTags(data.map((t) => ({ name: t.name })));
+      setTags(data.map((t) => t.name));
     } catch (err) {
       console.error("Failed to fetch tags:", err);
     }
@@ -100,13 +95,13 @@ export default function Landscapes() {
             onDelete={() => setSelectedCategory("")}
           />
         )}
-        {tags.map((tagObj) => (
+        {tags.map((tag) => (
           <Chip
-            key={tagObj.name}
-            label={tagObj.name}
-            onClick={() => toggleTag(tagObj.name)}
-            color={selectedTags.includes(tagObj.name) ? "secondary" : "default"}
-            variant={selectedTags.includes(tagObj.name) ? "filled" : "outlined"}
+            key={tag}
+            label={tag}
+            onClick={() => toggleTag(tag)}
+            color={selectedTags.includes(tag) ? "secondary" : "default"}
+            variant={selectedTags.includes(tag) ? "filled" : "outlined"}
             sx={{ cursor: "pointer", margin: "0 4px" }}
           />
         ))}
@@ -114,9 +109,9 @@ export default function Landscapes() {
 
       {/* Gallery */}
       {loading ? (
-        <Typography>Loading landscapes...</Typography>
+        <Typography className="loading">Loading landscapes...</Typography>
       ) : visibleLandscapes.length === 0 ? (
-        <Typography>No landscapes match selected filters.</Typography>
+        <Typography className="no-results">No landscapes match selected filters.</Typography>
       ) : (
         <Masonry
           breakpointCols={breakpointColumnsObj}
@@ -131,7 +126,6 @@ export default function Landscapes() {
               onClick={() => openLightbox(i)}
               loading="lazy"
               className="masonry-image"
-              style={{ cursor: "pointer" }}
             />
           ))}
         </Masonry>
@@ -140,20 +134,11 @@ export default function Landscapes() {
       {/* Lightbox */}
       {lightboxOpen && (
         <CustomLightbox
-          photos={visibleLandscapes.map((l) => ({
-            src: l.fullSrc,
-            title: l.title,
-          }))}
+          photos={visibleLandscapes.map((l) => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
           onClose={() => setLightboxOpen(false)}
-          onPrev={() =>
-            setCurrentIndex(
-              (currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length
-            )
-          }
-          onNext={() =>
-            setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)
-          }
+          onPrev={() => setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)}
+          onNext={() => setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)}
         />
       )}
     </div>

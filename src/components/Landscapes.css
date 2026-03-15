@@ -1,87 +1,26 @@
-/* --- container --- */
 .landscape-container {
-  margin-top: 20px;
   display: flex;
-  justify-content: center;
-  width: 100%;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .landscape-toolbar {
   display: flex;
-  align-items: center; /* ensures vertical alignment */
   flex-wrap: wrap;
-  
-  margin-bottom: 1rem;
-}
-
-.filter-group {
-  display: flex;
-  align-items: center; /* centers Album, Tags, and Upload perfectly */
-  gap: 0.5rem;
-}
-.album-category {
-  display:flex;
-  flex-direction: row;
-  gap: 10px;
-  align-items: center;
-  margin-right: 8px;
-  margin-top:1.4px;
-}
-
-.filter-label,
-.tags-label {
-  display: flex;
-  align-items: center;
-  font-size: 0.9rem;
-  color: #888;
-  margin-right: 0.3rem;
-  text-align: center;
-}
-
-.test-styles {
-  display:flex;
-  gap:8px;
-  margin-right: 15px;
-}
-
-.tag-chip {
-   display: flex;
-  align-items: center;
-  height: 32px; /* matches MUI Chip height */
-}
-.upload-chip {
-  display: flex;
-  align-items: center;
-  font-weight: bolder;
-  height: 32px; /* matches MUI Chip height */
-}
-
-/* Selected tag overrides */
-.landscape-tag-chip.MuiChip-colorPrimary {
-  background-color: #1976d2;
-  color: white;
-}
-
-.landscape {
-  
-}
-
-/* --- masonry / gallery --- */
-.landscape .masonry-wrapper {
-  width: 90%;
-  min-height: 45vh;
-  display: flex;
-  justify-content: center;
+  gap: 8px;
   margin-bottom: 20px;
-  gap: 30px;
-  transition: opacity 0.4s ease-in-out;
 }
 
-.landscape .masonry-image {
+.masonry-wrapper {
+  width: 90%;
+  display: flex;
+  gap: 20px;
+}
+
+.masonry-image {
   width: 100%;
-  height: auto;
   border-radius: 8px;
   margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -90,28 +29,11 @@
 
 .masonry-image:hover {
   transform: scale(1.03);
-  cursor: pointer;
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* --- text --- */
-.landscape-title {
-  text-align: center;
-  /* font-weight: 700; */
-  color: #52336c;
-  margin-bottom: 12px;
-}
-
-.loading,
-.error-message {
+.loading, .no-results {
   text-align: center;
   font-size: 1.2rem;
   margin: 20px 0;
-}
-
-/* --- upload container --- */
-.upload-chip-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
 }
