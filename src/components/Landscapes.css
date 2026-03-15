@@ -67,13 +67,27 @@
 }
 
 .landscape .masonry-image {
-  width: clamp(200px, 25%, 300px); /* responsive, min 200px, max 300px */
+  width: 300px;       /* fixed width on desktop */
+  max-width: 100%;    /* never exceeds container width */
   height: auto;
   border-radius: 8px;
   margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .landscape .masonry-image {
+    width: 250px;     /* mid-sized screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .landscape .masonry-image {
+    width: 90%;       /* mobile screens: fill most of container */
+  }
 }
 
 .landscape .masonry-image:hover {
