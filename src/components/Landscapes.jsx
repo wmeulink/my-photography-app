@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { Box, Chip, Typography } from "@mui/material";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
+import './Landscapes.css';
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 

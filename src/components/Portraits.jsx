@@ -3,6 +3,7 @@ import { Box, Typography, Chip } from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
+import './Portraits.css';
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
