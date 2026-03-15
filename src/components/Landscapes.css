@@ -54,12 +54,12 @@
 
 /* --- Masonry / Gallery --- */
 .landscape .masonry-wrapper {
-  width: 100%;             /* full container width */
-  max-width: 1200px;       /* prevents giant stretching */
-  display: flex;
-  flex-wrap: wrap;         /* allows multiple rows */
-  justify-content: center; /* centers rows */
-  gap: 20px;               /* spacing between images */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  justify-items: center; /* centers items in their grid cell */
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto 20px auto;
   box-sizing: border-box;
   transition: opacity 0.4s ease-in-out;
@@ -67,12 +67,11 @@
 
 /* --- Images --- */
 .landscape .masonry-image {
-  width: 300px;       /* fixed desktop width */
-  max-width: 100%;    /* never exceed container width */
-  height: auto;
-  display: block;     /* prevents inline flex stretching */
+  width: 100%;          /* fills grid cell */
+  height: 250px;        /* consistent card height */
+  object-fit: cover;    /* crops tall images */
+  display: block;
   border-radius: 8px;
-  margin-top: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
@@ -83,20 +82,7 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* --- Responsive --- */
-@media (max-width: 1024px) {
-  .landscape .masonry-image {
-    width: 250px;
-  }
-}
-
-@media (max-width: 768px) {
-  .landscape .masonry-image {
-    width: 90%;       /* fill most of container on mobile */
-  }
-}
-
-/* --- Titles --- */
+/* --- Text / Titles --- */
 .landscape-title {
   text-align: center;
   color: #52336c;
@@ -109,4 +95,23 @@
   text-align: center;
   font-size: 1.2rem;
   margin: 20px 0;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .landscape .masonry-wrapper {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .landscape .masonry-image {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .landscape .masonry-wrapper {
+    grid-template-columns: repeat(auto-fill, minmax(90%, 1fr));
+  }
+  .landscape .masonry-image {
+    height: 180px;
+  }
 }
