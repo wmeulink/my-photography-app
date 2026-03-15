@@ -34,11 +34,11 @@
 
 /* --- masonry / gallery --- */
 .portraits-container .my-masonry-grid {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
+  justify-items: center; /* centers items in their grid cell */
+  width: 100%;
 }
 
 .portraits-container .polaroid {
