@@ -28,35 +28,35 @@ button, nav, select {
 .navbar-container {
     width: 100%;
     background-color: #f4f0f5;
-    color: #52336c;
-    font-family: 'Montserrat', sans-serif;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    color: #52336c;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .site-header {
     width: 100%;
+    max-width: 1200px; /* boxed header on large screens */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     padding: 3rem 1rem; /* desktop header height */
-    margin: 20px 0;
+    margin: 20px auto;
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
     transition: padding 0.3s ease, width 0.3s ease;
 }
 
 .site-header h1 {
-    font-size: 3rem; /* wider, more impactful on desktop */
+    font-size: 2.75rem; /* desktop title size */
     margin-bottom: 1rem;
 }
 
 .site-header nav {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    flex-wrap: wrap; /* allow links to wrap if needed */
     gap: 20px;
     width: 100%;
     max-width: 100%;
@@ -98,7 +98,7 @@ button, nav, select {
     width: 100%;
     max-width: 1200px;
     text-align: center;
-    padding: 2rem 1rem;
+    padding: 3rem 1rem; /* same height as header */
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
     color: #52336c;
@@ -118,7 +118,7 @@ button, nav, select {
     }
 
     .site-header h1 {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
 
     .site-header nav {
@@ -135,31 +135,29 @@ button, nav, select {
 /* Mobile */
 @media (max-width: 768px) {
     .site-header {
-        padding: 1rem 1rem;
+        padding: 1.25rem 1rem;
         margin: 0 auto 1rem auto;
     }
 
     .site-header h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         margin-bottom: 0.5rem;
     }
 
     .site-header nav {
-        flex-direction: column; /* stack links vertically */
+        flex-direction: column; /* vertical links for mobile */
         align-items: center;
         gap: 10px;
-        width: 100%;
     }
 
     .site-header nav a {
-        width: 100%; /* take full width so no cutoff */
-        max-width: 250px; /* optional cap for aesthetics */
+        word-break: break-word;
         text-align: center;
-        padding: 0.5rem 0;
+        padding: 0.4rem 0.8rem;
     }
 
     .footer {
-        padding: 1rem 0.75rem;
+        padding: 1.25rem 1rem;
         font-size: 0.9rem;
         margin-bottom: 1rem;
     }
