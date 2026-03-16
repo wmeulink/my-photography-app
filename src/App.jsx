@@ -12,7 +12,6 @@ import "./App.css";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
 
   return (
@@ -23,10 +22,12 @@ function App() {
           <button className="hamburger" onClick={toggleMobileMenu}>
             ☰
           </button>
-          <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
-            <Navbar />
-          </nav>
         </div>
+
+        {/* Mobile modal menu */}
+        <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+          <Navbar />
+        </nav>
       </header>
 
       <main className="site-content">
