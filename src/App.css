@@ -121,29 +121,26 @@ button, nav, select {
   z-index: 900;
 }
 
-/* MOBILE NAV LINKS */
 .mobile-modal nav,
 .mobile-modal nav .navbar-buttons-container {
-  display: flex !important;     /* force flex */
+  display: flex !important;
   flex-direction: column !important; /* stack vertically */
   gap: 12px;
 }
 
 .mobile-modal nav .MuiButton-root {
-  display: flex !important;     /* keep button content aligned */
-  flex-direction: row !important;
-  width: 100% !important;       /* full-width buttons for stacking */
-  justify-content: flex-start !important;
+  display: block !important;       /* force block-level stacking */
+  width: 100% !important;          /* take full width of column */
   text-align: left !important;
   padding-left: 0 !important;
   padding-bottom: 2px !important;
+  justify-content: flex-start !important; /* keep content left-aligned */
 }
 
 .mobile-modal nav .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
-  width: fit-content !important; /* underline text only */
+  width: fit-content !important; /* underline only text */
 }
-
 /* ===============================================
    SITE CONTENT
    =============================================== */
