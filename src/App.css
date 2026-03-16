@@ -1,13 +1,16 @@
 /* ===============================================
    GLOBAL STYLES
    =============================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     color: #2f2f2f;
     background-color: #fafafa;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 h1, h2, h3 {
@@ -20,41 +23,39 @@ button, nav, select {
 }
 
 /* ===============================================
-   NAVBAR / HEADER
+   HEADER / NAVBAR
    =============================================== */
 .navbar-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    color: #52336c;
     background-color: #f4f0f5;
+    color: #52336c;
+    display: flex;
+    justify-content: center;
 }
 
 .site-header {
-    padding: 2rem 1rem; /* top/bottom 2rem, sides 1rem */
-    margin: 20px auto 2px auto; /* auto centers horizontally */
+    width: 100%;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 1200px; /* caps width on large screens */
-    font-family: 'Montserrat', sans-serif;
-    color: #52336c;
+    align-items: center;
     text-align: center;
-    background-color: #f4f0f5;
-    box-shadow: 0px 2px 8px rgba(206, 187, 203, 0.936);
-    transition: padding 0.3s ease, width 0.3s ease;
+    padding: 2.5rem 1rem; /* more height on desktop */
+    box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
+    transition: padding 0.3s ease;
 }
 
 .site-header h1 {
-    font-size: 2.25rem; /* desktop title size */
+    font-size: 2.5rem; /* desktop title bigger */
     margin-bottom: 1rem;
 }
 
 .site-header nav {
     display: flex;
-    justify-content: center;
-    gap: 20px; /* space between nav links */
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
 }
 
 .site-header nav a {
@@ -65,8 +66,11 @@ button, nav, select {
     transition: color 0.2s ease;
 }
 
-.site-header nav a:hover {
-    color: #1976d2; /* highlight on hover */
+.site-header nav a:hover,
+.navbar-buttons-container .MuiButton-root.active-nav {
+    color: #1976d2;
+    font-weight: bold;
+    border-bottom: 2px solid #52336c;
 }
 
 /* ===============================================
@@ -79,16 +83,13 @@ button, nav, select {
 }
 
 .footer {
-    box-shadow: 0px 2px 8px rgba(206, 187, 203, 0.936);
-    font-family: 'Nunito Sans', sans-serif;
-    background-color: #f4f0f5;
-    text-align: center;
-    padding: 2rem 1rem; /* top/bottom 2rem, sides 1rem */
     width: 100%;
     max-width: 1200px;
+    text-align: center;
+    padding: 2rem 1rem;
+    background-color: #f4f0f5;
+    box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
     color: #52336c;
-    margin: 0 auto 20px auto; /* centers horizontally */
-    transition: padding 0.3s ease, width 0.3s ease;
 }
 
 /* ===============================================
@@ -102,26 +103,26 @@ button, nav, select {
 /* ===============================================
    RESPONSIVE ADJUSTMENTS
    =============================================== */
+
+/* Tablet */
 @media (max-width: 1024px) {
-    .site-header, .footer-container {
-        width: 94%;
-        max-width: 95%;
-        padding: 1.5rem;
+    .site-header {
+        padding: 2rem 1rem;
     }
 
     .site-header h1 {
         font-size: 2rem;
     }
 
-    .site-header nav a {
+    .site-header nav {
         gap: 15px;
     }
 }
 
+/* Mobile */
 @media (max-width: 768px) {
     .site-header {
-        padding: 1rem 0.75rem; /* slightly smaller padding */
-        margin: 0 auto 1rem auto;
+        padding: 1.25rem 1rem;
     }
 
     .site-header h1 {
@@ -130,20 +131,17 @@ button, nav, select {
     }
 
     .site-header nav {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         gap: 10px;
     }
 
     .site-header nav a {
         word-break: break-word;
         text-align: center;
+        padding: 0.4rem 0.8rem;
     }
 
     .footer {
         padding: 1rem 0.75rem;
         font-size: 0.9rem;
-        margin-bottom: 1rem;
     }
 }
