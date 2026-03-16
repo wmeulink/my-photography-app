@@ -6,15 +6,7 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Mobile underline */
-.mobile-modal .navbar-buttons-container .MuiButton-root.active-nav {
-  display: flex;
-  align-items: center;
-  border:2px solid red;
-  justify-content: center;
-  /* underline only as wide as text */
-  padding-bottom: 2px;
-}
+
 /* ===============================
    MOBILE MODAL OVERRIDES
    =============================== */

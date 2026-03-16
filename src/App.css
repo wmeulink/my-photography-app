@@ -11,6 +11,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   color: #2f2f2f;
   background-color: #fafafa;
+  overflow-x: hidden; /* prevent horizontal scroll */
 }
 
 h1, h2, h3 {
@@ -57,7 +58,9 @@ button, nav, select {
   margin-bottom: 1.5rem;
 }
 
-/* Desktop nav */
+/* ===============================================
+   DESKTOP NAV
+   =============================================== */
 .desktop-nav {
   display: flex;
   justify-content: center;
@@ -81,7 +84,9 @@ button, nav, select {
   border-bottom: 2px solid #52336c;
 }
 
-/* Hamburger */
+/* ===============================================
+   HAMBURGER
+   =============================================== */
 .hamburger {
   display: none;
   font-size: 2rem;
@@ -96,20 +101,22 @@ button, nav, select {
   z-index: 1300;
 }
 
-/* Mobile modal */
+/* ===============================================
+   MOBILE MODAL NAV
+   =============================================== */
 .mobile-modal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 250px;
+  width: 220px; /* slightly smaller */
   height: 100vh;
   background-color: #f4f0f5;
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
   z-index: 1200;
-  padding: 3rem 1rem;
+  padding: 2.5rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .modal-overlay {
@@ -122,7 +129,39 @@ button, nav, select {
   z-index: 1100;
 }
 
-/* Site content */
+/* ===============================================
+   NAVBAR BUTTONS
+   =============================================== */
+.navbar-buttons-container .MuiButton-root.active-nav {
+  border-bottom: 2px solid #52336c;
+  font-weight: bold;
+  color: #52336c;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Mobile modal overrides */
+.mobile-modal .navbar-buttons-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
+.mobile-modal .navbar-buttons-container .MuiButton-root {
+  width: fit-content !important; /* underline only under text */
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 0 !important;
+  padding-bottom: 2px !important;
+}
+
+.mobile-modal .navbar-buttons-container .MuiButton-root.active-nav {
+  border-bottom: 2px solid #52336c;
+  width: fit-content !important; /* underline only text width */
+}
+
+/* ===============================================
+   SITE CONTENT
+   =============================================== */
 .site-content {
   flex-grow: 1;
   width: 100%;
@@ -131,7 +170,9 @@ button, nav, select {
   padding: 1rem;
 }
 
-/* Footer */
+/* ===============================================
+   FOOTER
+   =============================================== */
 .footer {
   width: 100%;
   background-color: #f4f0f5;
@@ -146,18 +187,47 @@ button, nav, select {
   color: #52336c;
 }
 
-/* Responsive */
+/* ===============================================
+   RESPONSIVE ADJUSTMENTS
+   =============================================== */
+@media (max-width: 1024px) {
+  .header-inner, .footer-inner {
+    padding: 2rem 1rem;
+  }
+
+  .site-header h1 {
+    font-size: 2.25rem;
+  }
+
+  .desktop-nav {
+    gap: 15px;
+  }
+}
+
 @media (max-width: 768px) {
+  .header-inner, .footer-inner {
+    padding: 1rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
   .desktop-nav {
     display: none;
   }
 
   .hamburger {
     display: block;
+    position: relative; /* align with title */
+    top: 0;
+    right: 0;
+    transform: none;
   }
 
-  .site-header h1 {
-    font-size: 1.75rem;
-    margin-bottom: 1.5rem;
+  .mobile-modal {
+    width: 220px;
+    padding: 2.5rem 1rem;
   }
 }
