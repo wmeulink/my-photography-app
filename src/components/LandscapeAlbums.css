@@ -2,14 +2,36 @@
   padding: 40px 20px;
   background: #f4f0f5;
   min-height: 100vh;
-  width: 93.5%;
-  display:flex;
+  width: 100%;           /* take full width */
+  max-width: 1200px;     /* cap the width like your header/footer */
+  display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top:20px;
-  margin-left:26px;
+  margin: 20px auto 0 auto; /* center horizontally with auto margins */
   flex-wrap: wrap;
   font-family: 'Montserrat', sans-serif;
+}
+
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 28px;
+  width: 100%;            /* full width of container */
+  justify-items: center;
+  padding: 0 10px;        /* optional padding for small screens */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .album-page {
+    padding: 20px 10px;
+  }
+  .album-grid {
+    gap: 16px;
+  }
+  .album-cover {
+    height: 180px;
+  }
 }
 
 .album-title {
@@ -17,14 +39,6 @@
   font-weight: 700;
   color: #52336c;
   margin-bottom: 40px;
-}
-
-.album-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 28px;
-  width: 96%;
-  justify-items: center;
 }
 
 .album-card {

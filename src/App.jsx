@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="navbar-container">
       <header className="site-header">
-        <h1>Elliott Photography Co.</h1>
+        <h1>Elliott Photography</h1>
         <Navbar />
       </header>
       <Routes>
