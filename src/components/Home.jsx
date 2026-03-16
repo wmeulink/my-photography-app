@@ -93,7 +93,7 @@ export default function Home() {
         title="Elliott Photography Co. | Washougal, WA Photographer"
         description="Browse the latest photography by Whitney Elliott, featuring landscapes, portraits, and event photos taken across Washougal, Camas, Vancouver, and Portland."
         keywords="Elliott Photography, Whitney Elliott, Washougal photographer, Camas photographer, Vancouver WA photographer, Portland photographer, Pacific Northwest photography, landscape photography, portrait photography, event photography, engagement photos, family photos, wedding photographer, outdoor photoshoot"
-        url="https://elliottphotographyco.com"
+        url="https://whittyelliott.com"
         image={photos[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
         structuredData={structuredData}
       />

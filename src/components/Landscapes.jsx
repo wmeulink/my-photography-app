@@ -80,7 +80,7 @@ export default function Landscapes() {
         title={`Landscapes | Elliott Photography Co.${selectedCategory ? ` - ${selectedCategory}` : ""}`}
         description="Explore Whitney Elliott's landscape photography portfolio."
         keywords={`Landscape photography, ${selectedCategory || ""}`}
-        url={`https://elliottphotographyco.com/landscapes${selectedCategory ? `/${selectedCategory}` : ""}`}
+        url={`https://whittyelliott.com/landscapes${selectedCategory ? `/${selectedCategory}` : ""}`}
         image={landscapes[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
       />
 

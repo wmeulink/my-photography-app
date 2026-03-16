@@ -71,7 +71,7 @@ export default function Portraits() {
           title="Portraits | Elliott Photography Co."
           description="Professional portrait photography by Whitney Elliott."
           keywords="Portrait photography, family portraits, engagement photography, Washougal, Camas, Vancouver, Portland"
-          url="https://elliottphotographyco.com/portraits"
+          url="https://whittyelliott.com/portraits"
           image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
         />
 
