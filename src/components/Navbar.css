@@ -1,4 +1,4 @@
-/* ACTIVE NAV */
+/* Active nav button */
 .navbar-buttons-container .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
   font-weight: bold;
@@ -6,11 +6,22 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-/* MOBILE MODAL OVERRIDES */
+/* Mobile underline */
+.mobile-modal .navbar-buttons-container .MuiButton-root.active-nav {
+  display: flex;
+  align-items: center;
+  border:2px solid red;
+  justify-content: center;
+  /* underline only as wide as text */
+  padding-bottom: 2px;
+}
+/* ===============================
+   MOBILE MODAL OVERRIDES
+   =============================== */
 .mobile-modal .navbar-buttons-container {
   display: flex !important;
-  flex-direction: column !important;
-  gap: 12px !important;
+  flex-direction: column !important; /* vertical links */
+  gap: 16px !important;
 }
 
 .mobile-modal .navbar-buttons-container .MuiButton-root {
@@ -18,11 +29,4 @@
   justify-content: flex-start !important;
   text-align: left !important;
   padding-left: 0 !important;
-}
-
-/* UNDERLINE WIDTH FIX */
-.mobile-modal .link-text.active-nav {
-  display: inline-block;
-  border-bottom: 2px solid #52336c;
-  padding-bottom: 2px;
 }

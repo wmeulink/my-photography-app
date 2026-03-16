@@ -38,7 +38,10 @@ function App() {
           {/* Mobile modal */}
           {mobileMenuOpen && (
             <>
-              <div className="modal-overlay" onClick={closeMobileMenu}></div>
+              <div
+                className="modal-overlay"
+                onClick={closeMobileMenu}
+              ></div>
               <nav className="mobile-modal">
                 <Navbar closeMenu={closeMobileMenu} />
               </nav>
@@ -61,7 +64,7 @@ function App() {
 
       <footer className="footer">
         <div className="footer-inner">
-          <p>© 2025 Developed & Designed by Whitney Elliott</p>
+          <p>© 2026 Developed & Designed by Whitney Elliott</p>
         </div>
       </footer>
     </div>

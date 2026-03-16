@@ -31,9 +31,9 @@ function Navbar({ closeMenu }) {
                 to={link.to}
                 color="inherit"
                 className={isActive ? "active-nav" : ""}
-                onClick={closeMenu ? closeMenu : undefined}
+                onClick={closeMenu ? closeMenu : undefined} // closes mobile menu when clicked
               >
-                <span className="link-text">{link.label}</span>
+                {link.label}
               </Button>
             );
           })}

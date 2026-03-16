@@ -1,19 +1,18 @@
-/* GLOBAL RESET */
+/* ===============================================
+   GLOBAL STYLES
+   =============================================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body, #root {
-  width: 100%;
-  min-height: 100%;
-  background-color: #fafafa;
+body {
   font-family: 'Montserrat', sans-serif;
   color: #2f2f2f;
+  background-color: #fafafa;
 }
 
-/* HEADERS */
 h1, h2, h3 {
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -23,12 +22,14 @@ button, nav, select {
   font-family: 'Nunito Sans', sans-serif;
 }
 
-/* CONTAINERS */
+/* ===============================================
+   HEADER / NAVBAR
+   =============================================== */
 .navbar-container {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
 }
 
 .site-header {
@@ -40,22 +41,23 @@ button, nav, select {
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 3rem 1rem;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .site-header h1 {
-  font-size: 1.75rem;
-  text-align: center;
+  font-size: 3rem;
   color: #52336c;
   flex: 1 1 100%;
+  text-align: center;
   margin-bottom: 1.5rem;
 }
 
-/* DESKTOP NAV */
+/* Desktop nav */
 .desktop-nav {
   display: flex;
   justify-content: center;
@@ -79,7 +81,7 @@ button, nav, select {
   border-bottom: 2px solid #52336c;
 }
 
-/* HAMBURGER */
+/* Hamburger */
 .hamburger {
   display: none;
   font-size: 2rem;
@@ -87,22 +89,27 @@ button, nav, select {
   border: none;
   color: #52336c;
   cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1300;
 }
 
-/* MOBILE MODAL NAV */
+/* Mobile modal */
 .mobile-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 250px;
-  height: 100%;
+  height: 100vh;
   background-color: #f4f0f5;
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
   z-index: 1200;
   padding: 3rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 20px;
 }
 
 .modal-overlay {
@@ -115,15 +122,16 @@ button, nav, select {
   z-index: 1100;
 }
 
-/* SITE CONTENT */
+/* Site content */
 .site-content {
+  flex-grow: 1;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
 }
 
-/* FOOTER */
+/* Footer */
 .footer {
   width: 100%;
   background-color: #f4f0f5;
@@ -138,8 +146,18 @@ button, nav, select {
   color: #52336c;
 }
 
-/* RESPONSIVE */
+/* Responsive */
 @media (max-width: 768px) {
-  .desktop-nav { display: none; }
-  .hamburger { display: block; }
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .site-header h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
 }
