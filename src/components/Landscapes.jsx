@@ -77,7 +77,7 @@ export default function Landscapes() {
   return (
     <div className="landscape-container">
       <SEO
-        title={`Landscapes | Elliott Photography Co.${selectedCategory ? ` - ${selectedCategory}` : ""}`}
+        title={`Landscapes | Elliott Photography ${selectedCategory ? ` - ${selectedCategory}` : ""}`}
         description="Explore Whitney Elliott's landscape photography portfolio."
         keywords={`Landscape photography, ${selectedCategory || ""}`}
         url={`https://whittyelliott.com/landscapes${selectedCategory ? `/${selectedCategory}` : ""}`}

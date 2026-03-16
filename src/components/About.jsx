@@ -10,7 +10,7 @@ export default function About() {
   return (
     <Box className="about-container">
       <SEO
-        title="Elliott Photography Co. | Whitney Elliott (Meulink) | Washougal Photographer"
+        title="Elliott Photography | Whitney Elliott (Meulink) | Washougal Photographer"
         description="Browse professional photography by Whitney Elliott (Meulink), featuring landscapes, portraits, and event photos across Washougal, Camas, Vancouver, and Portland."
         keywords="Whitney Elliott, Whitney Meulink, Elliott Photography, Washougal photographer, Camas, Vancouver, Portland, portrait photography, landscape photography, event photography"
         url="https://whittyelliott.com/about"

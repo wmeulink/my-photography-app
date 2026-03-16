@@ -68,7 +68,7 @@ export default function Portraits() {
     <div className="portraits-container">
       <Box className="page-container">
         <SEO
-          title="Portraits | Elliott Photography Co."
+          title="Portraits | Elliott Photography"
           description="Professional portrait photography by Whitney Elliott."
           keywords="Portrait photography, family portraits, engagement photography, Washougal, Camas, Vancouver, Portland"
           url="https://whittyelliott.com/portraits"

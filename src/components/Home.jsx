@@ -76,7 +76,7 @@ export default function Home() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ImageGallery",
-    name: "Elliott Photography Co.",
+    name: "Elliott Photography",
     description:
       "Professional portrait, event, and landscape photography by Whitney Elliott based in Washougal, WA, serving Camas, Vancouver, and Portland areas.",
     image: photos.slice(0, 5).map((p) => p.thumbnailSrc),
@@ -90,7 +90,7 @@ export default function Home() {
   return (
     <div className="page-container">
       <SEO
-        title="Elliott Photography Co. | Washougal, WA Photographer"
+        title="Elliott Photography | Washougal, WA Photographer"
         description="Browse the latest photography by Whitney Elliott, featuring landscapes, portraits, and event photos taken across Washougal, Camas, Vancouver, and Portland."
         keywords="Elliott Photography, Whitney Elliott, Washougal photographer, Camas photographer, Vancouver WA photographer, Portland photographer, Pacific Northwest photography, landscape photography, portrait photography, event photography, engagement photos, family photos, wedding photographer, outdoor photoshoot"
         url="https://whittyelliott.com"
