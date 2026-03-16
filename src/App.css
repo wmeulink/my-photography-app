@@ -27,42 +27,50 @@ button, nav, select {
    =============================================== */
 .navbar-container {
     width: 100%;
-    background-color: #f4f0f5;
     display: flex;
     flex-direction: column;
-    color: #52336c;
-    font-family: 'Montserrat', sans-serif;
+    align-items: center;
 }
 
 .site-header {
     width: 100%;
-    max-width: 1200px; /* boxed header on large screens */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    padding: 3rem 1rem; /* desktop header height */
-    margin: 20px auto;
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
-    transition: padding 0.3s ease, width 0.3s ease;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .site-header h1 {
-    font-size: 2.75rem; /* desktop title size */
-    margin-bottom: 1rem;
+    font-size: 3rem;
+    color: #52336c;
+    text-align: center;
+    flex: 1 1 100%;
 }
 
-.site-header nav {
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #52336c;
+}
+
+.nav-links {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     gap: 20px;
-    width: 100%;
-    max-width: 100%;
+    flex-wrap: wrap;
 }
 
-.site-header nav a {
+.nav-links a {
     text-decoration: none;
     color: #52336c;
     font-weight: 600;
@@ -70,7 +78,7 @@ button, nav, select {
     transition: color 0.2s ease;
 }
 
-.site-header nav a:hover,
+.nav-links a:hover,
 .navbar-buttons-container .MuiButton-root.active-nav {
     color: #1976d2;
     font-weight: bold;
@@ -88,23 +96,18 @@ button, nav, select {
 /* ===============================================
    FOOTER
    =============================================== */
-.footer-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
 .footer {
     width: 100%;
-    max-width: 1200px;
-    text-align: center;
-    padding: 3rem 1rem; /* same height as header */
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
+}
+
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+    text-align: center;
     color: #52336c;
-    margin: 0 auto 20px auto;
-    font-family: 'Nunito Sans', sans-serif;
-    transition: padding 0.3s ease, width 0.3s ease;
 }
 
 /* ===============================================
@@ -113,52 +116,54 @@ button, nav, select {
 
 /* Tablet */
 @media (max-width: 1024px) {
-    .site-header {
+    .header-inner, .footer-inner {
         padding: 2rem 1rem;
     }
 
     .site-header h1 {
-        font-size: 2rem;
+        font-size: 2.25rem;
     }
 
-    .site-header nav {
+    .nav-links {
         gap: 15px;
-    }
-
-    .footer-container {
-        width: 94%;
-        max-width: 95%;
-        padding: 1.5rem;
     }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-    .site-header {
-        padding: 1.25rem 1rem;
-        margin: 0 auto 1rem auto;
+    .header-inner, .footer-inner {
+        padding: 1rem;
     }
 
     .site-header h1 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+        font-size: 1.75rem;
     }
 
-    .site-header nav {
-        flex-direction: column; /* vertical links for mobile */
-        align-items: center;
+    .hamburger {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
         gap: 10px;
-    }
-
-    .site-header nav a {
-        word-break: break-word;
+        width: 100%;
         text-align: center;
-        padding: 0.4rem 0.8rem;
     }
 
-    .footer {
-        padding: 1.25rem 1rem;
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        max-width: 250px;
+        padding: 0.5rem 0;
+        margin: 0 auto;
+    }
+
+    .footer-inner {
+        padding: 1rem;
         font-size: 0.9rem;
-        margin-bottom: 1rem;
     }
 }

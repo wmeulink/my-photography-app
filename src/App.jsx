@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
@@ -10,11 +11,22 @@ import Portraits from './components/Portraits';
 import "./App.css";
 
 function App() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
+
   return (
     <div className="navbar-container">
       <header className="site-header">
-        <h1>Elliott Photography</h1>
-        <Navbar />
+        <div className="header-inner">
+          <h1>Elliott Photography</h1>
+          <button className="hamburger" onClick={toggleMobileMenu}>
+            ☰
+          </button>
+          <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+            <Navbar />
+          </nav>
+        </div>
       </header>
 
       <main className="site-content">
@@ -29,13 +41,13 @@ function App() {
         </Routes>
       </main>
 
-      <div className='footer-container'>
-        <footer className='footer'>
-          <p>© 2026 Developed & Designed by Whitney Elliott</p>
-        </footer>
-      </div>
+      <footer className="footer">
+        <div className="footer-inner">
+          <p>© 2025 Developed & Designed by Whitney Elliott</p>
+        </div>
+      </footer>
     </div>
-  )
+  );
 }
 
 export default App;
