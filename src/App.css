@@ -119,14 +119,21 @@ button, nav, select {
   flex-direction: column;
 }
 
+/* Mobile modal */
 .mobile-modal {
-  flex: 1;
+  position: fixed;
+  top: 0;
+  left: 0; /* ensure it’s on the left */
+  width: 180px; /* skinnier */
+  max-width: 80vw; /* responsive in very small screens */
+  height: 100vh;
+  background-color: #f4f0f5;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+  padding: 2.5rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 2.5rem 1rem;
-  background-color: #f4f0f5;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+  z-index: 1000;
   overflow-y: auto;
 }
 
