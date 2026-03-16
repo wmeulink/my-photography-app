@@ -27,40 +27,39 @@ button, nav, select {
    =============================================== */
 .navbar-container {
     width: 100%;
+    background-color: #f4f0f5;
+    color: #52336c;
+    font-family: 'Montserrat', sans-serif;
     display: flex;
     flex-direction: column;
-    color: #52336c;
-    background-color: #f4f0f5;
-    font-family: 'Montserrat', sans-serif;
+    align-items: center;
 }
 
 .site-header {
-    width: 100%;            /* full width across the screen */
-    max-width: 100%;        /* remove desktop max-width cap */
-    margin: 0;              /* edge-to-edge, no centering */
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 3rem 1rem;     /* desktop vertical padding */
+    padding: 3rem 1rem; /* desktop header height */
+    margin: 20px 0;
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
-    font-family: 'Montserrat', sans-serif;
-    color: #52336c;
     transition: padding 0.3s ease, width 0.3s ease;
 }
 
 .site-header h1 {
-    font-size: 2.75rem;     /* larger title on desktop */
+    font-size: 3rem; /* wider, more impactful on desktop */
     margin-bottom: 1rem;
 }
 
 .site-header nav {
     display: flex;
-    flex-wrap: wrap;        /* allow nav to wrap if needed */
     justify-content: center;
+    flex-wrap: wrap; /* allow links to wrap if needed */
     gap: 20px;
     width: 100%;
+    max-width: 100%;
 }
 
 .site-header nav a {
@@ -119,7 +118,7 @@ button, nav, select {
     }
 
     .site-header h1 {
-        font-size: 2rem;
+        font-size: 2.25rem;
     }
 
     .site-header nav {
@@ -136,26 +135,27 @@ button, nav, select {
 /* Mobile */
 @media (max-width: 768px) {
     .site-header {
-        padding: 1rem 0.75rem;
+        padding: 1rem 1rem;
+        margin: 0 auto 1rem auto;
     }
 
     .site-header h1 {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
         margin-bottom: 0.5rem;
     }
 
     .site-header nav {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column; /* stack links vertically */
+        align-items: center;
         gap: 10px;
+        width: 100%;
     }
 
     .site-header nav a {
-        flex: 1 1 45%;       /* allow two buttons per row */
-        word-break: break-word;
+        width: 100%; /* take full width so no cutoff */
+        max-width: 250px; /* optional cap for aesthetics */
         text-align: center;
-        padding: 0.4rem 0.8rem;
-        font-size: 0.95rem;
+        padding: 0.5rem 0;
     }
 
     .footer {
