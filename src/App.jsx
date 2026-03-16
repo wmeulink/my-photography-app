@@ -1,13 +1,13 @@
 import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
-import Navbar from './components/Navbar';
-import { Routes, Route } from 'react-router-dom';
 import Landscapes from './components/Landscapes';
 import Events from './components/Events';
 import LandscapeAlbums from './components/LandscapeAlbums';
 import Portraits from './components/Portraits';
+import Navbar from './components/Navbar';
 import "./App.css";
 
 function App() {
@@ -27,15 +27,22 @@ function App() {
             <Navbar />
           </nav>
 
-          {/* Hamburger */}
-          <button className="hamburger" onClick={toggleMobileMenu}>
+          {/* Hamburger button */}
+          <button
+            className="hamburger"
+            onClick={toggleMobileMenu}
+            aria-label="Open mobile menu"
+          >
             ☰
           </button>
 
-          {/* Mobile modal nav */}
+          {/* Mobile modal */}
           {mobileMenuOpen && (
             <>
-              <div className="modal-overlay" onClick={closeMobileMenu}></div>
+              <div
+                className="modal-overlay"
+                onClick={closeMobileMenu}
+              ></div>
               <nav className="mobile-modal">
                 <Navbar closeMenu={closeMobileMenu} />
               </nav>
