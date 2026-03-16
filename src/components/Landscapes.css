@@ -9,7 +9,10 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: 100vh;       /* ensures page fills viewport */
   box-sizing: border-box;
+  background-color: #fafafa;  /* match site background */
+  padding-bottom: 40px;    /* space at bottom */
 }
 
 /* --- Toolbar / Filters --- */

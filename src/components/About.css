@@ -1,10 +1,14 @@
+/* --- Outer container with consistent background --- */
 .about-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  min-height: 100vh;          /* fills viewport */
+  background-color: #fafafa;  /* match site background */
 }
 
+/* --- About card itself remains white for contrast --- */
 .about-card {
   display: flex;
   flex-direction: row; /* default desktop layout */
