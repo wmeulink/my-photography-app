@@ -21,15 +21,26 @@ function App() {
       <header className="site-header">
         <div className="header-inner">
           <h1>Elliott Photography</h1>
+
+          {/* Desktop nav */}
+          <nav className="nav-links desktop-nav">
+            <Navbar />
+          </nav>
+
+          {/* Hamburger button for mobile */}
           <button className="hamburger" onClick={toggleMobileMenu}>
             ☰
           </button>
-          <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
-            <div className="modal-overlay" onClick={closeMobileMenu}></div>
-            <div className="modal-nav">
-              <Navbar />
-            </div>
-          </nav>
+
+          {/* Mobile modal nav */}
+          {mobileMenuOpen && (
+            <>
+              <div className="modal-overlay" onClick={closeMobileMenu}></div>
+              <div className="nav-links mobile-modal">
+                <Navbar closeMenu={closeMobileMenu} />
+              </div>
+            </>
+          )}
         </div>
       </header>
 
