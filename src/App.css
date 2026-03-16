@@ -113,10 +113,19 @@ button, nav, select {
     gap: 20px;
 }
 
-.nav-links.mobile-modal a {
+/* Force vertical links in mobile modal */
+.nav-links.mobile-modal a,
+.mobile-nav-links a {
+    text-decoration: none;
+    color: #52336c;
+    font-weight: 600;
     width: 100%;
     padding: 0.5rem 0;
     text-align: left;
+}
+
+.nav-links.mobile-modal a:hover {
+    color: #1976d2;
 }
 
 /* Modal overlay */

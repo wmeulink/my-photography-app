@@ -37,7 +37,7 @@ function App() {
             <>
               <div className="modal-overlay" onClick={closeMobileMenu}></div>
               <div className="nav-links mobile-modal">
-                <Navbar closeMenu={closeMobileMenu} />
+                <Navbar closeMenu={closeMobileMenu} className="mobile-nav-links" />
               </div>
             </>
           )}
