@@ -14,6 +14,12 @@
   justify-content: center;
   margin: 0 auto;
   width: 100%;
+  gap: 20px; /* <-- this adds horizontal spacing between columns */
+}
+
+/* spacing between items vertically */
+.masonry-item-wrapper {
+  margin-bottom: 20px; /* vertical spacing */
 }
 
 /* Masonry columns */
