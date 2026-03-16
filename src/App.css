@@ -26,7 +26,6 @@ button, nav, select {
    HEADER / NAVBAR
    =============================================== */
 .navbar-container {
-    height: auto;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -36,28 +35,29 @@ button, nav, select {
 }
 
 .site-header {
-    padding: 3rem 1rem; /* taller header on desktop */
-    margin: 20px auto 2px auto; /* center horizontally */
+    width: 100%;            /* full width across the screen */
+    max-width: 100%;        /* remove desktop max-width cap */
+    margin: 0;              /* edge-to-edge, no centering */
     display: flex;
     flex-direction: column;
-    width: 100%;
-    max-width: 1200px;
-    font-family: 'Montserrat', sans-serif;
-    color: #52336c;
+    align-items: center;
     text-align: center;
+    padding: 3rem 1rem;     /* desktop vertical padding */
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
+    font-family: 'Montserrat', sans-serif;
+    color: #52336c;
     transition: padding 0.3s ease, width 0.3s ease;
 }
 
 .site-header h1 {
-    font-size: 2.75rem; /* bigger title on desktop */
+    font-size: 2.75rem;     /* larger title on desktop */
     margin-bottom: 1rem;
 }
 
 .site-header nav {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: wrap;        /* allow nav to wrap if needed */
     justify-content: center;
     gap: 20px;
     width: 100%;
@@ -115,11 +115,11 @@ button, nav, select {
 /* Tablet */
 @media (max-width: 1024px) {
     .site-header {
-        padding: 2rem 1rem; /* slightly smaller on tablet */
+        padding: 2rem 1rem;
     }
 
     .site-header h1 {
-        font-size: 2rem; /* scale title down for tablet */
+        font-size: 2rem;
     }
 
     .site-header nav {
@@ -136,26 +136,26 @@ button, nav, select {
 /* Mobile */
 @media (max-width: 768px) {
     .site-header {
-        padding: 1rem 0.75rem; /* smaller padding for mobile */
-        margin: 0 auto 1rem auto;
+        padding: 1rem 0.75rem;
     }
 
     .site-header h1 {
-        font-size: 1.5rem; /* smaller title for mobile */
+        font-size: 1.5rem;
         margin-bottom: 0.5rem;
     }
 
     .site-header nav {
-        display: flex;
         flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
     }
 
     .site-header nav a {
+        flex: 1 1 45%;       /* allow two buttons per row */
         word-break: break-word;
         text-align: center;
         padding: 0.4rem 0.8rem;
+        font-size: 0.95rem;
     }
 
     .footer {
