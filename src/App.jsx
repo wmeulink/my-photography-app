@@ -12,7 +12,9 @@ import "./App.css";
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
+  const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
     <div className="navbar-container">
@@ -22,13 +24,13 @@ function App() {
           <button className="hamburger" onClick={toggleMobileMenu}>
             ☰
           </button>
+          <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
+            <Navbar closeMenu={closeMobileMenu} />
+          </nav>
         </div>
-
-        {/* Mobile modal menu */}
-        <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
-          <Navbar />
-        </nav>
       </header>
+
+      {mobileMenuOpen && <div className="overlay" onClick={closeMobileMenu}></div>}
 
       <main className="site-content">
         <Routes>
