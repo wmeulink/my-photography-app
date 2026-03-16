@@ -38,7 +38,7 @@ function App() {
 
           {/* Mobile modal */}
           {mobileMenuOpen && (
-            <>
+            <div className="modal-component">
               <div
                 className="modal-overlay"
                 onClick={closeMobileMenu}
@@ -46,7 +46,7 @@ function App() {
               <nav className="mobile-modal">
                 <Navbar closeMenu={closeMobileMenu} />
               </nav>
-            </>
+            </div>
           )}
         </div>
       </header>

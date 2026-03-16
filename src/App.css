@@ -114,9 +114,14 @@ button, nav, select {
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
   z-index: 1200;
   padding: 3rem 1rem;
-  display: flex;
-  flex-direction: column; /* vertical links */
+  display: flex; /* vertical links */
   gap: 20px;
+}
+
+.modal-component {
+  display: flex;
+  border:2px solid red;
+  flex-direction: column !important;
 }
 
 .mobile-modal a {
