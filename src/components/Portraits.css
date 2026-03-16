@@ -1,20 +1,29 @@
+/* ===============================================
+   PORTRAITS
+   =============================================== */
+
+/* --- Container --- */
 .portraits-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 100%;
+  min-height: 100vh; /* ensures page fills viewport */
+  box-sizing: border-box;
+  padding-bottom: 40px; /* extra space at bottom */
 }
 
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   width: 100%;
+  max-width: 1300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
 }
 
+/* --- Header --- */
 .portraits-container .portrait-header {
   font-weight: 700;
   color: #52336c;
@@ -23,36 +32,37 @@
   margin-bottom: 16px;
 }
 
+/* --- Tag / Filter Buttons --- */
 .portraits-container .portrait-buttons-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  height: 50px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-/* --- masonry / gallery --- */
+/* --- Masonry / Grid --- */
 .portraits-container .my-masonry-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  justify-items: center; /* centers items in their grid cell */
+  justify-items: center;
   width: 100%;
 }
 
+/* --- Polaroid Cards --- */
 .portraits-container .polaroid {
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-  height: 300px; /* consistent card height */
+  width: 220px;
+  height: 320px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
   padding: 10px 10px 25px;
-  margin-bottom: 16px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
+  border-radius: 8px;
 }
 
 .portraits-container .polaroid:hover {
@@ -60,22 +70,26 @@
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
 }
 
+/* --- Images --- */
 .portraits-container .polaroid img {
   width: 100%;
-  height: 200px; /* consistent image height */
+  height: 220px;
   object-fit: cover;
   background-color: #fafafa;
+  border-radius: 4px;
 }
 
+/* --- Labels / Tags --- */
 .portraits-container .polaroid .label {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 0.95rem;
   font-weight: 600;
   text-align: center;
   color: #4a3b58;
+  line-height: 1.3;
 }
 
-/* --- upload button / dialog --- */
+/* --- Upload Button / Dialog --- */
 .portraits-container .upload-button {
   border-radius: 20px;
   text-transform: none;
@@ -92,13 +106,49 @@
   gap: 1rem;
 }
 
+/* --- Loading / No Results / Error --- */
 .loading,
 .no-results,
 .error-message {
   text-align: center;
   margin-top: 2rem;
+  font-size: 1.2rem;
 }
 
 .no-results {
   font-style: italic;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .portraits-container .my-masonry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .portraits-container .polaroid {
+    width: 180px;
+    height: 280px;
+  }
+  .portraits-container .polaroid img {
+    height: 160px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portraits-container .my-masonry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(90%, 1fr));
+    gap: 12px;
+  }
+  .portraits-container .polaroid {
+    width: 90%;
+    height: auto; /* allows height to adjust naturally */
+  }
+  .portraits-container .polaroid img {
+    height: auto;
+    max-height: 250px;
+  }
+  .portraits-container .portrait-buttons-container {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
 }
