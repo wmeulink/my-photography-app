@@ -68,8 +68,10 @@
 /* --- Images --- */
 .landscape .masonry-image {
   width: 100%;
-  height: 250px; 
-  object-fit: cover; 
+  max-width: 300px;     /* prevents the image from growing too wide */
+  height: 250px;
+  max-height: 250px;    /* optional, ensures uniform size */
+  object-fit: cover;
   display: block;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
@@ -78,6 +80,7 @@
 }
 
 .landscape .masonry-image:hover {
+  cursor: pointer;
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
