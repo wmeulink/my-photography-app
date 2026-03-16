@@ -1,9 +1,14 @@
+/* ===============================================
+   LANDSCAPES
+   =============================================== */
+
+/* --- Container --- */
 .landscape-container {
-  min-height: 100vh;
-  padding: 20px;
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -11,27 +16,61 @@
 .landscape-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 20px;
-  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
 }
 
-/* --- Masonry / Grid --- */
+.filter-group,
+.album-category {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-label,
+.tags-label {
+  font-size: 0.9rem;
+  color: #888;
+  margin-right: 0.3rem;
+}
+
+/* --- Chips --- */
+.tag-chip,
+.upload-chip {
+  display: flex;
+  align-items: center;
+  height: 32px;
+}
+
+.upload-chip {
+  font-weight: bold;
+}
+
+.landscape-tag-chip.MuiChip-colorPrimary {
+  background-color: #1976d2;
+  color: white;
+}
+
+/* --- Masonry / Gallery --- */
 .landscape .masonry-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* responsive columns */
   gap: 20px;
+  justify-items: center; /* centers items in their grid cell */
   width: 100%;
-  max-width: 1400px;
-  justify-items: center;
+  max-width: 1200px;
+  margin: 0 auto 40px auto; /* more bottom spacing to keep page tall */
   box-sizing: border-box;
+  transition: opacity 0.4s ease-in-out;
 }
 
 /* --- Images --- */
 .landscape .masonry-image {
   width: 100%;
-  aspect-ratio: 4/3; /* keeps images consistent */
-  object-fit: cover;
+  height: 250px;          /* consistent card height */
+  object-fit: cover;      /* crop tall images */
+  display: block;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -39,16 +78,23 @@
 }
 
 .landscape .masonry-image:hover {
-  transform: translateY(-4px) scale(1.03);
+  transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-/* --- Titles --- */
+/* --- Text / Titles --- */
 .landscape-title {
   text-align: center;
   color: #52336c;
-  margin: 16px 0;
-  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* --- Loading / Error Messages --- */
+.loading,
+.error-message {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 20px 0;
 }
 
 /* --- Responsive --- */
@@ -56,13 +102,19 @@
   .landscape .masonry-wrapper {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
+  .landscape .masonry-image {
+    height: 220px;
+  }
 }
 
 @media (max-width: 768px) {
   .landscape .masonry-wrapper {
-    grid-template-columns: repeat(auto-fit, minmax(90%, 1fr));
+    grid-template-columns: 1fr; /* stack in single column on mobile */
+    gap: 15px;
   }
   .landscape .masonry-image {
-    height: auto;
+    width: 90%;       /* small padding on sides */
+    height: auto;     /* maintain natural aspect ratio */
+    max-height: 300px; /* optional max height */
   }
 }
