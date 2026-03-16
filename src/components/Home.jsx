@@ -84,7 +84,7 @@ export default function Home() {
       "@type": "Person",
       name: "Whitney Elliott",
     },
-    url: "https://elliottphotographyco.com",
+    url: "https://whittyelliott.com",
   };
 
   return (
