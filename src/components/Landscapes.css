@@ -11,7 +11,7 @@
   width: 100%;
   min-height: 100vh;       /* ensures page fills viewport */
   box-sizing: border-box;
-  background-color: #fafafa;  /* match site background */
+  background-color: #f4f0f5;/* match site background */
   padding-bottom: 40px;    /* space at bottom */
 }
 
