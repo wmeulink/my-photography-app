@@ -99,20 +99,36 @@ button, nav, select {
    MOBILE MODAL NAV
    =============================================== */
 
+/* ===============================
+   MOBILE MODAL OVERRIDES
+   =============================== */
+.mobile-modal .navbar-buttons-container {
+  display: flex !important;
+  flex-direction: column !important; /* vertical links */
+  gap: 16px !important;
+}
+
+.mobile-modal .navbar-buttons-container .MuiButton-root {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 0 !important;
+}
+
 .mobile-modal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 220px;
+  width: 220px; /* slightly smaller */
   height: 100vh;
   background-color: #f4f0f5;
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
   padding: 2.5rem 1rem;
   display: flex;
   flex-direction: column;
+  gap: 16px;
 }
 
-/* overlay behind modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -123,25 +139,25 @@ button, nav, select {
 }
 
 /* ===============================================
-   NAV BUTTONS INSIDE MODAL
+   MOBILE NAVBAR BUTTONS ONLY
    =============================================== */
-
 .mobile-modal nav .navbar-buttons-container {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: flex !important;
+  flex-direction: column !important; /* vertical links */
+  gap: 12px !important;
 }
 
 .mobile-modal nav .navbar-buttons-container .MuiButton-root {
-  width: fit-content;        /* underline only text width */
-  justify-content: flex-start;
-  text-align: left;
-  padding-left: 0;
-  padding-bottom: 2px;
+  width: fit-content !important; /* underline only under text */
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 0 !important;
+  padding-bottom: 2px !important;
 }
 
 .mobile-modal nav .navbar-buttons-container .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
+  width: fit-content !important; /* underline only text width */
 }
 /* ===============================================
    SITE CONTENT
