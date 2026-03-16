@@ -11,7 +11,7 @@ body {
   font-family: 'Montserrat', sans-serif;
   color: #2f2f2f;
   background-color: #fafafa;
-  overflow-x: hidden; /* prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -95,22 +95,9 @@ button, nav, select {
   cursor: pointer;
 }
 
-.mobile-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 220px;
-  height: 100vh;
-  background-color: #f4f0f5;
-  box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-  padding: 2.5rem 1rem;
-  display: flex;
-  flex-direction: column; /* stack content vertically */
-  gap: 16px;
-  z-index: 1000;
-  overflow-y: auto; /* scroll if too tall */
-}
-
+/* ===============================================
+   MOBILE MODAL (NEW STRUCTURE)
+   =============================================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -121,26 +108,50 @@ button, nav, select {
   z-index: 900;
 }
 
+.mobile-modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 220px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-modal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 2.5rem 1rem;
+  background-color: #f4f0f5;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+  overflow-y: auto;
+}
+
+/* Force buttons vertical */
 .mobile-modal nav,
 .mobile-modal nav .navbar-buttons-container {
-  display: flex !important;
-  flex-direction: column !important; /* stack vertically */
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
 .mobile-modal nav .MuiButton-root {
-  display: block !important;       /* force block-level stacking */
-  width: 100% !important;          /* take full width of column */
+  display: block !important;
+  width: 100% !important;
   text-align: left !important;
+  justify-content: flex-start !important;
   padding-left: 0 !important;
   padding-bottom: 2px !important;
-  justify-content: flex-start !important; /* keep content left-aligned */
 }
 
 .mobile-modal nav .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
-  width: fit-content !important; /* underline only text */
+  width: fit-content !important;
 }
+
 /* ===============================================
    SITE CONTENT
    =============================================== */
@@ -170,33 +181,14 @@ button, nav, select {
 }
 
 /* ===============================================
-   RESPONSIVE ADJUSTMENTS
+   RESPONSIVE
    =============================================== */
-@media (max-width: 1024px) {
-  .header-inner, .footer-inner {
-    padding: 2rem 1rem;
-  }
-
-  .site-header h1 {
-    font-size: 2.25rem;
-  }
-
-  .desktop-nav {
-    gap: 15px;
-  }
-}
-
 @media (max-width: 768px) {
-  .header-inner, .footer-inner {
-    padding: 1rem;
-  }
-
-  /* title + hamburger inline */
   .header-inner {
-    display: flex;
     justify-content: space-between;
-    align-items: center;
     flex-wrap: nowrap;
+    align-items: center;
+    padding: 1rem;
   }
 
   .site-header h1 {
@@ -212,10 +204,5 @@ button, nav, select {
 
   .hamburger {
     display: block;
-  }
-
-  .mobile-modal {
-    width: 220px;
-    padding: 2.5rem 1rem;
   }
 }

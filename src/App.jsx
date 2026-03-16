@@ -37,15 +37,15 @@ function App() {
 
           {/* Mobile modal */}
           {mobileMenuOpen && (
-            <>
+            <div className="mobile-modal-wrapper">
               <div
                 className="modal-overlay"
                 onClick={closeMobileMenu}
               ></div>
-              <nav className="mobile-modal">
+              <div className="mobile-modal">
                 <Navbar closeMenu={closeMobileMenu} />
-              </nav>
-            </>
+              </div>
+            </div>
           )}
         </div>
       </header>
