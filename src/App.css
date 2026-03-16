@@ -95,9 +95,6 @@ button, nav, select {
   cursor: pointer;
 }
 
-/* ===============================================
-   MOBILE MODAL
-   =============================================== */
 .mobile-modal {
   position: fixed;
   top: 0;
@@ -108,10 +105,10 @@ button, nav, select {
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
   padding: 2.5rem 1rem;
   display: flex;
-  flex-direction: column; /* stack links vertically */
+  flex-direction: column; /* stack content vertically */
   gap: 16px;
   z-index: 1000;
-  overflow-y: auto; /* in case content exceeds viewport */
+  overflow-y: auto; /* scroll if too tall */
 }
 
 .modal-overlay {
@@ -124,33 +121,27 @@ button, nav, select {
   z-index: 900;
 }
 
-/* ===============================================
-   MOBILE NAVBAR BUTTONS ONLY
-   =============================================== */
-.mobile-modal nav {
-  display: flex;
-  flex-direction: column; /* vertical links */
-  gap: 12px;
-}
-
+/* MOBILE NAV LINKS */
+.mobile-modal nav,
 .mobile-modal nav .navbar-buttons-container {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;     /* force flex */
+  flex-direction: column !important; /* stack vertically */
   gap: 12px;
 }
 
-.mobile-modal nav .navbar-buttons-container .MuiButton-root {
-  display: block;
-  width: 100%; /* full width for easy tap */
+.mobile-modal nav .MuiButton-root {
+  display: flex !important;     /* keep button content aligned */
+  flex-direction: row !important;
+  width: 100% !important;       /* full-width buttons for stacking */
   justify-content: flex-start !important;
   text-align: left !important;
   padding-left: 0 !important;
   padding-bottom: 2px !important;
 }
 
-.mobile-modal nav .navbar-buttons-container .MuiButton-root.active-nav {
+.mobile-modal nav .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
-  width: fit-content; /* underline only text */
+  width: fit-content !important; /* underline text only */
 }
 
 /* ===============================================
