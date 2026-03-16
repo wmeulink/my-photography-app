@@ -38,9 +38,11 @@
 /* --- Chips --- */
 .landscape-container .tag-chip,
 .landscape-container .upload-chip {
-  display: flex;
-  align-items: center;
-  height: 32px;
+  width: auto !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 0 12px !important;
+  margin: 4px 2px !important;
 }
 
 .landscape-container .upload-chip {

@@ -122,23 +122,15 @@ button, nav, select {
 }
 
 /* ===============================================
-   NAVBAR BUTTONS
+   MOBILE NAVBAR BUTTONS ONLY
    =============================================== */
-.navbar-buttons-container .MuiButton-root.active-nav {
-  border-bottom: 2px solid #52336c;
-  font-weight: bold;
-  color: #52336c;
-  font-family: 'Montserrat', sans-serif;
-}
-
-/* Mobile modal overrides */
-.mobile-modal .navbar-buttons-container {
+.mobile-modal nav .navbar-buttons-container {
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: column !important; /* vertical links */
   gap: 12px !important;
 }
 
-.mobile-modal .navbar-buttons-container .MuiButton-root {
+.mobile-modal nav .navbar-buttons-container .MuiButton-root {
   width: fit-content !important; /* underline only under text */
   justify-content: flex-start !important;
   text-align: left !important;
@@ -146,11 +138,10 @@ button, nav, select {
   padding-bottom: 2px !important;
 }
 
-.mobile-modal .navbar-buttons-container .MuiButton-root.active-nav {
+.mobile-modal nav .navbar-buttons-container .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
   width: fit-content !important; /* underline only text width */
 }
-
 /* ===============================================
    SITE CONTENT
    =============================================== */
