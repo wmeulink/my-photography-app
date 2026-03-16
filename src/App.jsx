@@ -25,14 +25,15 @@ function App() {
             ☰
           </button>
           <nav className={`nav-links ${mobileMenuOpen ? 'open' : ''}`}>
-            <Navbar closeMenu={closeMobileMenu} />
+            <div className="modal-overlay" onClick={closeMobileMenu}></div>
+            <div className="modal-nav">
+              <Navbar />
+            </div>
           </nav>
         </div>
       </header>
 
-      {mobileMenuOpen && <div className="overlay" onClick={closeMobileMenu}></div>}
-
-      <main className="site-content">
+      <main className="site-content" onClick={closeMobileMenu}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/albums" element={<LandscapeAlbums />} />

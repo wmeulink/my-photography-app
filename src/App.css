@@ -1,4 +1,6 @@
-/* GLOBAL */
+/* ===============================================
+   GLOBAL STYLES
+   =============================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -20,7 +22,9 @@ button, nav, select {
     font-family: 'Nunito Sans', sans-serif;
 }
 
-/* HEADER / NAVBAR */
+/* ===============================================
+   HEADER / NAVBAR
+   =============================================== */
 .navbar-container {
     width: 100%;
     display: flex;
@@ -28,30 +32,32 @@ button, nav, select {
     align-items: center;
 }
 
+/* Header box with shadow */
 .site-header {
     width: 100%;
     background-color: #f4f0f5;
     box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
 }
 
+/* Inner header content */
 .header-inner {
     max-width: 1200px;
     margin: 0 auto;
     padding: 3rem 1rem;
     display: flex;
-    align-items: flex-end; /* push nav up slightly */
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column; /* title on top, links below */
+    align-items: center;
+    gap: 1rem; /* space between title and nav links */
+    position: relative;
 }
 
 .site-header h1 {
     font-size: 3rem;
     color: #52336c;
     text-align: center;
-    flex: 1 1 100%;
-    margin-bottom: 1rem;
 }
 
+/* Hamburger button */
 .hamburger {
     display: none;
     font-size: 2rem;
@@ -59,11 +65,18 @@ button, nav, select {
     border: none;
     cursor: pointer;
     color: #52336c;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
+/* Desktop nav links */
 .nav-links {
     display: flex;
+    justify-content: center;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .nav-links a {
@@ -81,7 +94,26 @@ button, nav, select {
     border-bottom: 2px solid #52336c;
 }
 
-/* FOOTER */
+/* Mobile modal nav */
+.nav-links .modal-overlay {
+    display: none;
+}
+
+.nav-links .modal-nav {
+    display: none;
+}
+
+/* ===============================================
+   SITE CONTENT
+   =============================================== */
+.site-content {
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+/* ===============================================
+   FOOTER
+   =============================================== */
 .footer {
     width: 100%;
     background-color: #f4f0f5;
@@ -96,24 +128,26 @@ button, nav, select {
     color: #52336c;
 }
 
-/* SITE CONTENT */
-.site-content {
-    flex-grow: 1;
-    padding: 0; /* remove white gap */
+/* ===============================================
+   RESPONSIVE ADJUSTMENTS
+   =============================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .header-inner, .footer-inner {
+        padding: 2rem 1rem;
+    }
+
+    .site-header h1 {
+        font-size: 2.25rem;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
 }
 
-/* OVERLAY for mobile menu */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    z-index: 10;
-}
-
-/* MOBILE */
+/* Mobile */
 @media (max-width: 768px) {
     .header-inner, .footer-inner {
         padding: 1rem;
@@ -128,29 +162,30 @@ button, nav, select {
     }
 
     .nav-links {
-        position: fixed;
-        top: 0;
-        left: -250px; /* hidden initially */
-        flex-direction: column;
-        width: 250px;
-        height: 100%;
-        background-color: #f4f0f5;
-        padding: 4rem 1rem 1rem 1rem;
-        gap: 20px;
-        z-index: 20;
-        transition: left 0.3s ease;
-        box-shadow: 2px 0 8px rgba(206,187,203,0.936);
+        display: none;
     }
 
     .nav-links.open {
+        display: block;
+        position: fixed;
+        top: 0;
         left: 0;
+        height: 100vh;
+        width: 250px;
+        background-color: #f4f0f5;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+        z-index: 1000;
+        padding: 2rem 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
 
-    .nav-links a {
+    .nav-links.open a {
         width: 100%;
+        padding: 0.5rem 0;
         text-align: left;
-        padding: 0.75rem 1rem;
-        border-bottom: 1px solid #ddd;
     }
 
     .footer-inner {
