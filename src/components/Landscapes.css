@@ -53,7 +53,7 @@
 }
 
 /* --- Masonry / Gallery --- */
-.landscape .masonry-wrapper {
+.my-masonry-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
@@ -66,11 +66,11 @@
 }
 
 /* --- Images --- */
-.landscape .masonry-image {
+.masonry-image {
   width: 100%;
-  max-width: 300px;     /* prevents the image from growing too wide */
+  max-width: 300px;     /* prevents image from growing too wide */
   height: 250px;
-  max-height: 250px;    /* optional, ensures uniform size */
+  max-height: 250px;    /* uniform size */
   object-fit: cover;
   display: block;
   border-radius: 8px;
@@ -79,8 +79,7 @@
   cursor: pointer;
 }
 
-.landscape .masonry-image:hover {
-  cursor: pointer;
+.masonry-image:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
@@ -103,20 +102,21 @@
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
-  .landscape .masonry-wrapper {
+  .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
-  .landscape .masonry-image {
+  .masonry-image {
     height: 220px;
+    max-height: 220px;
   }
 }
 
 @media (max-width: 768px) {
-  .landscape .masonry-wrapper {
+  .my-masonry-grid {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  .landscape .masonry-image {
+  .masonry-image {
     width: 90%;
     height: auto;
     max-height: 300px;
