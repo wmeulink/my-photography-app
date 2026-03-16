@@ -115,14 +115,14 @@ export default function Landscapes() {
       ) : (
         <Box className="my-masonry-grid">
           {visibleLandscapes.map((l, i) => (
-            <div key={i} className="polaroid" onClick={() => openLightbox(i)} style={{ width: 300, height: 250 }}>
-              <img
-                src={l.thumbnailSrc}
-                alt={l.title || "Landscape"}
-                loading="lazy"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </div>
+            <img
+              key={i}
+              src={l.thumbnailSrc}
+              alt={l.title || "Landscape"}
+              loading="lazy"
+              className="masonry-image"
+              onClick={() => openLightbox(i)}
+            />
           ))}
         </Box>
       )}
