@@ -47,7 +47,6 @@ button, nav, select {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  position: relative;
 }
 
 .site-header h1 {
@@ -94,11 +93,6 @@ button, nav, select {
   border: none;
   color: #52336c;
   cursor: pointer;
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1300;
 }
 
 /* ===============================================
@@ -112,7 +106,6 @@ button, nav, select {
   height: 100vh;
   background-color: #f4f0f5;
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
-  z-index: 1200;
   padding: 2.5rem 1rem;
   display: flex;
   flex-direction: column;
@@ -126,7 +119,6 @@ button, nav, select {
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,0.3);
-  z-index: 1100;
 }
 
 /* ===============================================
@@ -209,9 +201,19 @@ button, nav, select {
     padding: 1rem;
   }
 
+  /* title + hamburger inline */
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
   .site-header h1 {
     font-size: 1.75rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    flex: 1;
+    text-align: left;
   }
 
   .desktop-nav {
@@ -220,10 +222,6 @@ button, nav, select {
 
   .hamburger {
     display: block;
-    position: relative; /* align with title */
-    top: 0;
-    right: 0;
-    transform: none;
   }
 
   .mobile-modal {
