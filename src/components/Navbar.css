@@ -1,6 +1,23 @@
+/* Active nav button */
 .navbar-buttons-container .MuiButton-root.active-nav {
   border-bottom: 2px solid #52336c;
   font-weight: bold;
   color: #52336c;
   font-family: 'Montserrat', sans-serif;
+}
+
+/* ===============================
+   MOBILE MODAL OVERRIDES
+   =============================== */
+.mobile-modal .navbar-buttons-container {
+  display: flex !important;
+  flex-direction: column !important; /* vertical links */
+  gap: 16px !important;
+}
+
+.mobile-modal .navbar-buttons-container .MuiButton-root {
+  width: 100% !important;
+  justify-content: flex-start !important;
+  text-align: left !important;
+  padding-left: 0 !important;
 }

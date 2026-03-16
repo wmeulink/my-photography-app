@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import './Navbar.css';
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 
-function Navbar() {
+function Navbar({ closeMenu }) {
   const location = useLocation();
 
   const navLinks = [
@@ -31,6 +31,7 @@ function Navbar() {
                 to={link.to}
                 color="inherit"
                 className={isActive ? "active-nav" : ""}
+                onClick={closeMenu ? closeMenu : undefined} // closes mobile menu when clicked
               >
                 {link.label}
               </Button>

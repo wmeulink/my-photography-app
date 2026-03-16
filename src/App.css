@@ -49,18 +49,15 @@ button, nav, select {
   position: relative;
 }
 
-/* Header title */
 .site-header h1 {
   font-size: 3rem;
   color: #52336c;
   flex: 1 1 100%;
   text-align: center;
-  margin-bottom: 1.5rem; /* space between title and nav */
+  margin-bottom: 1.5rem;
 }
 
-/* ===============================================
-   DESKTOP NAV
-   =============================================== */
+/* Desktop nav */
 .desktop-nav {
   display: flex;
   justify-content: center;
@@ -84,9 +81,7 @@ button, nav, select {
   border-bottom: 2px solid #52336c;
 }
 
-/* ===============================================
-   HAMBURGER BUTTON
-   =============================================== */
+/* Hamburger */
 .hamburger {
   display: none;
   font-size: 2rem;
@@ -101,44 +96,22 @@ button, nav, select {
   z-index: 1300;
 }
 
-/* ===============================================
-   MOBILE MODAL NAV
-   =============================================== */
+/* Mobile modal */
 .mobile-modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 250px;
-  height: 100%;
+  height: 100vh;
   background-color: #f4f0f5;
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
   z-index: 1200;
   padding: 3rem 1rem;
-  display: flex; /* vertical links */
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-.modal-component {
-  display: flex;
-  border:2px solid red;
-  flex-direction: column !important;
-}
-
-.mobile-modal a {
-  display: block;
-  text-decoration: none;
-  color: #52336c;
-  font-weight: 600;
-  padding: 0.5rem 0;
-  text-align: left;
-}
-
-.mobile-modal a:hover {
-  color: #1976d2;
-  font-weight: bold;
-}
-
-/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -149,9 +122,7 @@ button, nav, select {
   z-index: 1100;
 }
 
-/* ===============================================
-   SITE CONTENT
-   =============================================== */
+/* Site content */
 .site-content {
   flex-grow: 1;
   width: 100%;
@@ -160,9 +131,7 @@ button, nav, select {
   padding: 1rem;
 }
 
-/* ===============================================
-   FOOTER
-   =============================================== */
+/* Footer */
 .footer {
   width: 100%;
   background-color: #f4f0f5;
@@ -177,43 +146,18 @@ button, nav, select {
   color: #52336c;
 }
 
-/* ===============================================
-   RESPONSIVE ADJUSTMENTS
-   =============================================== */
-
-/* Tablet */
-@media (max-width: 1024px) {
-  .header-inner, .footer-inner {
-    padding: 2rem 1rem;
-  }
-
-  .site-header h1 {
-    font-size: 2.25rem;
-  }
-
-  .desktop-nav {
-    gap: 15px;
-  }
-}
-
-/* Mobile */
+/* Responsive */
 @media (max-width: 768px) {
-  .header-inner, .footer-inner {
-    padding: 1rem;
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
   }
 
   .site-header h1 {
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
-  }
-
-  /* hide desktop nav */
-  .desktop-nav {
-    display: none;
-  }
-
-  /* show hamburger */
-  .hamburger {
-    display: block;
   }
 }

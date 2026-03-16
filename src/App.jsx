@@ -4,7 +4,6 @@ import About from './components/About';
 import Home from './components/Home';
 import Contact from './components/Contact';
 import Landscapes from './components/Landscapes';
-import Events from './components/Events';
 import LandscapeAlbums from './components/LandscapeAlbums';
 import Portraits from './components/Portraits';
 import Navbar from './components/Navbar';
@@ -38,7 +37,7 @@ function App() {
 
           {/* Mobile modal */}
           {mobileMenuOpen && (
-            <div className="modal-component">
+            <>
               <div
                 className="modal-overlay"
                 onClick={closeMobileMenu}
@@ -46,7 +45,7 @@ function App() {
               <nav className="mobile-modal">
                 <Navbar closeMenu={closeMobileMenu} />
               </nav>
-            </div>
+            </>
           )}
         </div>
       </header>
