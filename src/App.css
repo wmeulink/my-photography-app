@@ -44,7 +44,7 @@ button, nav, select {
     padding: 3rem 1rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
     flex-wrap: wrap;
 }
@@ -53,17 +53,17 @@ button, nav, select {
 .site-header h1 {
     font-size: 3rem;
     color: #52336c;
-    text-align: center;
     flex: 1 1 100%;
+    text-align: center;
     margin-bottom: 1rem;
 }
 
-/* Desktop nav */
+/* Desktop nav links */
 .nav-links.desktop-nav {
     display: flex;
     justify-content: center;
-    gap: 20px;
     flex: 1 1 100%;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
@@ -82,7 +82,7 @@ button, nav, select {
     border-bottom: 2px solid #52336c;
 }
 
-/* Hamburger */
+/* Hamburger button */
 .hamburger {
     display: none;
     font-size: 2rem;
@@ -94,7 +94,7 @@ button, nav, select {
     right: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 1100;
+    z-index: 1300;
 }
 
 /* Mobile modal nav */
@@ -114,16 +114,17 @@ button, nav, select {
 }
 
 .nav-links.mobile-modal a {
-    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: left;
     text-decoration: none;
     color: #52336c;
     font-weight: 600;
-    padding: 0.5rem 0;
-    text-align: left;
 }
 
 .nav-links.mobile-modal a:hover {
     color: #1976d2;
+    font-weight: bold;
 }
 
 /* Modal overlay */
@@ -192,6 +193,7 @@ button, nav, select {
 
     .site-header h1 {
         font-size: 1.75rem;
+        margin-bottom: 1rem;
     }
 
     .nav-links.desktop-nav {
