@@ -44,9 +44,9 @@ button, nav, select {
     padding: 3rem 1rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: center;
     position: relative;
+    flex-wrap: wrap;
 }
 
 /* Header title */
@@ -58,12 +58,12 @@ button, nav, select {
     margin-bottom: 1rem;
 }
 
-/* Desktop nav links */
+/* Desktop nav */
 .nav-links.desktop-nav {
     display: flex;
     justify-content: center;
-    flex: 1 1 100%;
     gap: 20px;
+    flex: 1 1 100%;
     flex-wrap: wrap;
 }
 
@@ -82,7 +82,7 @@ button, nav, select {
     border-bottom: 2px solid #52336c;
 }
 
-/* Hamburger button */
+/* Hamburger */
 .hamburger {
     display: none;
     font-size: 2rem;
@@ -113,13 +113,11 @@ button, nav, select {
     gap: 20px;
 }
 
-/* Force vertical links in mobile modal */
-.nav-links.mobile-modal a,
-.mobile-nav-links a {
+.nav-links.mobile-modal a {
+    display: block;
     text-decoration: none;
     color: #52336c;
     font-weight: 600;
-    width: 100%;
     padding: 0.5rem 0;
     text-align: left;
 }

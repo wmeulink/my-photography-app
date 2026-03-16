@@ -31,18 +31,18 @@ function App() {
           <button className="hamburger" onClick={toggleMobileMenu}>
             ☰
           </button>
-
-          {/* Mobile modal nav */}
-          {mobileMenuOpen && (
-            <>
-              <div className="modal-overlay" onClick={closeMobileMenu}></div>
-              <div className="nav-links mobile-modal">
-                <Navbar closeMenu={closeMobileMenu} className="mobile-nav-links" />
-              </div>
-            </>
-          )}
         </div>
       </header>
+
+      {/* Mobile modal nav */}
+      {mobileMenuOpen && (
+        <>
+          <div className="modal-overlay" onClick={closeMobileMenu}></div>
+          <nav className="nav-links mobile-modal">
+            <Navbar closeMenu={closeMobileMenu} />
+          </nav>
+        </>
+      )}
 
       <main className="site-content" onClick={closeMobileMenu}>
         <Routes>
