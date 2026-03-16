@@ -103,7 +103,7 @@ button, nav, select {
   position: fixed;
   top: 0;
   left: 0;
-  width: 220px; /* slightly smaller */
+  width: 220px;
   height: 100vh;
   background-color: #f4f0f5;
   box-shadow: 2px 0 12px rgba(0,0,0,0.2);
@@ -111,6 +111,7 @@ button, nav, select {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  z-index: 1000;
 }
 
 .modal-overlay {
@@ -120,6 +121,7 @@ button, nav, select {
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,0.3);
+  z-index: 900;
 }
 
 /* ===============================================
