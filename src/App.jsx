@@ -23,11 +23,11 @@ function App() {
           <h1>Elliott Photography</h1>
 
           {/* Desktop nav */}
-          <nav className="nav-links desktop-nav">
+          <nav className="desktop-nav">
             <Navbar />
           </nav>
 
-          {/* Hamburger button for mobile */}
+          {/* Hamburger */}
           <button className="hamburger" onClick={toggleMobileMenu}>
             ☰
           </button>
@@ -36,7 +36,7 @@ function App() {
           {mobileMenuOpen && (
             <>
               <div className="modal-overlay" onClick={closeMobileMenu}></div>
-              <nav className="nav-links mobile-modal">
+              <nav className="mobile-modal">
                 <Navbar closeMenu={closeMobileMenu} />
               </nav>
             </>
