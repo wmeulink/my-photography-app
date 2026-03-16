@@ -13,7 +13,7 @@
 }
 
 /* --- Toolbar / Filters --- */
-.landscape-toolbar {
+.landscape-container .landscape-toolbar {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -21,39 +21,39 @@
   margin-bottom: 1rem;
 }
 
-.filter-group,
-.album-category {
+.landscape-container .filter-group,
+.landscape-container .album-category {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.filter-label,
-.tags-label {
+.landscape-container .filter-label,
+.landscape-container .tags-label {
   font-size: 0.9rem;
   color: #888;
   margin-right: 0.3rem;
 }
 
 /* --- Chips --- */
-.tag-chip,
-.upload-chip {
+.landscape-container .tag-chip,
+.landscape-container .upload-chip {
   display: flex;
   align-items: center;
   height: 32px;
 }
 
-.upload-chip {
+.landscape-container .upload-chip {
   font-weight: bold;
 }
 
-.landscape-tag-chip.MuiChip-colorPrimary {
+.landscape-container .landscape-tag-chip.MuiChip-colorPrimary {
   background-color: #1976d2;
   color: white;
 }
 
 /* --- Masonry / Gallery --- */
-.my-masonry-grid {
+.landscape-container .my-masonry-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
@@ -66,7 +66,7 @@
 }
 
 /* --- Images --- */
-.masonry-image {
+.landscape-container .masonry-image {
   width: 100%;
   max-width: 300px;     /* prevents image from growing too wide */
   height: 250px;
@@ -79,22 +79,22 @@
   cursor: pointer;
 }
 
-.masonry-image:hover {
+.landscape-container .masonry-image:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
 /* --- Text / Titles --- */
-.landscape-title {
+.landscape-container .landscape-title {
   text-align: center;
   color: #52336c;
   margin-bottom: 12px;
 }
 
 /* --- Loading / Error Messages --- */
-.loading,
-.error-message,
-.no-results {
+.landscape-container .loading,
+.landscape-container .error-message,
+.landscape-container .no-results {
   text-align: center;
   font-size: 1.2rem;
   margin: 20px 0;
@@ -102,21 +102,21 @@
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
-  .my-masonry-grid {
+  .landscape-container .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
-  .masonry-image {
+  .landscape-container .masonry-image {
     height: 220px;
     max-height: 220px;
   }
 }
 
 @media (max-width: 768px) {
-  .my-masonry-grid {
+  .landscape-container .my-masonry-grid {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  .masonry-image {
+  .landscape-container .masonry-image {
     width: 90%;
     height: auto;
     max-height: 300px;
