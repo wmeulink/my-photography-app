@@ -1,11 +1,33 @@
+/* ===============================================
+   GLOBAL STYLES
+   =============================================== */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #2f2f2f;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+button, nav, select {
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+/* ===============================================
+   NAVBAR / HEADER
+   =============================================== */
 .navbar-container {
-    height: auto;
     width: 100%;
-    display:flex;
+    display: flex;
     flex-direction: column;
-    color:#52336c;
+    color: #52336c;
     background-color: #f4f0f5;
-     font-family: 'Montserrat', sans-serif;
 }
 
 .site-header {
@@ -23,11 +45,88 @@
     transition: padding 0.3s ease, width 0.3s ease;
 }
 
-/* Mobile adjustments */
+.site-header h1 {
+    font-size: 2.25rem; /* desktop title size */
+    margin-bottom: 1rem;
+}
+
+.site-header nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* space between nav links */
+    flex-wrap: wrap;
+}
+
+.site-header nav a {
+    text-decoration: none;
+    color: #52336c;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+.site-header nav a:hover {
+    color: #1976d2; /* highlight on hover */
+}
+
+/* ===============================================
+   FOOTER
+   =============================================== */
+.footer-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.footer {
+    box-shadow: 0px 2px 8px rgba(206, 187, 203, 0.936);
+    font-family: 'Nunito Sans', sans-serif;
+    background-color: #f4f0f5;
+    text-align: center;
+    padding: 2rem 1rem; /* top/bottom 2rem, sides 1rem */
+    width: 100%;
+    max-width: 1200px;
+    color: #52336c;
+    margin: 0 auto 20px auto; /* centers horizontally */
+    transition: padding 0.3s ease, width 0.3s ease;
+}
+
+/* ===============================================
+   SITE CONTENT
+   =============================================== */
+.site-content {
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+/* ===============================================
+   RESPONSIVE ADJUSTMENTS
+   =============================================== */
+@media (max-width: 1024px) {
+    .site-header, .footer-container {
+        width: 94%;
+        max-width: 95%;
+        padding: 1.5rem;
+    }
+
+    .site-header h1 {
+        font-size: 2rem;
+    }
+
+    .site-header nav a {
+        gap: 15px;
+    }
+}
+
 @media (max-width: 768px) {
     .site-header {
         padding: 1rem 0.75rem; /* slightly smaller padding */
-        margin: 0 auto 1rem auto; /* less margin */
+        margin: 0 auto 1rem auto;
+    }
+
+    .site-header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
     }
 
     .site-header nav {
@@ -42,86 +141,9 @@
         text-align: center;
     }
 
-    .site-header h1 {
-        font-size: 1.5rem; /* scales title for mobile */
-        margin-bottom: 0.5rem;
-    }
-}
-
-body {
-   font-family: 'Montserrat', sans-serif;
-  color: #2f2f2f;
-  background-color: #fafafa;
-}
-
-h1, h2, h3 {
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-button, nav, select {
-  font-family: 'Nunito Sans', sans-serif;
-}
-
-.footer-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.footer {
-    box-shadow: 0px 2px 8px rgba(206, 187, 203, 0.936);
-    font-family: 'Nunito Sans', sans-serif;
-    background-color: #f4f0f5;
-    text-align: center;
-    padding: 2rem 1rem; /* top/bottom 2rem, sides 1rem */
-    width: 100%;
-    max-width: 1200px;  /* caps width on large screens */
-    color: #52336c;
-    margin: 0 auto 20px auto; /* centers horizontally */
-    transition: padding 0.3s ease, width 0.3s ease;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
     .footer {
-        padding: 1rem 0.75rem; /* smaller padding for mobile */
-        font-size: 0.9rem; /* slightly smaller text */
+        padding: 1rem 0.75rem;
+        font-size: 0.9rem;
         margin-bottom: 1rem;
-    }
-}
-
-.site-content {
-    flex-grow: 1;
-    padding: 1rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 1024px) {
-    .site-header, .footer-container {
-        width: 94%;
-        font-family: 'Nunito Sans';
-        max-width: 95%;
-        padding: 1.5rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .site-header, .footer-container {
-        width: 100%; /* header uses full width on mobile */
-        max-width: 100%;
-        padding: 1rem;
-    }
-
-    .site-header nav {
-        display: flex;
-        flex-wrap: wrap; /* allow routes to wrap */
-        justify-content: center; /* center routes */
-        gap: 10px; /* spacing between routes */
-    }
-
-    .site-header nav a {
-        word-break: break-word; /* prevent overflow */
-        text-align: center;
     }
 }
