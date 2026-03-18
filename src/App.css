@@ -60,14 +60,14 @@ button, nav, select {
 /* ===============================================
    DESKTOP NAV
    =============================================== */
+
 .desktop-nav {
   display: flex;
   justify-content: center;
-  flex: 1 1 100%;
-  gap: 20px;
+  gap: 12px;        /* tighter spacing */
   flex-wrap: wrap;
+  flex: unset;      /* 🔥 remove the stretch */
 }
-
 .desktop-nav a {
   text-decoration: none;
   color: #52336c;
@@ -165,11 +165,10 @@ button, nav, select {
 .site-content {
   flex-grow: 1;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
   padding: 1rem;
 }
-
 /* ===============================================
    FOOTER
    =============================================== */
