@@ -127,3 +127,39 @@
     max-height: 300px;
   }
 }
+
+/* ===============================================
+   DESKTOP FIXES ONLY (SAFE)
+   =============================================== */
+@media (min-width: 1024px) {
+
+  /* --- Fix container centering issue --- */
+  .landscape-container {
+    align-items: stretch; /* stops weird boxed centering */
+  }
+
+  /* --- Center the toolbar (chips) --- */
+  .landscape-container .landscape-toolbar {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .landscape-container .filter-group,
+  .landscape-container .album-category {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* --- Improve grid width WITHOUT breaking layout --- */
+  .landscape-container .my-masonry-grid {
+    max-width: 1400px;     /* wider = less cramped */
+    padding: 0 20px;       /* breathing room on edges */
+  }
+
+  /* --- CRITICAL: remove image width restriction on desktop --- */
+  .landscape-container .masonry-image {
+    max-width: none;       /* removes 300px cap */
+    height: 260px;         /* slightly nicer proportion */
+  }
+
+}
