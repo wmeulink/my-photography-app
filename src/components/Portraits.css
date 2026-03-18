@@ -46,8 +46,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  justify-content: center; /* centers the grid inside container */
   justify-items: center;
   width: 100%;
+  max-width: 1400px;       /* consistent with container */
+  margin: 0 auto 40px auto;
+  box-sizing: border-box;
 }
 
 /* --- Polaroid Cards --- */
@@ -164,11 +168,15 @@
   }
 
   /* --- Give content more breathing room --- */
-  .portraits-container .page-container {
-    max-width: 1400px;   /* was 1300px */
-    padding-left: 40px;
-    padding-right: 40px;
-  }
+.portraits-container .page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers child elements */
+  width: 100%;
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+}
 
   /* --- Improve grid fill on wide screens --- */
   .portraits-container .my-masonry-grid {

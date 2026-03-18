@@ -17,11 +17,12 @@
 
 /* --- Toolbar / Filters --- */
 .landscape-container .landscape-toolbar {
-  display: flex;
+  max-width: 1200px;   /* same as .my-masonry-grid default */
+  width: 100%;
+  margin: 0 auto 20px auto;
+  justify-content: center; /* center chips */
   flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .landscape-container .filter-group,
@@ -162,4 +163,13 @@
     height: 260px;         /* slightly nicer proportion */
   }
 
+}
+
+@media (max-width: 768px) {
+  .landscape-container .landscape-toolbar {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 10px;
+  }
 }

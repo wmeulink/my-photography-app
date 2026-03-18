@@ -8,10 +8,18 @@
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  color: #2f2f2f;
-  background-color: #fafafa;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header,
+.footer,
+.album-page,
+.portraits-container,
+.landscape-container {
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 
 h1, h2, h3 {
@@ -44,9 +52,8 @@ button, nav, select {
   margin: 0 auto;
   padding: 3rem 1rem;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column; /* stack h1 + nav */
+  align-items: center;    /* center everything */
 }
 
 .site-header h1 {
@@ -64,9 +71,9 @@ button, nav, select {
 .desktop-nav {
   display: flex;
   justify-content: center;
-  gap: 12px;        /* tighter spacing */
+  gap: 12px;
   flex-wrap: wrap;
-  flex: unset;      /* 🔥 remove the stretch */
+  width: 100%;
 }
 .desktop-nav a {
   text-decoration: none;

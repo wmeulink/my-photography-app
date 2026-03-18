@@ -1,15 +1,12 @@
 .album-page {
+  background-color: #f4f0f5; /* matches landscapes / header */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 40px 20px;
-  background: #f4f0f5;
-  min-height: 100vh;
-  width: 100%;           /* take full width */
-  max-width: 1200px;     /* cap the width like your header/footer */
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px auto 0 auto; /* center horizontally with auto margins */
-  flex-wrap: wrap;
-  font-family: 'Montserrat', sans-serif;
 }
 
 .album-grid {
