@@ -1,21 +1,23 @@
 .album-page {
-  background-color: #f4f0f5; /* matches landscapes / header */
+  background-color: #f4f0f5;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;               /* remove extra top margin */
   padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;  /* ensure padding is counted in width */
 }
 
 .album-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 28px;
-  width: 100%;            /* full width of container */
+  width: 100%;
+  max-width: 1200px;       /* center and cap width */
   justify-items: center;
-  padding: 0 10px;        /* optional padding for small screens */
+  margin: 0 auto;          /* center grid horizontally */
+  padding: 0 10px;
 }
 
 /* Mobile adjustments */

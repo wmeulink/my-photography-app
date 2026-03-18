@@ -4,13 +4,15 @@
 
 /* --- Container --- */
 .portraits-container {
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 100vh; /* ensures page fills viewport */
+  min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: 40px; /* extra space at bottom */
+  padding-bottom: 40px;
+  background-color: #f4f0f5; /* same as header / landscapes / albums */
 }
 
 .portraits-container .page-container {

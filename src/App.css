@@ -71,9 +71,9 @@ button, nav, select {
 .desktop-nav {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   flex-wrap: wrap;
-  width: 100%;
+  width: auto;
 }
 .desktop-nav a {
   text-decoration: none;
