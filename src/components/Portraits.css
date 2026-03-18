@@ -152,3 +152,27 @@
     margin-bottom: 16px;
   }
 }
+
+/* ===============================================
+   PORTRAITS - DESKTOP FIXES ONLY (SAFE)
+   =============================================== */
+@media (min-width: 1024px) {
+
+  /* --- Let outer container stretch --- */
+  .portraits-container {
+    align-items: stretch;
+  }
+
+  /* --- Give content more breathing room --- */
+  .portraits-container .page-container {
+    max-width: 1400px;   /* was 1300px */
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  /* --- Improve grid fill on wide screens --- */
+  .portraits-container .my-masonry-grid {
+    gap: 24px;
+  }
+
+}

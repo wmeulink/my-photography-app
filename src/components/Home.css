@@ -76,3 +76,28 @@
     padding: 5px;
   }
 }
+
+/* ===============================================
+   HOME - DESKTOP FIXES ONLY (SAFE)
+   =============================================== */
+@media (min-width: 1024px) {
+
+  /* --- Let layout breathe on desktop --- */
+  .page-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  /* --- Expand masonry grid width --- */
+  .my-masonry-grid {
+    max-width: 1400px;   /* was effectively narrower before */
+    margin: 0 auto;
+  }
+
+  /* --- Improve column sizing for better fill --- */
+  .my-masonry-grid_column {
+    flex: 1 1 320px; /* slightly wider columns */
+    padding: 12px;
+  }
+
+}
