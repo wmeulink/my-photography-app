@@ -43,8 +43,27 @@ button, nav, select {
 
 .site-header {
   width: 100%;
-  background-color: #f4f0f5;
-  box-shadow: 0 2px 8px rgba(206, 187, 203, 0.936);
+  max-width: none;
+  margin: 0 auto;
+  padding: 0; /* remove extra spacing */
+  
+  /* Match the content background and gradient */
+  background: linear-gradient(180deg, #f4f0f5 0%, #ede5ef 100%);
+
+  /* Shadows */
+  box-shadow: 
+    inset 0 6px 12px rgba(0, 0, 0, 0.06),  /* subtle inner shadow */
+    0 8px 24px rgba(0, 0, 0, 0.12);        /* soft outer shadow */
+
+  border-radius: 12px; /* rounded corners */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.site-header:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    inset 0 6px 12px rgba(0,0,0,0.06),
+    0 12px 32px rgba(0,0,0,0.18);
 }
 
 .header-inner {
