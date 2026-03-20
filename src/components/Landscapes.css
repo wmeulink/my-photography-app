@@ -11,16 +11,16 @@
   width: 100%;
   min-height: 100vh;       /* ensures page fills viewport */
   box-sizing: border-box;
-  background-color: #f4f0f5;/* match site background */
-  padding-bottom: 40px;    /* space at bottom */
+  background-color: #f4f0f5; /* match site background */
+  padding-bottom: 40px;     /* space at bottom */
 }
 
 /* --- Toolbar / Filters --- */
 .landscape-container .landscape-toolbar {
-  max-width: 1200px;   /* same as .my-masonry-grid default */
+  max-width: 1200px;   
   width: 100%;
   margin: 0 auto 20px auto;
-  justify-content: center; /* center chips */
+  justify-content: center;
   flex-wrap: wrap;
   text-align: center;
 }
@@ -30,6 +30,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  justify-content: center; /* ensure centered for mobile and desktop */
+  flex-wrap: wrap;
 }
 
 .landscape-container .filter-label,
@@ -74,9 +76,9 @@
 /* --- Images --- */
 .landscape-container .masonry-image {
   width: 100%;
-  max-width: 300px;     /* prevents image from growing too wide */
+  max-width: 300px;     
   height: 250px;
-  max-height: 250px;    /* uniform size */
+  max-height: 250px;    
   object-fit: cover;
   display: block;
   border-radius: 8px;
@@ -127,49 +129,29 @@
     height: auto;
     max-height: 300px;
   }
+  .landscape-container .landscape-toolbar {
+    width: 100%;
+    padding: 0 10px;
+  }
 }
 
 /* ===============================================
-   DESKTOP FIXES ONLY (SAFE)
+   DESKTOP FIXES ONLY
    =============================================== */
 @media (min-width: 1024px) {
 
-  /* --- Fix container centering issue --- */
   .landscape-container {
     align-items: stretch; /* stops weird boxed centering */
   }
 
-  /* --- Center the toolbar (chips) --- */
-  .landscape-container .landscape-toolbar {
-    justify-content: center;
-    text-align: center;
-  }
-
-  .landscape-container .filter-group,
-  .landscape-container .album-category {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  /* --- Improve grid width WITHOUT breaking layout --- */
   .landscape-container .my-masonry-grid {
-    max-width: 1400px;     /* wider = less cramped */
-    padding: 0 20px;       /* breathing room on edges */
+    max-width: 1400px;     
+    padding: 0 20px;       
   }
 
-  /* --- CRITICAL: remove image width restriction on desktop --- */
   .landscape-container .masonry-image {
-    max-width: none;       /* removes 300px cap */
-    height: 260px;         /* slightly nicer proportion */
+    max-width: none;       
+    height: 260px;         
   }
 
-}
-
-@media (max-width: 768px) {
-  .landscape-container .landscape-toolbar {
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    padding: 0 10px;
-  }
 }

@@ -1,103 +1,94 @@
-/* Home Page Container */
+/* ===============================================
+   HOME PAGE
+   =============================================== */
+
+/* --- Page Container --- */
 .page-container {
   background: #f4f0f5;
   font-family: 'Montserrat', sans-serif;
   width: 100%;
   padding: 20px;
-  display: block; /* ensure Masonry can expand naturally */
+  display: block; /* allows Masonry to expand naturally */
   box-sizing: border-box;
 }
 
-/* Masonry grid wrapper */
-.my-masonry-grid {
+/* --- Masonry Grid Wrapper --- */
+.home .my-masonry-grid {
   display: flex;
   justify-content: center;
   margin: 0 auto;
   width: 100%;
-  gap: 20px; /* <-- this adds horizontal spacing between columns */
+  gap: 20px; /* horizontal spacing between columns */
 }
 
-/* spacing between items vertically */
-.masonry-item-wrapper {
-  margin-bottom: 20px; /* vertical spacing */
-}
-
-/* Masonry columns */
-.my-masonry-grid_column {
-  flex: 1 1 300px; /* minimum width for each column, grows to fill space */
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-/* Individual image wrapper inside Masonry column */
-.masonry-item-wrapper {
+/* --- Masonry Item Wrapper --- */
+.home .masonry-item-wrapper {
   position: relative;
   width: 100%;
-   /* same as Portraits polaroids */
   margin-bottom: 16px;
   overflow: hidden;
-  
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
 }
 
-.masonry-item-wrapper:hover {
+.home .masonry-item-wrapper:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 22px rgba(0,0,0,0.25);
 }
 
-/* Images inside Masonry wrapper */
+/* --- Images --- */
 .home .masonry-image {
   width: 100%;
-  height: auto; /* consistent with Portraits polaroids */
+  height: auto;
   object-fit: cover;
   display: block;
   border-radius: 8px;
 }
 
-/* Lightbox spinner fix */
+/* --- Masonry Columns --- */
+.home .my-masonry-grid_column {
+  flex: 1 1 300px; /* minimum width per column */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* --- Lightbox Spinner Fix --- */
 .ril-spinner {
   display: none !important;
 }
 
-/* Responsive adjustments */
+/* --- Responsive --- */
 @media (max-width: 1024px) {
-  .my-masonry-grid_column {
+  .home .my-masonry-grid_column {
     flex: 1 1 250px;
     padding: 8px;
   }
 }
 
 @media (max-width: 768px) {
-  .my-masonry-grid_column {
+  .home .my-masonry-grid_column {
     flex: 1 1 100%; /* single column on mobile */
     padding: 5px;
   }
 }
 
-/* ===============================================
-   HOME - DESKTOP FIXES ONLY (SAFE)
-   =============================================== */
+/* --- Desktop Fixes --- */
 @media (min-width: 1024px) {
-
-  /* --- Let layout breathe on desktop --- */
+  /* allow more breathing room on desktop */
   .page-container {
     padding-left: 40px;
     padding-right: 40px;
   }
 
-  /* --- Expand masonry grid width --- */
-  .my-masonry-grid {
-    max-width: 1400px;   /* was effectively narrower before */
+  .home .my-masonry-grid {
+    max-width: 1400px;
     margin: 0 auto;
   }
 
-  /* --- Improve column sizing for better fill --- */
-  .my-masonry-grid_column {
+  .home .my-masonry-grid_column {
     flex: 1 1 320px; /* slightly wider columns */
     padding: 12px;
   }
-
 }

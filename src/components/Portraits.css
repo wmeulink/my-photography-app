@@ -11,15 +11,15 @@
   min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 40px;
-  background-color: #f4f0f5; /* match header / landscapes / albums */
-  align-items: center;       /* mobile default */
+  background-color: #f4f0f5; 
+  align-items: center; /* mobile default */
 }
 
 /* --- Inner Page Container --- */
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   width: 100%;
-  max-width: 1400px; /* unified with landscapes */
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +44,6 @@
   margin-bottom: 24px;
 }
 
-/* --- Make portrait buttons look like landscape chips --- */
 .portraits-container .portrait-buttons-container button,
 .portraits-container .portrait-buttons-container .MuiButton-root {
   width: auto !important;
@@ -58,7 +57,6 @@
   text-transform: none;
 }
 
-/* Active / Selected state */
 .portraits-container .portrait-buttons-container button.active,
 .portraits-container .portrait-buttons-container .MuiButton-root.active {
   background-color: #1976d2;
@@ -117,7 +115,7 @@
   line-height: 1.3;
 }
 
-/* --- Upload Button / Dialog --- */
+/* --- Upload / Dialog --- */
 .portraits-container .upload-button {
   border-radius: 20px;
   text-transform: none;
@@ -181,14 +179,11 @@
   }
 }
 
-/* ===============================================
-   DESKTOP FIXES ONLY (SAFE)
-   =============================================== */
+/* --- Desktop Fixes --- */
 @media (min-width: 1024px) {
   .portraits-container {
-    align-items: stretch; /* stretch container for wide screens */
+    align-items: stretch;
   }
-
   .portraits-container .my-masonry-grid {
     gap: 24px;
   }
