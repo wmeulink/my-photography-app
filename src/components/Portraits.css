@@ -7,31 +7,30 @@
   margin-top: 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 40px;
-  background-color: #f4f0f5; 
-  align-items: center; /* mobile default */
+  background-color: #f4f0f5; /* same as header / landscapes / albums */
 }
 
-/* --- Inner Page Container --- */
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  margin: 0 auto;
 }
 
 /* --- Header --- */
 .portraits-container .portrait-header {
   font-weight: 700;
   color: #52336c;
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin-bottom: 16px;
 }
 
@@ -44,34 +43,15 @@
   margin-bottom: 24px;
 }
 
-.portraits-container .portrait-buttons-container button,
-.portraits-container .portrait-buttons-container .MuiButton-root {
-  width: auto !important;
-  justify-content: center !important;
-  text-align: center !important;
-  padding: 0 12px !important;
-  margin: 4px 2px !important;
-  min-height: 36px;
-  font-weight: bold;
-  border-radius: 16px;
-  text-transform: none;
-}
-
-.portraits-container .portrait-buttons-container button.active,
-.portraits-container .portrait-buttons-container .MuiButton-root.active {
-  background-color: #1976d2;
-  color: #fff;
-  border-bottom: 2px solid #52336c;
-}
-
 /* --- Masonry / Grid --- */
 .portraits-container .my-masonry-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  justify-content: center; /* centers the grid inside container */
   justify-items: center;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1400px;       /* consistent with container */
   margin: 0 auto 40px auto;
   box-sizing: border-box;
 }
@@ -115,7 +95,7 @@
   line-height: 1.3;
 }
 
-/* --- Upload / Dialog --- */
+/* --- Upload Button / Dialog --- */
 .portraits-container .upload-button {
   border-radius: 20px;
   text-transform: none;
@@ -133,15 +113,15 @@
 }
 
 /* --- Loading / No Results / Error --- */
-.portraits-container .loading,
-.portraits-container .no-results,
-.portraits-container .error-message {
+.loading,
+.no-results,
+.error-message {
   text-align: center;
   margin-top: 2rem;
   font-size: 1.2rem;
 }
 
-.portraits-container .no-results {
+.no-results {
   font-style: italic;
 }
 
@@ -167,7 +147,7 @@
   }
   .portraits-container .polaroid {
     width: 90%;
-    height: auto;
+    height: auto; /* allows height to adjust naturally */
   }
   .portraits-container .polaroid img {
     height: auto;
@@ -179,12 +159,30 @@
   }
 }
 
-/* --- Desktop Fixes --- */
+/* ===============================================
+   PORTRAITS - DESKTOP FIXES ONLY (SAFE)
+   =============================================== */
 @media (min-width: 1024px) {
+
+  /* --- Let outer container stretch --- */
   .portraits-container {
     align-items: stretch;
   }
+
+  /* --- Give content more breathing room --- */
+.portraits-container .page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers child elements */
+  width: 100%;
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+  /* --- Improve grid fill on wide screens --- */
   .portraits-container .my-masonry-grid {
     gap: 24px;
   }
+
 }
