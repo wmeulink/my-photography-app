@@ -12,7 +12,7 @@
   min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 40px;
-  background-color: #f4f0f5; /* same as header / landscapes / albums */
+  background-color: #f4f0f5;
 }
 
 .portraits-container .page-container {
@@ -63,7 +63,7 @@
   flex-direction: column;
   align-items: center;
   width: 220px;
-  height: auto; /* dynamic height based on image */
+  height: 320px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
   padding: 10px 10px 25px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -80,10 +80,8 @@
 .portraits-container .polaroid img,
 .portraits-container .polaroid-img {
   width: 100%;
-  height: auto;           /* natural height */
-  max-height: 320px;      /* prevents overly tall images on desktop */
-  object-fit: contain;     /* show full image without cropping */
-  display: block;
+  height: 100%;
+  object-fit: cover;
   border-radius: 4px;
 }
 
@@ -135,11 +133,11 @@
   }
   .portraits-container .polaroid {
     width: 180px;
+    height: 280px;
   }
-  .portraits-container .polaroid img,
-  .portraits-container .polaroid-img {
-    max-height: 280px;
-    object-fit: contain;
+  .portraits-container .polaroid img {
+    height: 100%;
+    object-fit: cover;
   }
 }
 
@@ -151,15 +149,15 @@
   .portraits-container .polaroid {
     width: 90%;
     height: auto;
-    aspect-ratio: auto;  /* image dictates height */
+    aspect-ratio: 3 / 4;
     padding: 10px 10px 25px;
   }
 
   .portraits-container .polaroid-img {
     width: 100%;
-    height: auto;
-    max-height: none;   /* full image visible on mobile */
-    object-fit: contain;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
   }
 
   .portraits-container .portrait-buttons-container {
@@ -172,13 +170,10 @@
    PORTRAITS - DESKTOP FIXES ONLY (SAFE)
    =============================================== */
 @media (min-width: 1024px) {
-
-  /* --- Let outer container stretch --- */
   .portraits-container {
     align-items: stretch;
   }
 
-  /* --- Give content more breathing room --- */
   .portraits-container .page-container {
     display: flex;
     flex-direction: column;
@@ -189,7 +184,6 @@
     margin: 0 auto;
   }
 
-  /* --- Improve grid fill on wide screens --- */
   .portraits-container .my-masonry-grid {
     gap: 24px;
   }
