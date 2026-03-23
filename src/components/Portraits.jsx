@@ -59,9 +59,17 @@ export default function Portraits() {
     );
   };
 
+  // ✅ Lightbox open/close with scroll lock
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
+    document.body.style.overflow = "hidden"; // prevent background scroll
+    window.scrollTo({ top: 0, behavior: "smooth" }); // ensure lightbox is at top
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    document.body.style.overflow = "auto"; // restore scroll
   };
 
   return (
@@ -102,7 +110,7 @@ export default function Portraits() {
                   src={p.thumbnailSrc}
                   alt={p.title || "Portrait"}
                   loading="lazy"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  className="polaroid-img" // uses CSS for responsive polaroid aspect
                 />
                 <div className="label">{p.title || "Untitled"}</div>
               </div>
@@ -115,7 +123,7 @@ export default function Portraits() {
           <CustomLightbox
             photos={filteredPortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
-            onClose={() => setLightboxOpen(false)}
+            onClose={closeLightbox}
             onPrev={() => setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)}
             onNext={() => setCurrentIndex((currentIndex + 1) % filteredPortraits.length)}
           />
