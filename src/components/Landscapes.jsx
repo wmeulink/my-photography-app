@@ -28,7 +28,6 @@ export default function Landscapes() {
     const fetchLandscapes = async () => {
       setLoading(true);
       try {
-        // Fetch only the selected category for performance, else all
         const url = selectedCategory
           ? `${API_URL}/api/Landscapes/category/${encodeURIComponent(selectedCategory)}`
           : `${API_URL}/api/Landscapes`;
@@ -85,12 +84,17 @@ export default function Landscapes() {
     });
   }, [selectedTags, landscapes, selectedCategory]);
 
-  // Open lightbox
+  // Lightbox controls with scroll lock
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-    // Optional: scroll to top to avoid long mobile page
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.body.style.overflow = "hidden"; // lock background scroll
+    window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top on mobile
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    document.body.style.overflow = "auto"; // restore scroll
   };
 
   return (
@@ -151,7 +155,7 @@ export default function Landscapes() {
         <CustomLightbox
           photos={visibleLandscapes.map(l => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
-          onClose={() => setLightboxOpen(false)}
+          onClose={closeLightbox} // updated for scroll lock
           onPrev={() => setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)}
           onNext={() => setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)}
         />
