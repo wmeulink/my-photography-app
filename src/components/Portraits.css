@@ -1,6 +1,5 @@
 /* ===============================================
-   PORTRAITS CSS - CLEAN RESPONSIVE LAYOUT
-   Mobile-first, desktop image heights consistent
+   PORTRAITS CSS - FINAL DESKTOP BIG & MOBILE FIX
    =============================================== */
 
 /* --- Container --- */
@@ -47,7 +46,7 @@
 /* --- Masonry / Grid --- */
 .portraits-container .my-masonry-grid {
   display: grid;
-  grid-template-columns: 1fr; /* mobile first: single column */
+  grid-template-columns: 1fr; /* mobile first */
   gap: 16px;
   width: 100%;
   max-width: 1400px;
@@ -62,9 +61,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 70%;           /* smaller for mobile */
-  max-width: 250px;
-  aspect-ratio: 3 / 4;  /* keep your preferred ratio */
+  width: 85%;           /* slightly wider for mobile */
+  max-width: 300px;
+  aspect-ratio: 3 / 4;
   padding: 10px 10px 25px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
   border-radius: 8px;
@@ -81,7 +80,7 @@
 .portraits-container .polaroid img,
 .portraits-container .polaroid .polaroid-img {
   width: 100%;
-  height: 100%;         /* fills polaroid */
+  height: auto;         /* prevents overlapping */
   object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
@@ -115,23 +114,22 @@
    =============================================== */
 @media (min-width: 768px) and (max-width: 1024px) {
   .portraits-container .my-masonry-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 18px;
   }
 
   .portraits-container .polaroid {
-    width: 180px;
-    height: auto;
+    width: 200px;
     aspect-ratio: 3 / 4;
   }
 
   .portraits-container .polaroid img {
-    height: 160px;
+    height: 180px;
   }
 
   .portraits-container .portrait-buttons-container {
-    gap: 10px;
-    margin-bottom: 16px;
+    gap: 12px;
+    margin-bottom: 18px;
   }
 }
 
@@ -140,14 +138,14 @@
    =============================================== */
 @media (min-width: 1024px) {
   .portraits-container .my-masonry-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
     justify-items: center;
   }
 
   .portraits-container .polaroid {
-    width: 180px;
-    height: 260px;       /* fixed desktop polaroid */
+    width: 240px;      /* larger desktop polaroid */
+    height: 350px;     /* bigger, keeps ratio */
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -157,13 +155,13 @@
   .portraits-container .polaroid img,
   .portraits-container .polaroid .polaroid-img {
     width: 100%;
-    height: 70%;         /* consistent image height across all cards */
+    height: 240px;     /* bigger image for desktop */
     object-fit: cover;
   }
 
   .portraits-container .polaroid .label {
-    flex-shrink: 0;       /* ensure label space is reserved */
     margin-top: 8px;
+    flex-shrink: 0;
   }
 
   .portraits-container .page-container {
