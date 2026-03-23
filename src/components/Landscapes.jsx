@@ -17,15 +17,17 @@ export default function Landscapes() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => setSelectedCategory(categoryParam || ""), [categoryParam]);
+  // Keep selectedCategory in sync with URL
+  useEffect(() => {
+    setSelectedCategory(categoryParam || "");
+  }, [categoryParam]);
 
+  // Fetch landscapes and tags
   useEffect(() => {
     const fetchLandscapes = async () => {
       setLoading(true);
       try {
-        const url = selectedCategory
-          ? `${API_URL}/api/Landscapes/category/${selectedCategory}`
-          : `${API_URL}/api/Landscapes`;
+        const url = `${API_URL}/api/Landscapes`;
         const res = await fetch(url);
         const data = await res.json();
 
@@ -33,6 +35,7 @@ export default function Landscapes() {
           ...l,
           thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
           fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
+          categoryName: l.categoryName || l.category?.name || "", // critical for filtering albums
         }));
 
         setLandscapes(converted);
@@ -56,19 +59,29 @@ export default function Landscapes() {
 
     fetchLandscapes();
     fetchTags();
-  }, [selectedCategory]);
+  }, []);
 
+  // Toggle tag selection
   const toggleTag = (tag) => {
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
   };
 
+  // Filter landscapes by selectedCategory + selectedTags
   const visibleLandscapes = useMemo(() => {
-    if (!selectedTags.length) return landscapes;
-    return landscapes.filter(l => selectedTags.every(tag => l.tags.includes(tag)));
-  }, [selectedTags, landscapes]);
+    return landscapes.filter(l => {
+      const matchesCategory = selectedCategory
+        ? l.categoryName.toLowerCase() === selectedCategory.toLowerCase()
+        : true;
+      const matchesTags = selectedTags.length
+        ? selectedTags.every(tag => l.tags.includes(tag))
+        : true;
+      return matchesCategory && matchesTags;
+    });
+  }, [selectedTags, landscapes, selectedCategory]);
 
+  // Lightbox controls
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);

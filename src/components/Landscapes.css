@@ -11,13 +11,13 @@
   width: 100%;
   min-height: 100vh;       /* ensures page fills viewport */
   box-sizing: border-box;
-  background-color: #f4f0f5;/* match site background */
+  background-color: #f4f0f5; /* match site background */
   padding-bottom: 40px;    /* space at bottom */
 }
 
 /* --- Toolbar / Filters --- */
 .landscape-container .landscape-toolbar {
-  max-width: 1200px;   /* same as .my-masonry-grid default */
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto 20px auto;
   justify-content: center; /* center chips */
@@ -71,14 +71,11 @@
   transition: opacity 0.4s ease-in-out;
 }
 
-/* --- Images --- */
+/* --- Images (Thumbnails) --- */
 .landscape-container .masonry-image {
   width: 100%;
-  max-width: 300px;     /* prevents image from growing too wide */
-  height: 250px;
-  max-height: 250px;    /* uniform size */
-  object-fit: cover;
-  display: block;
+  height: auto;          /* keep aspect ratio */
+  object-fit: contain;   /* prevents cropping */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -90,6 +87,17 @@
   box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
+/* --- Lightbox Images --- */
+.custom-lightbox img {
+  max-width: 90vw;    /* fit in viewport width */
+  max-height: 90vh;   /* fit in viewport height */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
 /* --- Text / Titles --- */
 .landscape-container .landscape-title {
   text-align: center;
@@ -97,7 +105,7 @@
   margin-bottom: 12px;
 }
 
-/* --- Loading / Error Messages --- */
+/* --- Loading / Error / No Results Messages --- */
 .landscape-container .loading,
 .landscape-container .error-message,
 .landscape-container .no-results {
@@ -112,8 +120,8 @@
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
   .landscape-container .masonry-image {
-    height: 220px;
-    max-height: 220px;
+    height: auto;       /* auto height preserves aspect ratio */
+    max-height: 260px;  /* optional limit */
   }
 }
 
@@ -126,6 +134,12 @@
     width: 90%;
     height: auto;
     max-height: 300px;
+  }
+  .landscape-container .landscape-toolbar {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 10px;
   }
 }
 
@@ -157,19 +171,4 @@
     padding: 0 20px;       /* breathing room on edges */
   }
 
-  /* --- CRITICAL: remove image width restriction on desktop --- */
-  .landscape-container .masonry-image {
-    max-width: none;       /* removes 300px cap */
-    height: 260px;         /* slightly nicer proportion */
-  }
-
-}
-
-@media (max-width: 768px) {
-  .landscape-container .landscape-toolbar {
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    padding: 0 10px;
-  }
 }
