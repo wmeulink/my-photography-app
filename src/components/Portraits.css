@@ -1,18 +1,18 @@
 /* ===============================================
-   PORTRAITS CSS - DESKTOP SPACING & MOBILE IMAGE FIX
+   PORTRAITS CSS - FULL RESPONSIVE FIX
    =============================================== */
 
 /* --- Container --- */
 .portraits-container {
   margin: 0;
-  padding: 40px 0 60px;   /* more top & bottom padding for breathing */
+  padding: 40px 0 60px;   /* breathing room top & bottom */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
   background-color: #f4f0f5;
-  min-height: 100vh;      /* ensure footer not stuck next to images */
+  min-height: 100vh;      /* footer won't stick to images */
 }
 
 /* --- Page Container --- */
@@ -82,8 +82,8 @@
 .portraits-container .polaroid img,
 .portraits-container .polaroid .polaroid-img {
   width: 100%;
-  height: 70%;          /* fixed proportion of polaroid */
-  object-fit: cover;    /* crops nicely without stretching */
+  height: 70%;          /* desktop default, mobile override later */
+  object-fit: cover;
   border-radius: 4px;
   flex-shrink: 0;
 }
@@ -92,9 +92,10 @@
 .portraits-container .polaroid .label {
   margin-top: 8px;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 400;                   /* natural handwriting feel */
   text-align: center;
-  color: #4a3b58;
+  color: black;                       /* black ink for 90s vibe */
+  font-family: 'Reenie Beanie', cursive;
   line-height: 1.3;
   flex-shrink: 0;
 }
@@ -147,8 +148,8 @@
   }
 
   .portraits-container .polaroid {
-    width: 240px;      /* bigger polaroid */
-    height: 350px;     /* larger, keeps ratio */
+    width: 240px;
+    height: 350px;       /* larger, keeps ratio */
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -158,12 +159,38 @@
   .portraits-container .polaroid img,
   .portraits-container .polaroid .polaroid-img {
     width: 100%;
-    height: 250px;     /* bigger image for desktop */
+    height: 250px;       /* bigger image for desktop */
     object-fit: cover;
   }
 
   .portraits-container .page-container {
-    padding: 40px 20px; /* more breathing room */
+    padding: 40px 20px;  /* more breathing room */
     margin: 0 auto;
+  }
+}
+
+/* ===============================================
+   RESPONSIVE - MOBILE
+   =============================================== */
+@media (max-width: 767px) {
+  .portraits-container .polaroid {
+    width: 90%;
+    max-width: 320px;
+    aspect-ratio: 3 / 4;
+    padding: 10px 10px 20px;
+  }
+
+  .portraits-container .polaroid img,
+  .portraits-container .polaroid .polaroid-img {
+    width: 100%;
+    height: 82%;         /* taller images → less white space */
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .portraits-container .portrait-buttons-container {
+    gap: 10px;
+    margin-bottom: 16px;
   }
 }
