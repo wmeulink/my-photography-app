@@ -12,7 +12,7 @@
   min-height: 100vh;
   box-sizing: border-box;
   padding-bottom: 40px;
-  background-color: #f4f0f5;
+  background-color: #f4f0f5; /* same as header / landscapes / albums */
 }
 
 .portraits-container .page-container {
@@ -80,8 +80,9 @@
 .portraits-container .polaroid img,
 .portraits-container .polaroid-img {
   width: 100%;
-  height: 100%;
+  height: 220px; /* same as desktop for consistency */
   object-fit: cover;
+  background-color: #fafafa;
   border-radius: 4px;
 }
 
@@ -125,7 +126,7 @@
   font-style: italic;
 }
 
-/* --- Responsive --- */
+/* --- Responsive: Tablet / Small Desktop --- */
 @media (max-width: 1024px) {
   .portraits-container .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -136,26 +137,29 @@
     height: 280px;
   }
   .portraits-container .polaroid img {
-    height: 100%;
-    object-fit: cover;
+    height: 160px;
   }
 }
 
+/* --- Responsive: Mobile --- */
 @media (max-width: 768px) {
   .portraits-container .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(90%, 1fr));
     gap: 12px;
   }
+
   .portraits-container .polaroid {
     width: 90%;
-    height: auto;
-    aspect-ratio: 3 / 4;
+    height: 280px; /* keep similar to desktop proportion */
     padding: 10px 10px 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* label stays below image */
   }
 
   .portraits-container .polaroid-img {
     width: 100%;
-    height: 100%;
+    height: 220px; /* same as desktop */
     object-fit: cover;
     border-radius: 4px;
   }
@@ -166,14 +170,15 @@
   }
 }
 
-/* ===============================================
-   PORTRAITS - DESKTOP FIXES ONLY (SAFE)
-   =============================================== */
+/* --- Desktop Fixes Only --- */
 @media (min-width: 1024px) {
+
+  /* Let outer container stretch */
   .portraits-container {
     align-items: stretch;
   }
 
+  /* Give content more breathing room */
   .portraits-container .page-container {
     display: flex;
     flex-direction: column;
@@ -184,6 +189,7 @@
     margin: 0 auto;
   }
 
+  /* Improve grid fill on wide screens */
   .portraits-container .my-masonry-grid {
     gap: 24px;
   }
