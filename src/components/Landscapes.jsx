@@ -17,9 +17,10 @@ export default function Landscapes() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Keep selectedCategory in sync with URL
+  // Sync category from URL and reset tags when category changes
   useEffect(() => {
     setSelectedCategory(categoryParam || "");
+    setSelectedTags([]); // reset tags to avoid "no matches"
   }, [categoryParam]);
 
   // Fetch landscapes and tags
@@ -27,7 +28,10 @@ export default function Landscapes() {
     const fetchLandscapes = async () => {
       setLoading(true);
       try {
-        const url = `${API_URL}/api/Landscapes`;
+        // Fetch only the selected category for performance, else all
+        const url = selectedCategory
+          ? `${API_URL}/api/Landscapes/category/${encodeURIComponent(selectedCategory)}`
+          : `${API_URL}/api/Landscapes`;
         const res = await fetch(url);
         const data = await res.json();
 
@@ -35,7 +39,7 @@ export default function Landscapes() {
           ...l,
           thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
           fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
-          categoryName: l.categoryName || l.category?.name || "", // critical for filtering albums
+          categoryName: l.categoryName || l.category?.name || "",
         }));
 
         setLandscapes(converted);
@@ -59,7 +63,7 @@ export default function Landscapes() {
 
     fetchLandscapes();
     fetchTags();
-  }, []);
+  }, [selectedCategory]);
 
   // Toggle tag selection
   const toggleTag = (tag) => {
@@ -68,7 +72,7 @@ export default function Landscapes() {
     );
   };
 
-  // Filter landscapes by selectedCategory + selectedTags
+  // Filter landscapes by category and tags
   const visibleLandscapes = useMemo(() => {
     return landscapes.filter(l => {
       const matchesCategory = selectedCategory
@@ -81,19 +85,21 @@ export default function Landscapes() {
     });
   }, [selectedTags, landscapes, selectedCategory]);
 
-  // Lightbox controls
+  // Open lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
+    // Optional: scroll to top to avoid long mobile page
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <div className="landscape-container">
       <SEO
-        title={`Landscapes | Elliott Photography ${selectedCategory ? ` - ${selectedCategory}` : ""}`}
+        title={`Landscapes | Elliott Photography${selectedCategory ? ` - ${selectedCategory}` : ""}`}
         description="Explore Whitney Elliott's landscape photography portfolio."
         keywords={`Landscape photography, ${selectedCategory || ""}`}
-        url={`https://whittyelliott.com/landscapes${selectedCategory ? `/${selectedCategory}` : ""}`}
+        url={`https://whittyelliott.com/landscapes${selectedCategory ? `/${encodeURIComponent(selectedCategory)}` : ""}`}
         image={landscapes[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
       />
 
