@@ -48,10 +48,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  justify-content: center; /* centers the grid inside container */
+  justify-content: center;
   justify-items: center;
   width: 100%;
-  max-width: 1400px;       /* consistent with container */
+  max-width: 1400px;
   margin: 0 auto 40px auto;
   box-sizing: border-box;
 }
@@ -63,7 +63,7 @@
   flex-direction: column;
   align-items: center;
   width: 220px;
-  height: 320px;
+  height: auto; /* dynamic height based on image */
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
   padding: 10px 10px 25px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -77,11 +77,13 @@
 }
 
 /* --- Images --- */
-.portraits-container .polaroid img {
+.portraits-container .polaroid img,
+.portraits-container .polaroid-img {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
-  background-color: #fafafa;
+  height: auto;           /* natural height */
+  max-height: 320px;      /* prevents overly tall images on desktop */
+  object-fit: contain;     /* show full image without cropping */
+  display: block;
   border-radius: 4px;
 }
 
@@ -133,10 +135,11 @@
   }
   .portraits-container .polaroid {
     width: 180px;
-    height: 280px;
   }
-  .portraits-container .polaroid img {
-    height: 160px;
+  .portraits-container .polaroid img,
+  .portraits-container .polaroid-img {
+    max-height: 280px;
+    object-fit: contain;
   }
 }
 
@@ -148,16 +151,15 @@
   .portraits-container .polaroid {
     width: 90%;
     height: auto;
-    aspect-ratio: 3 / 4;   /* polaroid ratio */
+    aspect-ratio: auto;  /* image dictates height */
     padding: 10px 10px 25px;
   }
 
   .portraits-container .polaroid-img {
     width: 100%;
     height: auto;
-    max-height: 320px;     /* ensures polaroid look on mobile */
-    object-fit: cover;
-    border-radius: 4px;
+    max-height: none;   /* full image visible on mobile */
+    object-fit: contain;
   }
 
   .portraits-container .portrait-buttons-container {
@@ -177,19 +179,18 @@
   }
 
   /* --- Give content more breathing room --- */
-.portraits-container .page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* centers child elements */
-  width: 100%;
-  max-width: 1400px;
-  padding: 20px;
-  margin: 0 auto;
-}
+  .portraits-container .page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    padding: 20px;
+    margin: 0 auto;
+  }
 
   /* --- Improve grid fill on wide screens --- */
   .portraits-container .my-masonry-grid {
     gap: 24px;
   }
-
 }
