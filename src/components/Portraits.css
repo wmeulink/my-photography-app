@@ -89,13 +89,13 @@
   flex-shrink: 0;
 }
 
-/* --- Labels - vertically centered under image --- */
+/* --- Labels - vertically centered under image, bigger font --- */
 .portraits-container .polaroid .label {
   display: flex;
   align-items: center;        /* vertical centering */
   justify-content: center;    /* horizontal centering */
   flex-grow: 1;               /* fill remaining space under image */
-  font-size: 0.95rem;
+  font-size: 1.2rem;          /* bigger font for all screens */
   font-weight: 400;           /* natural handwriting feel */
   text-align: center;
   color: black;               /* black ink */
@@ -104,6 +104,12 @@
   margin-top: 8px;
 }
 
+/* Mobile tweak: slightly larger for small screens */
+@media (max-width: 767px) {
+  .portraits-container .polaroid .label {
+    font-size: 1.4rem;        /* pop more on mobile */
+  }
+}
 /* --- Loading / No Results / Error --- */
 .loading,
 .no-results,
