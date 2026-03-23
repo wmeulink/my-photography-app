@@ -23,15 +23,13 @@ export default function Landscapes() {
     setSelectedTags([]); // reset tags to avoid "no matches"
   }, [categoryParam]);
 
-  // Fetch landscapes and tags
+  // Fetch all landscapes and tags
   useEffect(() => {
     const fetchLandscapes = async () => {
       setLoading(true);
       try {
-        const url = selectedCategory
-          ? `${API_URL}/api/Landscapes/category/${encodeURIComponent(selectedCategory)}`
-          : `${API_URL}/api/Landscapes`;
-        const res = await fetch(url);
+        // Fetch all landscapes first
+        const res = await fetch(`${API_URL}/api/Landscapes`);
         const data = await res.json();
 
         const converted = data.map(l => ({
@@ -41,7 +39,14 @@ export default function Landscapes() {
           categoryName: l.categoryName || l.category?.name || "",
         }));
 
-        setLandscapes(converted);
+        // Filter by selectedCategory locally (case-insensitive)
+        const filtered = selectedCategory
+          ? converted.filter(
+              l => l.categoryName.toLowerCase() === selectedCategory.toLowerCase()
+            )
+          : converted;
+
+        setLandscapes(filtered);
       } catch (err) {
         console.error("Failed to fetch landscapes:", err);
         setLandscapes([]);
@@ -71,18 +76,15 @@ export default function Landscapes() {
     );
   };
 
-  // Filter landscapes by category and tags
+  // Filter landscapes by selected tags
   const visibleLandscapes = useMemo(() => {
     return landscapes.filter(l => {
-      const matchesCategory = selectedCategory
-        ? l.categoryName.toLowerCase() === selectedCategory.toLowerCase()
-        : true;
       const matchesTags = selectedTags.length
         ? selectedTags.every(tag => l.tags.includes(tag))
         : true;
-      return matchesCategory && matchesTags;
+      return matchesTags;
     });
-  }, [selectedTags, landscapes, selectedCategory]);
+  }, [selectedTags, landscapes]);
 
   // Lightbox controls with scroll lock
   const openLightbox = (index) => {
@@ -155,7 +157,7 @@ export default function Landscapes() {
         <CustomLightbox
           photos={visibleLandscapes.map(l => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
-          onClose={closeLightbox} // updated for scroll lock
+          onClose={closeLightbox}
           onPrev={() => setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)}
           onNext={() => setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)}
         />
