@@ -1,28 +1,29 @@
 /* ===============================================
-   PORTRAITS
+   PORTRAITS CSS - CLEAN RESPONSIVE LAYOUT
+   Mobile first
    =============================================== */
 
 /* --- Container --- */
 .portraits-container {
-  margin-top: 0;
+  margin: 0;
+  padding: 20px 0 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: 100vh;
   box-sizing: border-box;
-  padding-bottom: 40px;
-  background-color: #f4f0f5; /* same as header / landscapes / albums */
+  background-color: #f4f0f5;
 }
 
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   width: 100%;
-  max-width: 1300px;
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  box-sizing: border-box;
 }
 
 /* --- Header --- */
@@ -46,13 +47,12 @@
 /* --- Masonry / Grid --- */
 .portraits-container .my-masonry-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  justify-content: center; /* centers the grid inside container */
-  justify-items: center;
+  grid-template-columns: 1fr; /* mobile first: single column */
+  gap: 16px;
   width: 100%;
-  max-width: 1400px;       /* consistent with container */
-  margin: 0 auto 40px auto;
+  max-width: 1400px;
+  justify-items: center;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
@@ -62,13 +62,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 220px;
-  height: 320px;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 3 / 4;   /* maintain polaroid ratio */
+  padding: 10px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-  padding: 10px 10px 25px;
+  border-radius: 8px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   cursor: pointer;
-  border-radius: 8px;
 }
 
 .portraits-container .polaroid:hover {
@@ -77,12 +78,13 @@
 }
 
 /* --- Images --- */
-.portraits-container .polaroid img {
+.portraits-container .polaroid img,
+.portraits-container .polaroid .polaroid-img {
   width: 100%;
-  height: 220px;
+  height: auto;       /* scale naturally */
   object-fit: cover;
-  background-color: #fafafa;
   border-radius: 4px;
+  flex-shrink: 0;
 }
 
 /* --- Labels / Tags --- */
@@ -93,23 +95,6 @@
   text-align: center;
   color: #4a3b58;
   line-height: 1.3;
-}
-
-/* --- Upload Button / Dialog --- */
-.portraits-container .upload-button {
-  border-radius: 20px;
-  text-transform: none;
-}
-
-.portraits-container .dialog-title {
-  font-weight: bold;
-  font-size: 1.3rem;
-}
-
-.portraits-container .dialog-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 }
 
 /* --- Loading / No Results / Error --- */
@@ -128,44 +113,20 @@
 /* ===============================================
    RESPONSIVE - TABLET
    =============================================== */
-@media (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .portraits-container .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 16px;
   }
+
   .portraits-container .polaroid {
     width: 180px;
-    height: 280px;
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
+
   .portraits-container .polaroid img {
     height: 160px;
-  }
-}
-
-/* ===============================================
-   RESPONSIVE - MOBILE
-   =============================================== */
-@media (max-width: 768px) {
-  .portraits-container .my-masonry-grid {
-    grid-template-columns: repeat(auto-fit, minmax(90%, 1fr));
-    gap: 12px;
-  }
-
-  .portraits-container .polaroid {
-    width: 90%;
-    height: auto;
-    aspect-ratio: 3 / 4;   /* maintain polaroid ratio */
-    padding: 10px 10px 25px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* label at bottom */
-  }
-
-  .portraits-container .polaroid-img {
-    width: 100%;
-    height: 100%;          /* fill container proportionally */
-    object-fit: cover;     /* crop nicely without cutting top */
-    border-radius: 4px;
   }
 
   .portraits-container .portrait-buttons-container {
@@ -175,24 +136,25 @@
 }
 
 /* ===============================================
-   DESKTOP FIXES ONLY
+   RESPONSIVE - DESKTOP
    =============================================== */
 @media (min-width: 1024px) {
-  .portraits-container {
-    align-items: stretch;
+  .portraits-container .my-masonry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+  }
+
+  .portraits-container .polaroid {
+    width: 220px;
+    height: 320px;
+  }
+
+  .portraits-container .polaroid img {
+    height: 220px;
   }
 
   .portraits-container .page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 1400px;
     padding: 20px;
     margin: 0 auto;
-  }
-
-  .portraits-container .my-masonry-grid {
-    gap: 24px;
   }
 }
