@@ -48,10 +48,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
-  justify-content: center;
+  justify-content: center; /* centers the grid inside container */
   justify-items: center;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1400px;       /* consistent with container */
   margin: 0 auto 40px auto;
   box-sizing: border-box;
 }
@@ -77,10 +77,9 @@
 }
 
 /* --- Images --- */
-.portraits-container .polaroid img,
-.portraits-container .polaroid-img {
+.portraits-container .polaroid img {
   width: 100%;
-  height: 220px; /* same as desktop for consistency */
+  height: 220px;
   object-fit: cover;
   background-color: #fafafa;
   border-radius: 4px;
@@ -126,7 +125,9 @@
   font-style: italic;
 }
 
-/* --- Responsive: Tablet / Small Desktop --- */
+/* ===============================================
+   RESPONSIVE - TABLET
+   =============================================== */
 @media (max-width: 1024px) {
   .portraits-container .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -141,7 +142,9 @@
   }
 }
 
-/* --- Responsive: Mobile --- */
+/* ===============================================
+   RESPONSIVE - MOBILE
+   =============================================== */
 @media (max-width: 768px) {
   .portraits-container .my-masonry-grid {
     grid-template-columns: repeat(auto-fit, minmax(90%, 1fr));
@@ -150,17 +153,18 @@
 
   .portraits-container .polaroid {
     width: 90%;
-    height: 280px; /* keep similar to desktop proportion */
+    height: auto;
+    aspect-ratio: 3 / 4;   /* maintain polaroid ratio */
     padding: 10px 10px 25px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* label stays below image */
+    justify-content: flex-start; /* label at bottom */
   }
 
   .portraits-container .polaroid-img {
     width: 100%;
-    height: 220px; /* same as desktop */
-    object-fit: cover;
+    height: 100%;          /* fill container proportionally */
+    object-fit: cover;     /* crop nicely without cutting top */
     border-radius: 4px;
   }
 
@@ -170,15 +174,14 @@
   }
 }
 
-/* --- Desktop Fixes Only --- */
+/* ===============================================
+   DESKTOP FIXES ONLY
+   =============================================== */
 @media (min-width: 1024px) {
-
-  /* Let outer container stretch */
   .portraits-container {
     align-items: stretch;
   }
 
-  /* Give content more breathing room */
   .portraits-container .page-container {
     display: flex;
     flex-direction: column;
@@ -189,7 +192,6 @@
     margin: 0 auto;
   }
 
-  /* Improve grid fill on wide screens */
   .portraits-container .my-masonry-grid {
     gap: 24px;
   }
