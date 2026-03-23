@@ -1,19 +1,21 @@
 /* ===============================================
-   PORTRAITS CSS - FINAL DESKTOP BIG & MOBILE FIX
+   PORTRAITS CSS - DESKTOP SPACING & MOBILE IMAGE FIX
    =============================================== */
 
 /* --- Container --- */
 .portraits-container {
   margin: 0;
-  padding: 20px 0 40px;
+  padding: 40px 0 60px;   /* more top & bottom padding for breathing */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
   background-color: #f4f0f5;
+  min-height: 100vh;      /* ensure footer not stuck next to images */
 }
 
+/* --- Page Container --- */
 .portraits-container .page-container {
   font-family: 'Montserrat', sans-serif;
   width: 100%;
@@ -34,7 +36,7 @@
   margin-bottom: 16px;
 }
 
-/* --- Tag / Filter Buttons --- */
+/* --- Buttons --- */
 .portraits-container .portrait-buttons-container {
   display: flex;
   flex-wrap: wrap;
@@ -43,7 +45,7 @@
   margin-bottom: 24px;
 }
 
-/* --- Masonry / Grid --- */
+/* --- Masonry Grid --- */
 .portraits-container .my-masonry-grid {
   display: grid;
   grid-template-columns: 1fr; /* mobile first */
@@ -61,7 +63,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 85%;           /* slightly wider for mobile */
+  width: 85%;
   max-width: 300px;
   aspect-ratio: 3 / 4;
   padding: 10px 10px 25px;
@@ -80,20 +82,21 @@
 .portraits-container .polaroid img,
 .portraits-container .polaroid .polaroid-img {
   width: 100%;
-  height: auto;         /* prevents overlapping */
-  object-fit: cover;
+  height: 70%;          /* fixed proportion of polaroid */
+  object-fit: cover;    /* crops nicely without stretching */
   border-radius: 4px;
   flex-shrink: 0;
 }
 
-/* --- Labels / Tags --- */
+/* --- Labels --- */
 .portraits-container .polaroid .label {
-  margin-top: 12px;
+  margin-top: 8px;
   font-size: 0.95rem;
   font-weight: 600;
   text-align: center;
   color: #4a3b58;
   line-height: 1.3;
+  flex-shrink: 0;
 }
 
 /* --- Loading / No Results / Error --- */
@@ -144,8 +147,8 @@
   }
 
   .portraits-container .polaroid {
-    width: 240px;      /* larger desktop polaroid */
-    height: 350px;     /* bigger, keeps ratio */
+    width: 240px;      /* bigger polaroid */
+    height: 350px;     /* larger, keeps ratio */
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -155,17 +158,12 @@
   .portraits-container .polaroid img,
   .portraits-container .polaroid .polaroid-img {
     width: 100%;
-    height: 240px;     /* bigger image for desktop */
+    height: 250px;     /* bigger image for desktop */
     object-fit: cover;
   }
 
-  .portraits-container .polaroid .label {
-    margin-top: 8px;
-    flex-shrink: 0;
-  }
-
   .portraits-container .page-container {
-    padding: 20px;
+    padding: 40px 20px; /* more breathing room */
     margin: 0 auto;
   }
 }
