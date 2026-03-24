@@ -95,7 +95,7 @@
   align-items: center;        /* vertical centering */
   justify-content: center;    /* horizontal centering */
   flex-grow: 1;               /* fill remaining space under image */
-  font-size: 1.2rem;          /* bigger font for all screens */
+  font-size: 2.2rem;          /* bigger font for all screens */
   font-weight: 400;           /* natural handwriting feel */
   text-align: center;
   color: black;               /* black ink */
@@ -107,7 +107,7 @@
 /* Mobile tweak: slightly larger for small screens */
 @media (max-width: 767px) {
   .portraits-container .polaroid .label {
-    font-size: 1.4rem;        /* pop more on mobile */
+    font-size: 1.9rem;        /* pop more on mobile */
   }
 }
 /* --- Loading / No Results / Error --- */
@@ -116,7 +116,7 @@
 .error-message {
   text-align: center;
   margin-top: 2rem;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 .no-results {
