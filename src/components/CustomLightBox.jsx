@@ -22,7 +22,7 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
     setTimeout(() => {
       setClosing(false);
       onClose();
-    }, 500); // match CSS animation duration
+    }, 500); // match CSS slide-out duration
   };
 
   return (
@@ -30,11 +30,16 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
       <span className="close" onClick={handleClose}>
         &times;
       </span>
-      <img
-        src={photo.src}         
-        alt={photo.title || "Photo"}
-        className={`lightbox-image ${closing ? "slide-out" : "fade-in"}`}
-      />
+
+      {/* Wrapper ensures vertical + horizontal centering */}
+      <div className="lightbox-content">
+        <img
+          src={photo.src}
+          alt={photo.title || "Photo"}
+          className={`lightbox-image ${closing ? "slide-out" : "fade-in"}`}
+        />
+      </div>
+
       <button className="prev" onClick={onPrev}>
         &lsaquo;
       </button>
