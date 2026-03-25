@@ -91,7 +91,6 @@ export default function Landscapes() {
     setCurrentIndex(index);
     setLightboxOpen(true);
     document.body.style.overflow = "hidden"; // lock background scroll
-    window.scrollTo({ top: 0, behavior: "smooth" }); // scroll to top on mobile
   };
 
   const closeLightbox = () => {

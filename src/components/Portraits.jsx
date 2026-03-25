@@ -64,7 +64,6 @@ export default function Portraits() {
     setCurrentIndex(index);
     setLightboxOpen(true);
     document.body.style.overflow = "hidden"; // prevent background scroll
-    window.scrollTo({ top: 0, behavior: "smooth" }); // ensure lightbox is at top
   };
 
   const closeLightbox = () => {
