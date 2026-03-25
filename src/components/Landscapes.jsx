@@ -42,8 +42,8 @@ export default function Landscapes() {
         // Filter by selectedCategory locally (case-insensitive)
         const filtered = selectedCategory
           ? converted.filter(
-              l => l.categoryName.toLowerCase() === selectedCategory.toLowerCase()
-            )
+            l => l.categoryName.toLowerCase() === selectedCategory.toLowerCase()
+          )
           : converted;
 
         setLandscapes(filtered);
@@ -86,11 +86,15 @@ export default function Landscapes() {
     });
   }, [selectedTags, landscapes]);
 
-  // Lightbox controls with scroll lock
+  // Lightbox open/close with proper scroll fix
   const openLightbox = (index) => {
-    setCurrentIndex(index);
-    setLightboxOpen(true);
-    document.body.style.overflow = "hidden"; // lock background scroll
+    document.body.style.overflow = "hidden"; // lock scroll immediately
+    window.scrollTo({ top: 0, behavior: "auto" }); // instantly scroll to top
+
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setLightboxOpen(true);
+    }, 0);
   };
 
   const closeLightbox = () => {

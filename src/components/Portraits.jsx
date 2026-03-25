@@ -59,18 +59,21 @@ export default function Portraits() {
     );
   };
 
-  // ✅ Lightbox open/close with scroll lock
   const openLightbox = (index) => {
-    setCurrentIndex(index);
-    setLightboxOpen(true);
-    document.body.style.overflow = "hidden"; // prevent background scroll
+    document.body.style.overflow = "hidden"; // lock scroll immediately
+    window.scrollTo({ top: 0, behavior: "auto" }); // instantly scroll to top
+
+    // open lightbox in next tick
+    setTimeout(() => {
+      setCurrentIndex(index);
+      setLightboxOpen(true);
+    }, 0);
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
     document.body.style.overflow = "auto"; // restore scroll
   };
-
   return (
     <div className="portraits-container">
       <Box className="page-container">
