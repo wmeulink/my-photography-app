@@ -107,7 +107,7 @@
 /* Mobile tweak: slightly larger for small screens */
 @media (max-width: 767px) {
   .portraits-container .polaroid .label {
-    font-size: 1.9rem;        /* pop more on mobile */
+    font-size: 1.6rem;        /* pop more on mobile */
   }
 }
 /* --- Loading / No Results / Error --- */
