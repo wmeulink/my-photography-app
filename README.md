@@ -1,12 +1,75 @@
-# React + Vite
+# Photography App – Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Live Demo
 
-Currently, two official plugins are available:
+View the application live at:  
+https://whittyelliott.com
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+A modern photography portfolio and client experience platform built with React.  
+This application allows users to browse galleries, view high-resolution images, and interact with a responsive, polished UI designed for showcasing photography work.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Features
+
+- Dynamic photo galleries
+- Fullscreen lightbox viewing experience
+- Responsive design for mobile and desktop
+- Optimized image loading and performance
+- Polaroid-style layout for portrait galleries
+- Smooth hover and navigation interactions
+
+---
+
+## Tech Stack
+
+- React
+- JavaScript / TypeScript
+- CSS / Custom Styling
+
+---
+
+## Project Structure
+
+    src/
+     ├── components/     # Reusable UI components
+     ├── pages/          # Main application pages
+     ├── styles/         # Styling and layout
+     ├── assets/         # Images and static files
+     └── utils/          # Helper functions
+
+---
+
+## Getting Started
+
+    git clone https://github.com/wmeulink/my-photography-app.git
+    cd my-photography-app
+    npm install
+    npm start
+
+---
+
+## Environment Variables
+
+Create a `.env` file in the root directory:
+
+    REACT_APP_API_URL=http://localhost:5000
+
+---
+
+## Backend Integration
+
+This frontend connects to the backend API:
+
+https://github.com/wmeulink/ElliottPhotography
+
+---
+
+## Future Improvements
+
+- User authentication
+- Private client galleries
+- Booking and scheduling system
+- Admin dashboard for uploads
