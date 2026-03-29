@@ -47,13 +47,17 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
   }, [photo, onPrev, onNext, handleClose]);
 
   // Track window size for responsive scaling
-  useEffect(() => {
-    const handleResize = () => {
+// Track window size for responsive scaling
+useEffect(() => {
+  const handleResize = () => {
+    // only update if window is actually visible
+    if (document.hasFocus()) {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    }
+  };
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
 
   if (!photo) return null;
 
