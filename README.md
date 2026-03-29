@@ -26,8 +26,8 @@ This application allows users to browse galleries, view high-resolution images, 
 ## Tech Stack
 
 - React
-- JavaScript / TypeScript
-- CSS / Custom Styling
+- JavaScript
+- CSS / Custom Styling 
 
 ---
 
@@ -66,10 +66,3 @@ This frontend connects to the backend API:
 https://github.com/wmeulink/ElliottPhotography
 
 ---
-
-## Future Improvements
-
-- User authentication
-- Private client galleries
-- Booking and scheduling system
-- Admin dashboard for uploads
