@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Box, Typography, Chip } from "@mui/material";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
-import './Portraits.css';
+import "./Portraits.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -11,9 +11,12 @@ export default function Portraits() {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Lightbox state
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Fetch portraits and tags
   useEffect(() => {
     const fetchPortraits = async () => {
       setLoading(true);
@@ -48,9 +51,12 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
+  // Filter portraits by selected tags
   const filteredPortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
-    return portraits.filter(p => selectedTags.every(tag => p.tags.includes(tag)));
+    return portraits.filter(p =>
+      selectedTags.every(tag => p.tags?.includes(tag))
+    );
   }, [selectedTags, portraits]);
 
   const toggleTag = (tag) => {
@@ -59,21 +65,30 @@ export default function Portraits() {
     );
   };
 
+  // Lightbox open/close with scroll lock
   const openLightbox = (index) => {
-    document.body.style.overflow = "hidden"; // lock scroll immediately
-    window.scrollTo({ top: 0, behavior: "auto" }); // instantly scroll to top
+    setCurrentIndex(index);
+    setLightboxOpen(true);
 
-    // open lightbox in next tick
-    setTimeout(() => {
-      setCurrentIndex(index);
-      setLightboxOpen(true);
-    }, 0);
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${window.scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.width = "100%";
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-    document.body.style.overflow = "auto"; // restore scroll
+
+    const scrollY = parseInt(document.body.style.top || "0") * -1;
+    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.width = "";
+    window.scrollTo(0, scrollY);
   };
+
   return (
     <div className="portraits-container">
       <Box className="page-container">
@@ -107,12 +122,12 @@ export default function Portraits() {
         ) : (
           <Box className="my-masonry-grid">
             {filteredPortraits.map((p, i) => (
-              <div key={i} className="polaroid" onClick={() => openLightbox(i)}>
+              <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
                 <img
                   src={p.thumbnailSrc}
                   alt={p.title || "Portrait"}
                   loading="lazy"
-                  className="polaroid-img" // uses CSS for responsive polaroid aspect
+                  className="polaroid-img"
                 />
                 <div className="label">{p.title || "Untitled"}</div>
               </div>

@@ -9,22 +9,24 @@ const API_URL = import.meta.env.VITE_API_URL || "";
 export default function Home() {
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState(null);
+
+  // Lightbox state
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
 
+  // Fetch photos
   useEffect(() => {
     const fetchPhotos = async () => {
       try {
         const res = await fetch(`${API_URL}/api/photos`);
         if (!res.ok) throw new Error("Failed to fetch photos");
-        const data = await res.json();
 
-        // convert to thumbnail/full URL pattern and add ratio placeholder
-        const converted = data.map((p) => ({
+        const data = await res.json();
+        const converted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/photos/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/photos/${p.id}/full`,
-          _ratio: null, // will hold width/height once loaded
+          _ratio: null,
         }));
 
         setPhotos(converted);
@@ -37,53 +39,66 @@ export default function Home() {
     fetchPhotos();
   }, []);
 
+  // Masonry breakpoints
   const breakpoints = {
     default: 3,
     1100: 2,
     700: 1,
   };
 
+  // Lightbox navigation
   const handlePrev = () => {
     setPhotoIndex((photoIndex + photos.length - 1) % photos.length);
   };
-
   const handleNext = () => {
     setPhotoIndex((photoIndex + 1) % photos.length);
   };
 
-  // onLoad handler: measure natural size and save ratio so we can reserve space
+  // Handle image load to store aspect ratio
   const handleImageLoad = (e, id) => {
     const img = e.target;
-    if (!img || !img.naturalWidth || !img.naturalHeight) return;
-
+    if (!img.naturalWidth || !img.naturalHeight) return;
     const ratio = img.naturalWidth / img.naturalHeight;
-    setPhotos((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, _ratio: ratio } : p))
-    );
+    setPhotos(prev => prev.map(p => (p.id === id ? { ...p, _ratio: ratio } : p)));
   };
 
-  // compute inline style for image container or img using stored ratio
-  const imgStyleFor = (p) => {
-    if (p._ratio) {
-      // aspect-ratio expects width/height — use that if supported
-      return { aspectRatio: `${p._ratio}` }; // modern browsers support this
-    }
-    // no ratio yet: return nothing; CSS fallback will apply
-    return {};
+  const imgStyleFor = (p) => p._ratio ? { aspectRatio: `${p._ratio}` } : {};
+
+  // Lightbox open/close with scroll lock
+  const openLightbox = (index) => {
+    setPhotoIndex(index);
+    setLightboxOpen(true);
+
+    // Lock scroll
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${window.scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.width = "100%";
   };
 
-  // Structured Data (unchanged)
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+
+    // Restore scroll
+    const scrollY = parseInt(document.body.style.top || "0") * -1;
+    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.width = "";
+    window.scrollTo(0, scrollY);
+  };
+
+  // Structured Data
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ImageGallery",
     name: "Elliott Photography",
     description:
       "Professional portrait, event, and landscape photography by Whitney Elliott based in Washougal, WA, serving Camas, Vancouver, and Portland areas.",
-    image: photos.slice(0, 5).map((p) => p.thumbnailSrc),
-    creator: {
-      "@type": "Person",
-      name: "Whitney Elliott",
-    },
+    image: photos.slice(0, 5).map(p => p.thumbnailSrc),
+    creator: { "@type": "Person", name: "Whitney Elliott" },
     url: "https://whittyelliott.com",
   };
 
@@ -108,22 +123,15 @@ export default function Home() {
           columnClassName=""
         >
           {photos.map((photo, i) => (
-            <div
-              key={photo.id}
-              className="masonry-item-wrapper"
-            >
+            <div key={photo.id} className="masonry-item-wrapper">
               <img
-                key={photo.id}
                 src={photo.thumbnailSrc}
                 alt={photo.title || "Photography by Whitney Elliott"}
                 className="masonry-image"
                 loading="lazy"
                 style={imgStyleFor(photo)}
                 onLoad={(e) => handleImageLoad(e, photo.id)}
-                onClick={() => {
-                  setPhotoIndex(i);
-                  setLightboxOpen(true);
-                }}
+                onClick={() => openLightbox(i)}
               />
             </div>
           ))}
@@ -131,9 +139,9 @@ export default function Home() {
 
         {lightboxOpen && (
           <CustomLightbox
-            photos={photos.map((p) => ({ src: p.fullSrc, title: p.title }))}
+            photos={photos.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={photoIndex}
-            onClose={() => setLightboxOpen(false)}
+            onClose={closeLightbox}
             onPrev={handlePrev}
             onNext={handleNext}
           />
