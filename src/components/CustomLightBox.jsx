@@ -3,8 +3,14 @@ import "./CustomLightBox.css";
 
 export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, onNext }) {
   const [closing, setClosing] = useState(false);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight
+  });
+
   const photo = photos[currentIndex];
 
+  // Key controls
   useEffect(() => {
     const handleKey = (e) => {
       if (e.key === "Escape") handleClose();
@@ -15,6 +21,15 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
     return () => window.removeEventListener("keydown", handleKey);
   }, [onPrev, onNext]);
 
+  // Window resize for responsiveness
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   if (!photo) return null;
 
   const handleClose = () => {
@@ -22,7 +37,7 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
     setTimeout(() => {
       setClosing(false);
       onClose();
-    }, 500); // match CSS slide-out duration
+    }, 500);
   };
 
   return (
@@ -31,12 +46,15 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
         &times;
       </span>
 
-      {/* Wrapper ensures vertical + horizontal centering */}
       <div className="lightbox-content">
         <img
           src={photo.src}
           alt={photo.title || "Photo"}
           className={`lightbox-image ${closing ? "slide-out" : "fade-in"}`}
+          style={{
+            maxWidth: windowSize.width < 768 ? "95vw" : "80vw",
+            maxHeight: windowSize.height < 600 ? "80vh" : "90vh"
+          }}
         />
       </div>
 

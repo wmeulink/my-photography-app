@@ -1,38 +1,36 @@
-/* ===============================================
-   CUSTOM LIGHTBOX
-   =============================================== */
-
 .custom-lightbox {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
-  background: rgba(23, 18, 23, 0.9);
+  height: 100%;
+  background: rgba(23, 18, 23, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 
-/* wrapper for proper vertical + horizontal centering */
+/* Content wrapper for centering + relative positioning */
 .lightbox-content {
+  position: relative;
+  width: 100%;
+  max-width: 95vw;
+  max-height: 95vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
 }
 
-/* lightbox image */
+/* Lightbox image */
 .lightbox-image {
-  display: block;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 8px;
+  object-fit: contain; /* ensures the image scales properly without distortion */
 }
 
-/* fade-in animation */
+/* Fade-in animation */
 .lightbox-image.fade-in {
   animation: fadeInImg 0.6s ease forwards;
 }
@@ -42,20 +40,14 @@
   to   { opacity: 1; transform: scale(1); }
 }
 
-/* slide-out animation */
+/* Slide-out animation */
 .lightbox-image.slide-out {
-  animation: slideOut 500ms ease forwards;
+  animation: slideOut 0.5s ease forwards;
 }
 
 @keyframes slideOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(60px);
-  }
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(60px); }
 }
 
 /* Close button */
@@ -66,26 +58,49 @@
   color: white;
   font-size: 40px;
   cursor: pointer;
+  z-index: 1100;
 }
 
-/* Prev / Next buttons */
+/* Prev/Next buttons */
 .prev,
 .next {
-  position: fixed;
+  position: absolute;
   top: 50%;
-  background: none;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.3);
   border: none;
   color: white;
-  font-size: 60px;
+  font-size: 50px;
+  padding: 10px 15px;
   cursor: pointer;
-  user-select: none;
-  transform: translateY(-50%); /* true vertical centering for buttons */
+  border-radius: 50%;
+  transition: background 0.2s;
+  z-index: 1001;
+}
+
+.prev:hover,
+.next:hover {
+  background: rgba(0,0,0,0.6);
 }
 
 .prev {
-  left: 20px;
+  left: 10px;
 }
 
 .next {
-  right: 20px;
+  right: 10px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .prev, .next {
+    font-size: 40px;
+    padding: 8px 12px;
+  }
+
+  .close {
+    font-size: 35px;
+    top: 15px;
+    right: 20px;
+  }
 }
