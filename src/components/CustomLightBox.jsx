@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./CustomLightBox.css";
 
 export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, onNext }) {
@@ -10,18 +10,43 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
 
   const photo = photos[currentIndex];
 
-  // Key controls
+  // Handle close with slide-out animation
+  const handleClose = useCallback(() => {
+    setClosing(true);
+    setTimeout(() => {
+      setClosing(false);
+      onClose();
+    }, 500); // match CSS slide-out duration
+  }, [onClose]);
+
+  // Key controls: Escape, ArrowLeft, ArrowRight
   useEffect(() => {
     const handleKey = (e) => {
-      if (e.key === "Escape") handleClose();
-      if (e.key === "ArrowLeft") onPrev();
-      if (e.key === "ArrowRight") onNext();
+      if (!photo) return;
+
+      switch (e.key) {
+        case "Escape":
+          e.preventDefault();
+          handleClose();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          onPrev();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          onNext();
+          break;
+        default:
+          break;
+      }
     };
+
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [onPrev, onNext]);
+  }, [photo, onPrev, onNext, handleClose]);
 
-  // Window resize for responsiveness
+  // Track window size for responsive scaling
   useEffect(() => {
     const handleResize = () => {
       setWindowSize({ width: window.innerWidth, height: window.innerHeight });
@@ -31,14 +56,6 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
   }, []);
 
   if (!photo) return null;
-
-  const handleClose = () => {
-    setClosing(true);
-    setTimeout(() => {
-      setClosing(false);
-      onClose();
-    }, 500);
-  };
 
   return (
     <div className="custom-lightbox">
@@ -56,14 +73,13 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
             maxHeight: windowSize.height < 600 ? "80vh" : "90vh"
           }}
         />
+        <button className="prev" onClick={onPrev}>
+          &lsaquo;
+        </button>
+        <button className="next" onClick={onNext}>
+          &rsaquo;
+        </button>
       </div>
-
-      <button className="prev" onClick={onPrev}>
-        &lsaquo;
-      </button>
-      <button className="next" onClick={onNext}>
-        &rsaquo;
-      </button>
     </div>
   );
 }
