@@ -3,18 +3,17 @@ import "./CustomLightBox.css";
 
 export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, onNext }) {
   const [closing, setClosing] = useState(false);
-
   const photo = photos[currentIndex];
-  if (!photo) return null;
 
-  // Close with slide-out animation
   const handleClose = useCallback(() => {
     setClosing(true);
     setTimeout(() => {
       setClosing(false);
       onClose();
-    }, 500); // optional, keeps slide-out animation
+    }, 200); // optional small fade, can even remove entirely
   }, [onClose]);
+
+  if (!photo) return null;
 
   return (
     <div className="custom-lightbox">
@@ -26,7 +25,7 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
         <img
           src={photo.src}
           alt={photo.title || "Photo"}
-          className={`lightbox-image ${closing ? "slide-out" : "fade-in"}`}
+          className="lightbox-image"
         />
         <button className="prev" onClick={onPrev}>
           &lsaquo;
