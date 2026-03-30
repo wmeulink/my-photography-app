@@ -14,7 +14,10 @@ export default function Portraits() {
   const [loading, setLoading] = useState(true);
 
   // Lightbox context
-  const { lightboxOpen, setLightboxOpen, currentIndex, setCurrentIndex } = useLightbox();
+  const { lightboxOpen, setLightboxOpen } = useLightbox();
+
+  // Local currentIndex for lightbox
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Fetch portraits and tags
   useEffect(() => {
@@ -25,8 +28,8 @@ export default function Portraits() {
         const data = await res.json();
         const converted = data.map(p => ({
           ...p,
-          thumbnailSrc: p.id ? `${API_URL}/api/Portraits/${p.id}/thumb` : null,
-          fullSrc: p.id ? `${API_URL}/api/Portraits/${p.id}/full` : null,
+          thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
+          fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
         }));
         setPortraits(converted);
       } catch (err) {
@@ -51,19 +54,14 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Filter portraits by selected tags
+  // Filter portraits
   const filteredPortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
-    return portraits.filter(p =>
-      selectedTags.every(tag => p.tags?.includes(tag))
-    );
+    return portraits.filter(p => selectedTags.every(tag => p.tags?.includes(tag)));
   }, [selectedTags, portraits]);
 
-  const toggleTag = (tag) => {
-    setSelectedTags(prev =>
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-    );
-  };
+  const toggleTag = (tag) =>
+    setSelectedTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]));
 
   // Open lightbox
   const openLightbox = (index) => {
@@ -110,17 +108,8 @@ export default function Portraits() {
         ) : (
           <Box className="my-masonry-grid">
             {filteredPortraits.map((p, i) => (
-              <div
-                key={p.id || i}
-                className="polaroid"
-                onClick={() => openLightbox(i)}
-              >
-                <img
-                  src={p.thumbnailSrc}
-                  alt={p.title || "Portrait"}
-                  loading="lazy"
-                  className="polaroid-img"
-                />
+              <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
+                <img src={p.thumbnailSrc} alt={p.title || "Portrait"} loading="lazy" className="polaroid-img" />
                 <div className="label">{p.title || "Untitled"}</div>
               </div>
             ))}
@@ -129,7 +118,7 @@ export default function Portraits() {
 
         {/* Lightbox */}
         {lightboxOpen && (
-          <CustomLightbox
+          <CustomLightBox
             photos={filteredPortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}

@@ -12,7 +12,10 @@ export default function Home() {
   const [error, setError] = useState(null);
 
   // Lightbox context
-  const { lightboxOpen, setLightboxOpen, currentIndex, setCurrentIndex } = useLightbox();
+  const { lightboxOpen, setLightboxOpen } = useLightbox();
+
+  // Local state for current photo in lightbox
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Fetch photos
   useEffect(() => {

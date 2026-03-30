@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 import { Box, Typography, Chip } from "@mui/material";
 import CustomLightBox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
-import './Landscapes.css';
 import { useLightbox } from "./LightBoxContext";
+import "./Landscapes.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -18,8 +18,10 @@ export default function Landscapes() {
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || "");
   const [loading, setLoading] = useState(true);
 
-  // Lightbox state from context
+  // Lightbox context
   const { lightboxOpen, setLightboxOpen } = useLightbox();
+
+  // Local currentIndex for lightbox
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Sync category from URL
@@ -35,18 +37,15 @@ export default function Landscapes() {
       try {
         const res = await fetch(`${API_URL}/api/Landscapes`);
         const data = await res.json();
-
         const formatted = data.map(l => ({
           ...l,
-          thumbnailSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/thumb` : null,
-          fullSrc: l.id ? `${API_URL}/api/Landscapes/${l.id}/full` : null,
+          thumbnailSrc: `${API_URL}/api/Landscapes/${l.id}/thumb`,
+          fullSrc: `${API_URL}/api/Landscapes/${l.id}/full`,
           categoryName: l.categoryName || l.category?.name || "",
         }));
-
         const filtered = selectedCategory
           ? formatted.filter(l => l.categoryName.toLowerCase() === selectedCategory.toLowerCase())
           : formatted;
-
         setLandscapes(filtered);
       } catch (err) {
         console.error("Failed to fetch landscapes:", err);
@@ -70,29 +69,27 @@ export default function Landscapes() {
     fetchTags();
   }, [selectedCategory]);
 
-  // Toggle tag selection
-  const toggleTag = (tag) => {
-    setSelectedTags(prev =>
-      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
-    );
-  };
+  const toggleTag = (tag) =>
+    setSelectedTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]));
 
-  // Filter landscapes by selected tags
+  // Filter landscapes
   const visibleLandscapes = useMemo(() => {
     return landscapes.filter(l =>
-      selectedTags.length
-        ? selectedTags.every(tag => l.tags.includes(tag))
-        : true
+      selectedTags.length ? selectedTags.every(tag => l.tags.includes(tag)) : true
     );
   }, [selectedTags, landscapes]);
 
-  // Open/close lightbox (scroll locking handled by context)
+  // Open lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
 
-  const closeLightbox = () => setLightboxOpen(false);
+  // Lightbox navigation
+  const handlePrev = () =>
+    setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length);
+  const handleNext = () =>
+    setCurrentIndex((currentIndex + 1) % visibleLandscapes.length);
 
   return (
     <div className="landscape-container">
@@ -136,7 +133,7 @@ export default function Landscapes() {
         <Box className="my-masonry-grid">
           {visibleLandscapes.map((l, i) => (
             <img
-              key={i}
+              key={l.id || i}
               src={l.thumbnailSrc}
               alt={l.title || "Landscape"}
               loading="lazy"
@@ -152,9 +149,9 @@ export default function Landscapes() {
         <CustomLightBox
           photos={visibleLandscapes.map(l => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
-          onClose={closeLightbox}
-          onPrev={() => setCurrentIndex((currentIndex + visibleLandscapes.length - 1) % visibleLandscapes.length)}
-          onNext={() => setCurrentIndex((currentIndex + 1) % visibleLandscapes.length)}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={handlePrev}
+          onNext={handleNext}
         />
       )}
     </div>

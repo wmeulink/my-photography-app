@@ -1,11 +1,12 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 // Create context
-const LightBoxContext = createContext();
+const LightboxContext = createContext();
 
 // Provider component
 export function LightboxProvider({ children }) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Handle scroll lock globally
   useEffect(() => {
@@ -15,20 +16,26 @@ export function LightboxProvider({ children }) {
       document.body.style.overflow = "";
     }
 
-    // Cleanup in case component unmounts
     return () => {
       document.body.style.overflow = "";
     };
   }, [lightboxOpen]);
 
   return (
-    <LightBoxContext.Provider value={{ lightboxOpen, setLightboxOpen }}>
+    <LightboxContext.Provider
+      value={{
+        lightboxOpen,
+        setLightboxOpen,
+        currentIndex,
+        setCurrentIndex
+      }}
+    >
       {children}
-    </LightBoxContext.Provider>
+    </LightboxContext.Provider>
   );
 }
 
 // Custom hook for easy usage
 export function useLightbox() {
-  return useContext(LightBoxContext);
+  return useContext(LightboxContext);
 }
