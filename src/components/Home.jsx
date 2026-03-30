@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import SEO from "./SEO";
 import CustomLightbox from "./CustomLightBox";
-import { useLightbox } from "../context/LightboxContext";
+import { useLightbox } from "./components/LightboxContext";
 import "./Home.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
