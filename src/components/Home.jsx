@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import SEO from "./SEO";
 import CustomLightbox from "./CustomLightBox";
+import { useLightbox } from "../context/LightboxContext";
 import "./Home.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -10,9 +11,8 @@ export default function Home() {
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState(null);
 
-  // Lightbox state
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [photoIndex, setPhotoIndex] = useState(0);
+  // Lightbox context
+  const { lightboxOpen, setLightboxOpen, currentIndex, setCurrentIndex } = useLightbox();
 
   // Fetch photos
   useEffect(() => {
@@ -43,18 +43,14 @@ export default function Home() {
 
   // Lightbox navigation
   const handlePrev = () =>
-    setPhotoIndex((photoIndex + photos.length - 1) % photos.length);
+    setCurrentIndex((currentIndex + photos.length - 1) % photos.length);
   const handleNext = () =>
-    setPhotoIndex((photoIndex + 1) % photos.length);
+    setCurrentIndex((currentIndex + 1) % photos.length);
 
-  // Open/close lightbox (CSS handles everything, no scroll hacks)
+  // Open lightbox
   const openLightbox = (index) => {
-    setPhotoIndex(index);
+    setCurrentIndex(index);
     setLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
   };
 
   // Structured Data
@@ -105,8 +101,8 @@ export default function Home() {
         {lightboxOpen && (
           <CustomLightbox
             photos={photos.map(p => ({ src: p.fullSrc, title: p.title }))}
-            currentIndex={photoIndex}
-            onClose={closeLightbox}
+            currentIndex={currentIndex}
+            onClose={() => setLightboxOpen(false)}
             onPrev={handlePrev}
             onNext={handleNext}
           />

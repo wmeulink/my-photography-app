@@ -1,13 +1,17 @@
 import React from "react";
+import { useLightbox } from "../context/LightboxContext";
 import "./CustomLightBox.css";
 
-export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, onNext }) {
+export default function CustomLightbox({ photos, currentIndex, onPrev, onNext }) {
+  const { setLightboxOpen } = useLightbox();
   const photo = photos[currentIndex];
   if (!photo) return null;
 
+  const handleClose = () => setLightboxOpen(false);
+
   return (
     <div className="custom-lightbox">
-      <span className="close" onClick={onClose}>&times;</span>
+      <span className="close" onClick={handleClose}>&times;</span>
 
       <div className="lightbox-content">
         <img

@@ -4,6 +4,7 @@ import { Box, Typography, Chip } from "@mui/material";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
 import './Landscapes.css';
+import { useLightbox } from "./components/LightboxContext"; // <-- context import
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -17,11 +18,11 @@ export default function Landscapes() {
   const [selectedCategory, setSelectedCategory] = useState(categoryParam || "");
   const [loading, setLoading] = useState(true);
 
-  // Lightbox state
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  // Lightbox state from context
+  const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Sync category from URL and reset tags when category changes
+  // Sync category from URL
   useEffect(() => {
     setSelectedCategory(categoryParam || "");
     setSelectedTags([]);
@@ -85,15 +86,13 @@ export default function Landscapes() {
     );
   }, [selectedTags, landscapes]);
 
-  // Lightbox open/close (CSS handles overlay, no scroll hacks)
+  // Open/close lightbox (scroll locking handled by context)
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
 
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
+  const closeLightbox = () => setLightboxOpen(false);
 
   return (
     <div className="landscape-container">

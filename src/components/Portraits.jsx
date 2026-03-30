@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Box, Typography, Chip } from "@mui/material";
 import CustomLightbox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
+import { useLightbox } from "../context/LightboxContext";
 import "./Portraits.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -12,9 +13,8 @@ export default function Portraits() {
   const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Lightbox state
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // Lightbox context
+  const { lightboxOpen, setLightboxOpen, currentIndex, setCurrentIndex } = useLightbox();
 
   // Fetch portraits and tags
   useEffect(() => {
@@ -65,15 +65,17 @@ export default function Portraits() {
     );
   };
 
-  // Lightbox open/close (CSS handles overlay, no scroll hacks)
+  // Open lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
 
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
+  // Lightbox navigation
+  const handlePrev = () =>
+    setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length);
+  const handleNext = () =>
+    setCurrentIndex((currentIndex + 1) % filteredPortraits.length);
 
   return (
     <div className="portraits-container">
@@ -130,13 +132,9 @@ export default function Portraits() {
           <CustomLightbox
             photos={filteredPortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
-            onClose={closeLightbox}
-            onPrev={() =>
-              setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)
-            }
-            onNext={() =>
-              setCurrentIndex((currentIndex + 1) % filteredPortraits.length)
-            }
+            onClose={() => setLightboxOpen(false)}
+            onPrev={handlePrev}
+            onNext={handleNext}
           />
         )}
       </Box>
