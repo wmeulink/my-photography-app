@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Box, Typography, Chip } from "@mui/material";
-import CustomLightbox from "./CustomLightBox";
+import CustomLightBox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
-import { useLightbox } from "../context/LightboxContext";
+import { useLightbox } from "./LightBoxContext";
 import "./Portraits.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";

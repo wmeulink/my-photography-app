@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { Box, Typography, Chip } from "@mui/material";
-import CustomLightbox from "./CustomLightBox";
+import CustomLightBox from "./CustomLightBox";
 import SEO from "./SEO.jsx";
 import './Landscapes.css';
-import { useLightbox } from "./components/LightboxContext"; // <-- context import
+import { useLightbox } from "./LightBoxContext";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
 
@@ -149,7 +149,7 @@ export default function Landscapes() {
 
       {/* Lightbox */}
       {lightboxOpen && (
-        <CustomLightbox
+        <CustomLightBox
           photos={visibleLandscapes.map(l => ({ src: l.fullSrc, title: l.title }))}
           currentIndex={currentIndex}
           onClose={closeLightbox}

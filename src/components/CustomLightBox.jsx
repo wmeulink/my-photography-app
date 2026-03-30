@@ -1,8 +1,8 @@
 import React from "react";
-import { useLightbox } from "../context/LightboxContext";
+import { useLightbox } from "./LightBoxContext";
 import "./CustomLightBox.css";
 
-export default function CustomLightbox({ photos, currentIndex, onPrev, onNext }) {
+export default function CustomLightBox({ photos, currentIndex, onPrev, onNext }) {
   const { setLightboxOpen } = useLightbox();
   const photo = photos[currentIndex];
   if (!photo) return null;

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import SEO from "./SEO";
-import CustomLightbox from "./CustomLightBox";
-import { useLightbox } from "./components/LightboxContext";
+import CustomLightBox from "./CustomLightBox";
+import { useLightbox } from "./LightBoxContext";
 import "./Home.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "";
@@ -99,7 +99,7 @@ export default function Home() {
         </Masonry>
 
         {lightboxOpen && (
-          <CustomLightbox
+          <CustomLightBox
             photos={photos.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}

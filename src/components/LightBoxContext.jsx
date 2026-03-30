@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
 // Create context
-const LightboxContext = createContext();
+const LightBoxContext = createContext();
 
 // Provider component
 export function LightboxProvider({ children }) {
@@ -22,13 +22,13 @@ export function LightboxProvider({ children }) {
   }, [lightboxOpen]);
 
   return (
-    <LightboxContext.Provider value={{ lightboxOpen, setLightboxOpen }}>
+    <LightBoxContext.Provider value={{ lightboxOpen, setLightboxOpen }}>
       {children}
-    </LightboxContext.Provider>
+    </LightBoxContext.Provider>
   );
 }
 
 // Custom hook for easy usage
 export function useLightbox() {
-  return useContext(LightboxContext);
+  return useContext(LightBoxContext);
 }
