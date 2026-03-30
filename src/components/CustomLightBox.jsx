@@ -10,20 +10,23 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
 
   const photo = photos[currentIndex];
 
-  // Handle close with slide-out animation
+  // Close lightbox with animation
   const handleClose = useCallback(() => {
     setClosing(true);
-    setTimeout(() => {
+  }, []);
+
+  // After animation ends, remove lightbox
+  const handleAnimationEnd = () => {
+    if (closing) {
       setClosing(false);
       onClose();
-    }, 500); // match CSS slide-out duration
-  }, [onClose]);
+    }
+  };
 
-  // Key controls: Escape, ArrowLeft, ArrowRight
+  // Key controls
   useEffect(() => {
     const handleKey = (e) => {
       if (!photo) return;
-
       switch (e.key) {
         case "Escape":
           e.preventDefault();
@@ -37,27 +40,22 @@ export default function CustomLightbox({ photos, currentIndex, onClose, onPrev, 
           e.preventDefault();
           onNext();
           break;
-        default:
-          break;
       }
     };
-
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, [photo, onPrev, onNext, handleClose]);
 
-  // Track window size for responsive scaling
-// Track window size for responsive scaling
-useEffect(() => {
-  const handleResize = () => {
-    // only update if window is actually visible
-    if (document.hasFocus()) {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    }
-  };
-  window.addEventListener("resize", handleResize);
-  return () => window.removeEventListener("resize", handleResize);
-}, []);
+  // Track window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (document.hasFocus()) {
+        setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   if (!photo) return null;
 
@@ -72,6 +70,7 @@ useEffect(() => {
           src={photo.src}
           alt={photo.title || "Photo"}
           className={`lightbox-image ${closing ? "slide-out" : "fade-in"}`}
+          onAnimationEnd={handleAnimationEnd} // <- animation triggers close
           style={{
             maxWidth: windowSize.width < 768 ? "95vw" : "80vw",
             maxHeight: windowSize.height < 600 ? "80vh" : "90vh"
