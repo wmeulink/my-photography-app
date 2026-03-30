@@ -85,31 +85,14 @@ export default function Landscapes() {
     );
   }, [selectedTags, landscapes]);
 
-  // Lightbox open/close with scroll lock
+  // Lightbox open/close (CSS handles overlay, no scroll hacks)
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-
-    // Lock scroll & freeze page position
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${window.scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.width = "100%";
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-
-    // Restore scroll & position
-    const scrollY = parseInt(document.body.style.top || "0") * -1;
-    document.body.style.overflow = "";
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.width = "";
-
-    window.scrollTo(0, scrollY);
   };
 
   return (

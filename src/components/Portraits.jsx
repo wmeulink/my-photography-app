@@ -65,28 +65,14 @@ export default function Portraits() {
     );
   };
 
-  // Lightbox open/close with scroll lock
+  // Lightbox open/close (CSS handles overlay, no scroll hacks)
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
-
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${window.scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.width = "100%";
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-
-    const scrollY = parseInt(document.body.style.top || "0") * -1;
-    document.body.style.overflow = "";
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.width = "";
-    window.scrollTo(0, scrollY);
   };
 
   return (
@@ -122,7 +108,11 @@ export default function Portraits() {
         ) : (
           <Box className="my-masonry-grid">
             {filteredPortraits.map((p, i) => (
-              <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
+              <div
+                key={p.id || i}
+                className="polaroid"
+                onClick={() => openLightbox(i)}
+              >
                 <img
                   src={p.thumbnailSrc}
                   alt={p.title || "Portrait"}
@@ -141,8 +131,12 @@ export default function Portraits() {
             photos={filteredPortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
             onClose={closeLightbox}
-            onPrev={() => setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)}
-            onNext={() => setCurrentIndex((currentIndex + 1) % filteredPortraits.length)}
+            onPrev={() =>
+              setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length)
+            }
+            onNext={() =>
+              setCurrentIndex((currentIndex + 1) % filteredPortraits.length)
+            }
           />
         )}
       </Box>

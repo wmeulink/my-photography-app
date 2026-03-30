@@ -26,7 +26,6 @@ export default function Home() {
           ...p,
           thumbnailSrc: `${API_URL}/api/photos/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/photos/${p.id}/full`,
-          _ratio: null,
         }));
 
         setPhotos(converted);
@@ -40,54 +39,22 @@ export default function Home() {
   }, []);
 
   // Masonry breakpoints
-  const breakpoints = {
-    default: 3,
-    1100: 2,
-    700: 1,
-  };
+  const breakpoints = { default: 3, 1100: 2, 700: 1 };
 
   // Lightbox navigation
-  const handlePrev = () => {
+  const handlePrev = () =>
     setPhotoIndex((photoIndex + photos.length - 1) % photos.length);
-  };
-  const handleNext = () => {
+  const handleNext = () =>
     setPhotoIndex((photoIndex + 1) % photos.length);
-  };
 
-  // Handle image load to store aspect ratio
-  const handleImageLoad = (e, id) => {
-    const img = e.target;
-    if (!img.naturalWidth || !img.naturalHeight) return;
-    const ratio = img.naturalWidth / img.naturalHeight;
-    setPhotos(prev => prev.map(p => (p.id === id ? { ...p, _ratio: ratio } : p)));
-  };
-
-  const imgStyleFor = (p) => p._ratio ? { aspectRatio: `${p._ratio}` } : {};
-
-  // Lightbox open/close with scroll lock
+  // Open/close lightbox (CSS handles everything, no scroll hacks)
   const openLightbox = (index) => {
     setPhotoIndex(index);
     setLightboxOpen(true);
-
-    // Lock scroll
-    document.body.style.overflow = "hidden";
-    document.body.style.position = "fixed";
-    document.body.style.top = `-${window.scrollY}px`;
-    document.body.style.left = "0";
-    document.body.style.width = "100%";
   };
 
   const closeLightbox = () => {
     setLightboxOpen(false);
-
-    // Restore scroll
-    const scrollY = parseInt(document.body.style.top || "0") * -1;
-    document.body.style.overflow = "";
-    document.body.style.position = "";
-    document.body.style.top = "";
-    document.body.style.left = "";
-    document.body.style.width = "";
-    window.scrollTo(0, scrollY);
   };
 
   // Structured Data
@@ -129,8 +96,6 @@ export default function Home() {
                 alt={photo.title || "Photography by Whitney Elliott"}
                 className="masonry-image"
                 loading="lazy"
-                style={imgStyleFor(photo)}
-                onLoad={(e) => handleImageLoad(e, photo.id)}
                 onClick={() => openLightbox(i)}
               />
             </div>
