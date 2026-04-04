@@ -16,6 +16,7 @@ export default function Portraits() {
   const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Fetch portraits and tags
   useEffect(() => {
     const fetchPortraits = async () => {
       setLoading(true);
@@ -27,9 +28,11 @@ export default function Portraits() {
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          // Keep tag objects, but normalize names
+          // Clean and normalize tags
           tags: Array.isArray(p.tags)
-            ? p.tags.map(t => t.name?.trim() || "")
+            ? p.tags
+                .map(t => (t?.name || t || "").trim())
+                .filter(Boolean) // remove empty strings
             : [],
         }));
 
@@ -46,7 +49,11 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(data.map(t => t.name.trim()));
+        setTags(
+          data
+            .map(t => t.name?.trim())
+            .filter(Boolean) // remove empty tag names
+        );
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -56,16 +63,18 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
+  // Toggle selected tag
   const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
+  // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter(p =>
       selectedTags.every(tag =>
-        p.tags?.some(t => t.toLowerCase() === tag.toLowerCase())
+        p.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
       )
     );
   }, [selectedTags, portraits]);
