@@ -32,15 +32,10 @@ export default function Portraits() {
           tags: (() => {
             if (!p.tags) return [];
             if (Array.isArray(p.tags)) {
-              return p.tags
-                .map(t => (t?.name || t || "").trim().toLowerCase())
-                .filter(Boolean);
+              return p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean);
             }
             if (typeof p.tags === "string") {
-              return p.tags
-                .split(",")
-                .map(t => t.trim().toLowerCase())
-                .filter(Boolean);
+              return p.tags.split(",").map(t => t.trim()).filter(Boolean);
             }
             return [];
           })(),
@@ -61,7 +56,7 @@ export default function Portraits() {
         const data = await res.json();
         setTags(
           data
-            .map(t => t.name?.trim().toLowerCase())
+            .map(t => t.name?.trim())
             .filter(Boolean) // remove empty tag names
         );
       } catch (err) {
@@ -74,20 +69,22 @@ export default function Portraits() {
   }, []);
 
   // Toggle selected tag
-  const toggleTag = tag =>
+  const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits by selected tags (any matching tag)
+  // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
+    console.log("Selected tags:", selectedTags);
+    console.log("Portrait tags:", portraits.map(p => p.tags));
     if (!selectedTags.length) return portraits;
     return portraits.filter(p =>
-      p.tags.some(t => selectedTags.includes(t))
+      selectedTags.every(tag => p.tags.includes(tag))
     );
   }, [selectedTags, portraits]);
 
-  const openLightbox = index => {
+  const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
