@@ -8,6 +8,7 @@ import "./Portraits.css";
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Portraits() {
+  // Core state
   const [portraits, setPortraits] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -26,12 +27,18 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
-        const converted = data.map(p => ({
+
+        // Normalize tags and add thumbnail/full src
+        const formatted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
+          tags: Array.isArray(p.tags)
+            ? p.tags.map(t => (t.name || t).trim())
+            : [], // convert tags to string array
         }));
-        setPortraits(converted);
+
+        setPortraits(formatted);
       } catch (err) {
         console.error("Failed to fetch portraits:", err);
         setPortraits([]);
@@ -44,7 +51,7 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(data.map(t => t.name));
+        setTags(data.map(t => t.name.trim())); // normalize tag strings
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -54,14 +61,21 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Filter portraits
-  const filteredPortraits = useMemo(() => {
-    if (!selectedTags.length) return portraits;
-    return portraits.filter(p => selectedTags.every(tag => p.tags?.includes(tag)));
-  }, [selectedTags, portraits]);
-
+  // Toggle selected tags
   const toggleTag = (tag) =>
-    setSelectedTags(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]));
+    setSelectedTags(prev =>
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
+
+  // Filter portraits
+  const visiblePortraits = useMemo(() => {
+    if (!selectedTags.length) return portraits;
+    return portraits.filter(p =>
+      selectedTags.every(tag =>
+        p.tags?.some(t => t.toLowerCase() === tag.toLowerCase())
+      )
+    );
+  }, [selectedTags, portraits]);
 
   // Open lightbox
   const openLightbox = (index) => {
@@ -71,9 +85,9 @@ export default function Portraits() {
 
   // Lightbox navigation
   const handlePrev = () =>
-    setCurrentIndex((currentIndex + filteredPortraits.length - 1) % filteredPortraits.length);
+    setCurrentIndex((currentIndex + visiblePortraits.length - 1) % visiblePortraits.length);
   const handleNext = () =>
-    setCurrentIndex((currentIndex + 1) % filteredPortraits.length);
+    setCurrentIndex((currentIndex + 1) % visiblePortraits.length);
 
   return (
     <div className="portraits-container">
@@ -103,13 +117,18 @@ export default function Portraits() {
         {/* Gallery */}
         {loading ? (
           <Typography className="loading">Loading portraits...</Typography>
-        ) : filteredPortraits.length === 0 ? (
+        ) : visiblePortraits.length === 0 ? (
           <Typography className="no-results">No portraits match selected tags.</Typography>
         ) : (
           <Box className="my-masonry-grid">
-            {filteredPortraits.map((p, i) => (
+            {visiblePortraits.map((p, i) => (
               <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
-                <img src={p.thumbnailSrc} alt={p.title || "Portrait"} loading="lazy" className="polaroid-img" />
+                <img
+                  src={p.thumbnailSrc}
+                  alt={p.title || "Portrait"}
+                  loading="lazy"
+                  className="polaroid-img"
+                />
                 <div className="label">{p.title || "Untitled"}</div>
               </div>
             ))}
@@ -119,7 +138,7 @@ export default function Portraits() {
         {/* Lightbox */}
         {lightboxOpen && (
           <CustomLightBox
-            photos={filteredPortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
+            photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={handlePrev}
