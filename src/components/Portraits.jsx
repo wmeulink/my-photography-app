@@ -16,8 +16,6 @@ export default function Portraits() {
 
   // Lightbox context
   const { lightboxOpen, setLightboxOpen } = useLightbox();
-
-  // Local currentIndex for lightbox
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Fetch portraits and tags
@@ -28,14 +26,12 @@ export default function Portraits() {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
 
-        // Normalize tags and add thumbnail/full src
         const formatted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          tags: Array.isArray(p.tags)
-            ? p.tags.map(t => (t.name || t).trim())
-            : [], // convert tags to string array
+          // Fixed: tags are already strings from backend
+          tags: Array.isArray(p.tags) ? p.tags.map(t => t.trim()) : [],
         }));
 
         setPortraits(formatted);
@@ -51,7 +47,7 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(data.map(t => t.name.trim())); // normalize tag strings
+        setTags(data.map(t => t.trim())); // assume backend returns strings
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -61,13 +57,13 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Toggle selected tags
+  // Toggle tag selection
   const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits
+  // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter(p =>
@@ -77,13 +73,11 @@ export default function Portraits() {
     );
   }, [selectedTags, portraits]);
 
-  // Open lightbox
+  // Lightbox functions
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
-
-  // Lightbox navigation
   const handlePrev = () =>
     setCurrentIndex((currentIndex + visiblePortraits.length - 1) % visiblePortraits.length);
   const handleNext = () =>
