@@ -23,6 +23,7 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
+        console.log("RAW PORTRAITS DATA:", data);
 
         // Normalize each portrait's tags to always be a non-empty array of strings
         const formatted = data.map(p => ({
