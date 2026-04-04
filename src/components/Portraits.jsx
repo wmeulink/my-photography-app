@@ -30,9 +30,8 @@ export default function Portraits() {
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
         }));
-        console.log("FORMATTED PORTRAITS (after adding URLs):", formatted);
-
         setPortraits(formatted);
+        console.log("PORTRAITS STATE AFTER FETCH:", formatted);
       } catch (err) {
         console.error("Failed to fetch portraits:", err);
         setPortraits([]);
@@ -66,33 +65,24 @@ export default function Portraits() {
     );
   };
 
-  // Filter portraits by selected tags
-  const visiblePortraits = useMemo(() => {
-    console.log("SELECTED TAGS:", selectedTags);
-    console.log("PORTRAITS BEFORE FILTERING:", portraits);
-
-    const filtered = portraits.filter(p =>
-      selectedTags.length ? selectedTags.every(tag => p.tags.includes(tag)) : true
-    );
-
-    console.log("VISIBLE PORTRAITS AFTER FILTERING:", filtered);
-    return filtered;
-  }, [selectedTags, portraits]);
+ const visiblePortraits = useMemo(() => {
+  if (!portraits.length) return [];
+  return portraits.filter(p =>
+    selectedTags.length ? selectedTags.every(tag => p.tags?.includes(tag)) : true
+  );
+}, [selectedTags, portraits]);
 
   const openLightbox = (index) => {
-    console.log("OPEN LIGHTBOX INDEX:", index);
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
 
   const handlePrev = () => {
     const newIndex = (currentIndex + visiblePortraits.length - 1) % visiblePortraits.length;
-    console.log("LIGHTBOX PREV INDEX:", newIndex);
     setCurrentIndex(newIndex);
   };
   const handleNext = () => {
     const newIndex = (currentIndex + 1) % visiblePortraits.length;
-    console.log("LIGHTBOX NEXT INDEX:", newIndex);
     setCurrentIndex(newIndex);
   };
 
