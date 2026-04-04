@@ -23,22 +23,12 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
-        console.log("RAW PORTRAITS DATA:", data);
 
-        // Normalize each portrait's tags to always be a non-empty array of strings
         const formatted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          tags: (() => {
-            if (Array.isArray(p.tags) && p.tags.length) {
-              return p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean);
-            }
-            if (typeof p.tags === "string" && p.tags.trim()) {
-              return p.tags.split(",").map(t => t.trim()).filter(Boolean);
-            }
-            return ["Untagged"]; // fallback if empty
-          })(),
+          tags: Array.isArray(p.tags) && p.tags.length ? p.tags : ["Untagged"], // always array
         }));
 
         setPortraits(formatted);
@@ -55,8 +45,8 @@ export default function Portraits() {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
 
-        // Always return non-empty array of strings
-        setTags(data.map(t => t.name?.trim()).filter(Boolean));
+        // always return array of strings, remove falsy
+        setTags(data.map(t => t.name).filter(Boolean));
       } catch (err) {
         console.error("Failed to fetch tags:", err);
         setTags([]);
@@ -73,16 +63,14 @@ export default function Portraits() {
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits by selected tags (case-insensitive)
+  // Filter portraits like Landscapes
   const visiblePortraits = useMemo(() => {
-    if (!selectedTags.length) return portraits;
-
-    return portraits.filter(p => {
-      const portraitTags = p.tags.map(t => t.toLowerCase().trim());
-      return selectedTags.every(tag => portraitTags.includes(tag.toLowerCase().trim()));
-    });
+    return portraits.filter(p =>
+      selectedTags.length ? selectedTags.every(tag => p.tags.includes(tag)) : true
+    );
   }, [selectedTags, portraits]);
 
+  // Lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
