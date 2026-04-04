@@ -23,11 +23,15 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
+        console.log("RAW PORTRAITS DATA:", data); // raw backend data
+
         const formatted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
         }));
+        console.log("FORMATTED PORTRAITS (after adding URLs):", formatted);
+
         setPortraits(formatted);
       } catch (err) {
         console.error("Failed to fetch portraits:", err);
@@ -41,7 +45,12 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(data.map(t => t.name));
+        console.log("RAW TAGS DATA:", data);
+
+        const tagNames = data.map(t => t.name);
+        console.log("TAG NAMES:", tagNames);
+
+        setTags(tagNames);
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -51,27 +60,44 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  const toggleTag = (tag) =>
+  const toggleTag = (tag) => {
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
+  };
 
   // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
-    return portraits.filter(p =>
+    console.log("SELECTED TAGS:", selectedTags);
+    console.log("PORTRAITS BEFORE FILTERING:", portraits);
+
+    const filtered = portraits.filter(p =>
       selectedTags.length ? selectedTags.every(tag => p.tags.includes(tag)) : true
     );
+
+    console.log("VISIBLE PORTRAITS AFTER FILTERING:", filtered);
+    return filtered;
   }, [selectedTags, portraits]);
 
   const openLightbox = (index) => {
+    console.log("OPEN LIGHTBOX INDEX:", index);
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
 
-  const handlePrev = () =>
-    setCurrentIndex((currentIndex + visiblePortraits.length - 1) % visiblePortraits.length);
-  const handleNext = () =>
-    setCurrentIndex((currentIndex + 1) % visiblePortraits.length);
+  const handlePrev = () => {
+    const newIndex = (currentIndex + visiblePortraits.length - 1) % visiblePortraits.length;
+    console.log("LIGHTBOX PREV INDEX:", newIndex);
+    setCurrentIndex(newIndex);
+  };
+  const handleNext = () => {
+    const newIndex = (currentIndex + 1) % visiblePortraits.length;
+    console.log("LIGHTBOX NEXT INDEX:", newIndex);
+    setCurrentIndex(newIndex);
+  };
+
+  console.log("CURRENT PORTRAITS STATE:", portraits);
+  console.log("CURRENT TAGS STATE:", tags);
 
   return (
     <div className="portraits-container">
