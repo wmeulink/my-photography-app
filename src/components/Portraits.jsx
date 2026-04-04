@@ -16,6 +16,7 @@ export default function Portraits() {
   const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Fetch portraits and tags
   useEffect(() => {
     const fetchPortraits = async () => {
       setLoading(true);
@@ -23,14 +24,20 @@ export default function Portraits() {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
 
+        // Normalize each portrait's tags to always be a non-empty array of strings
         const formatted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          // always an array, fallback to ["Untagged"]
-          tags: Array.isArray(p.tags) && p.tags.length
-            ? p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean)
-            : ["Untagged"],
+          tags: (() => {
+            if (Array.isArray(p.tags) && p.tags.length) {
+              return p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean);
+            }
+            if (typeof p.tags === "string" && p.tags.trim()) {
+              return p.tags.split(",").map(t => t.trim()).filter(Boolean);
+            }
+            return ["Untagged"]; // fallback if empty
+          })(),
         }));
 
         setPortraits(formatted);
@@ -47,7 +54,7 @@ export default function Portraits() {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
 
-        // always return array of names, remove falsy
+        // Always return non-empty array of strings
         setTags(data.map(t => t.name?.trim()).filter(Boolean));
       } catch (err) {
         console.error("Failed to fetch tags:", err);
@@ -65,14 +72,14 @@ export default function Portraits() {
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits by selected tags
+  // Filter portraits by selected tags (case-insensitive)
   const visiblePortraits = useMemo(() => {
-    console.log("Selected tags:", selectedTags);
-    console.log("Portrait tags:", portraits.map(p => p.tags));
     if (!selectedTags.length) return portraits;
-    return portraits.filter(p =>
-      selectedTags.every(tag => p.tags.includes(tag))
-    );
+
+    return portraits.filter(p => {
+      const portraitTags = p.tags.map(t => t.toLowerCase().trim());
+      return selectedTags.every(tag => portraitTags.includes(tag.toLowerCase().trim()));
+    });
   }, [selectedTags, portraits]);
 
   const openLightbox = (index) => {
