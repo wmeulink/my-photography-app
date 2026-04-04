@@ -8,13 +8,11 @@ import "./Portraits.css";
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Portraits() {
-  // Core state
   const [portraits, setPortraits] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Lightbox context
   const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -28,10 +26,19 @@ export default function Portraits() {
 
         const formatted = data.map(p => ({
           ...p,
-          thumbnailSrc: `${API_URL}/api/Portraits/${p.Id}/thumb`,
-          fullSrc: `${API_URL}/api/Portraits/${p.Id}/full`,
-          // Split comma-separated tags into array
-          tags: p.Tags ? p.Tags.split(",").map(t => t.trim()) : [],
+          thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
+          fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
+          // Robust tag normalization
+          tags: (() => {
+            if (!p.tags) return [];
+            if (Array.isArray(p.tags)) {
+              return p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean);
+            }
+            if (typeof p.tags === "string") {
+              return p.tags.split(",").map(t => t.trim()).filter(Boolean);
+            }
+            return [];
+          })(),
         }));
 
         setPortraits(formatted);
@@ -47,7 +54,11 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(data.map(t => t.name.trim()));
+        setTags(
+          data
+            .map(t => t.name?.trim())
+            .filter(Boolean) // remove empty tag names
+        );
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -57,27 +68,27 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Toggle selected tags
+  // Toggle selected tag
   const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits based on selected tags
+  // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter(p =>
       selectedTags.every(tag =>
-        p.tags.some(t => t.toLowerCase() === tag.toLowerCase())
+        p.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
       )
     );
   }, [selectedTags, portraits]);
 
-  // Lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
+
   const handlePrev = () =>
     setCurrentIndex((currentIndex + visiblePortraits.length - 1) % visiblePortraits.length);
   const handleNext = () =>
@@ -116,14 +127,14 @@ export default function Portraits() {
         ) : (
           <Box className="my-masonry-grid">
             {visiblePortraits.map((p, i) => (
-              <div key={p.Id || i} className="polaroid" onClick={() => openLightbox(i)}>
+              <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
                 <img
                   src={p.thumbnailSrc}
-                  alt={p.Title || "Portrait"}
+                  alt={p.title || "Portrait"}
                   loading="lazy"
                   className="polaroid-img"
                 />
-                <div className="label">{p.Title || "Untitled"}</div>
+                <div className="label">{p.title || "Untitled"}</div>
               </div>
             ))}
           </Box>
@@ -132,7 +143,7 @@ export default function Portraits() {
         {/* Lightbox */}
         {lightboxOpen && (
           <CustomLightBox
-            photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.Title }))}
+            photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={handlePrev}
