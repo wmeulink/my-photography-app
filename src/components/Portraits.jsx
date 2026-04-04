@@ -18,28 +18,46 @@ export default function Portraits() {
 
   // Fetch portraits and tags
   useEffect(() => {
-  const fetchPortraits = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/api/Portraits`);
-      const data = await res.json();
-      const formatted = data.map(p => ({
-        ...p,
-        thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
-        fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-      }));
-      setPortraits(formatted);
-      setVisiblePortraits(formatted); // <--- populate visible array immediately
-    } catch (err) {
-      console.error(err);
-      setPortraits([]);
-      setVisiblePortraits([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchPortraits();
-}, []);
+    const fetchPortraits = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_URL}/api/Portraits`);
+        const data = await res.json();
+        console.log("RAW PORTRAITS DATA:", data); // raw backend data
+
+        const formatted = data.map(p => ({
+          ...p,
+          thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
+          fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
+        }));
+        setPortraits(formatted);
+        console.log("PORTRAITS STATE AFTER FETCH:", formatted);
+      } catch (err) {
+        console.error("Failed to fetch portraits:", err);
+        setPortraits([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchTags = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/Tags`);
+        const data = await res.json();
+        console.log("RAW TAGS DATA:", data);
+
+        const tagNames = data.map(t => t.name);
+        console.log("TAG NAMES:", tagNames);
+
+        setTags(tagNames);
+      } catch (err) {
+        console.error("Failed to fetch tags:", err);
+      }
+    };
+
+    fetchPortraits();
+    fetchTags();
+  }, []);
 
   const toggleTag = (tag) => {
     setSelectedTags(prev =>
@@ -50,11 +68,12 @@ export default function Portraits() {
  const visiblePortraits = useMemo(() => {
   if (!portraits.length) return [];
   return portraits.filter(p =>
-    selectedTags.length ? selectedTags.every(tag => p.tags.includes(tag)) : true
+    selectedTags.length ? selectedTags.every(tag => p.tags?.includes(tag)) : true
   );
 }, [selectedTags, portraits]);
 
   const openLightbox = (index) => {
+    console.log("OPEN LIGHTBOX INDEX:", index);
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
