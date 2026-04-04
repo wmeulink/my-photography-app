@@ -16,7 +16,6 @@ export default function Portraits() {
   const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch portraits and tags
   useEffect(() => {
     const fetchPortraits = async () => {
       setLoading(true);
@@ -28,17 +27,10 @@ export default function Portraits() {
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          // Robust tag normalization
-          tags: (() => {
-            if (!p.tags) return [];
-            if (Array.isArray(p.tags)) {
-              return p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean);
-            }
-            if (typeof p.tags === "string") {
-              return p.tags.split(",").map(t => t.trim()).filter(Boolean);
-            }
-            return [];
-          })(),
+          // always an array, fallback to ["Untagged"]
+          tags: Array.isArray(p.tags) && p.tags.length
+            ? p.tags.map(t => (t?.name || t || "").trim()).filter(Boolean)
+            : ["Untagged"],
         }));
 
         setPortraits(formatted);
@@ -54,13 +46,12 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(
-          data
-            .map(t => t.name?.trim())
-            .filter(Boolean) // remove empty tag names
-        );
+
+        // always return array of names, remove falsy
+        setTags(data.map(t => t.name?.trim()).filter(Boolean));
       } catch (err) {
         console.error("Failed to fetch tags:", err);
+        setTags([]);
       }
     };
 
