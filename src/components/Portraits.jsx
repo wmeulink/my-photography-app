@@ -65,10 +65,13 @@ export default function Portraits() {
 
   // Filter portraits like Landscapes
   const visiblePortraits = useMemo(() => {
-    return portraits.filter(p =>
-      selectedTags.length ? selectedTags.every(tag => p.tags.includes(tag)) : true
-    );
-  }, [selectedTags, portraits]);
+  if (!selectedTags.length) return portraits;
+
+  return portraits.filter(p => {
+    const portraitTags = p.tags.map(t => t.toLowerCase());
+    return selectedTags.some(tag => portraitTags.includes(tag.toLowerCase()));
+  });
+}, [selectedTags, portraits]);
 
   // Lightbox
   const openLightbox = (index) => {
