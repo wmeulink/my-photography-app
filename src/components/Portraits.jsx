@@ -8,11 +8,13 @@ import "./Portraits.css";
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Portraits() {
+  // Core state
   const [portraits, setPortraits] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Lightbox context
   const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -26,14 +28,10 @@ export default function Portraits() {
 
         const formatted = data.map(p => ({
           ...p,
-          thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
-          fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          // Clean and normalize tags
-          tags: Array.isArray(p.tags)
-            ? p.tags
-                .map(t => (t?.name || t || "").trim())
-                .filter(Boolean) // remove empty strings
-            : [],
+          thumbnailSrc: `${API_URL}/api/Portraits/${p.Id}/thumb`,
+          fullSrc: `${API_URL}/api/Portraits/${p.Id}/full`,
+          // Split comma-separated tags into array
+          tags: p.Tags ? p.Tags.split(",").map(t => t.trim()) : [],
         }));
 
         setPortraits(formatted);
@@ -49,11 +47,7 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(
-          data
-            .map(t => t.name?.trim())
-            .filter(Boolean) // remove empty tag names
-        );
+        setTags(data.map(t => t.name.trim()));
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -63,27 +57,27 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Toggle selected tag
+  // Toggle selected tags
   const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits by selected tags
+  // Filter portraits based on selected tags
   const visiblePortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter(p =>
       selectedTags.every(tag =>
-        p.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
+        p.tags.some(t => t.toLowerCase() === tag.toLowerCase())
       )
     );
   }, [selectedTags, portraits]);
 
+  // Lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
-
   const handlePrev = () =>
     setCurrentIndex((currentIndex + visiblePortraits.length - 1) % visiblePortraits.length);
   const handleNext = () =>
@@ -122,14 +116,14 @@ export default function Portraits() {
         ) : (
           <Box className="my-masonry-grid">
             {visiblePortraits.map((p, i) => (
-              <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
+              <div key={p.Id || i} className="polaroid" onClick={() => openLightbox(i)}>
                 <img
                   src={p.thumbnailSrc}
-                  alt={p.title || "Portrait"}
+                  alt={p.Title || "Portrait"}
                   loading="lazy"
                   className="polaroid-img"
                 />
-                <div className="label">{p.title || "Untitled"}</div>
+                <div className="label">{p.Title || "Untitled"}</div>
               </div>
             ))}
           </Box>
@@ -138,7 +132,7 @@ export default function Portraits() {
         {/* Lightbox */}
         {lightboxOpen && (
           <CustomLightBox
-            photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
+            photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.Title }))}
             currentIndex={currentIndex}
             onClose={() => setLightboxOpen(false)}
             onPrev={handlePrev}
