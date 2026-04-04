@@ -23,14 +23,11 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Portraits`);
         const data = await res.json();
-
         const formatted = data.map(p => ({
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          tags: Array.isArray(p.tags) && p.tags.length ? p.tags : ["Untagged"], // always array
         }));
-
         setPortraits(formatted);
       } catch (err) {
         console.error("Failed to fetch portraits:", err);
@@ -44,12 +41,9 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-
-        // always return array of strings, remove falsy
-        setTags(data.map(t => t.name).filter(Boolean));
+        setTags(data.map(t => t.name));
       } catch (err) {
         console.error("Failed to fetch tags:", err);
-        setTags([]);
       }
     };
 
@@ -57,23 +51,18 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Toggle selected tag
   const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits like Landscapes
+  // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
-  if (!selectedTags.length) return portraits;
+    return portraits.filter(p =>
+      selectedTags.length ? selectedTags.every(tag => p.tags.includes(tag)) : true
+    );
+  }, [selectedTags, portraits]);
 
-  return portraits.filter(p => {
-    const portraitTags = p.tags.map(t => t.toLowerCase());
-    return selectedTags.some(tag => portraitTags.includes(tag.toLowerCase()));
-  });
-}, [selectedTags, portraits]);
-
-  // Lightbox
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
@@ -86,61 +75,59 @@ export default function Portraits() {
 
   return (
     <div className="portraits-container">
-      <Box className="page-container">
-        <SEO
-          title="Portraits | Elliott Photography"
-          description="Professional portrait photography by Whitney Elliott."
-          keywords="Portrait photography, family portraits, engagement photography, Washougal, Camas, Vancouver, Portland"
-          url="https://whittyelliott.com/portraits"
-          image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
-        />
+      <SEO
+        title="Portraits | Elliott Photography"
+        description="Professional portrait photography by Whitney Elliott."
+        keywords="Portrait photography, family portraits, engagement photography, Washougal, Camas, Vancouver, Portland"
+        url="https://whittyelliott.com/portraits"
+        image={portraits[0]?.thumbnailSrc || "/images/preview-photo.jpg"}
+      />
 
-        {/* Tag filters */}
-        <Box className="portrait-buttons-container">
-          {tags.map(tag => (
-            <Chip
-              key={tag}
-              label={tag}
-              onClick={() => toggleTag(tag)}
-              color={selectedTags.includes(tag) ? "primary" : "default"}
-              variant={selectedTags.includes(tag) ? "filled" : "outlined"}
-              className="upload-chip"
-            />
+      {/* Tag filters */}
+      <Box className="portrait-buttons-container">
+        {tags.map(tag => (
+          <Chip
+            key={tag}
+            label={tag}
+            onClick={() => toggleTag(tag)}
+            color={selectedTags.includes(tag) ? "primary" : "default"}
+            variant={selectedTags.includes(tag) ? "filled" : "outlined"}
+            className="upload-chip"
+          />
+        ))}
+      </Box>
+
+      {/* Gallery */}
+      {loading ? (
+        <Typography className="loading">Loading portraits...</Typography>
+      ) : visiblePortraits.length === 0 ? (
+        <Typography className="no-results">No portraits match selected tags.</Typography>
+      ) : (
+        <Box className="my-masonry-grid">
+          {visiblePortraits.map((p, i) => (
+            <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
+              <img
+                src={p.thumbnailSrc}
+                alt={p.title || "Portrait"}
+                loading="lazy"
+                className="polaroid-img"
+              />
+              <div className="label">{p.title || "Untitled"}</div>
+            </div>
           ))}
         </Box>
+      )}
 
-        {/* Gallery */}
-        {loading ? (
-          <Typography className="loading">Loading portraits...</Typography>
-        ) : visiblePortraits.length === 0 ? (
-          <Typography className="no-results">No portraits match selected tags.</Typography>
-        ) : (
-          <Box className="my-masonry-grid">
-            {visiblePortraits.map((p, i) => (
-              <div key={p.id || i} className="polaroid" onClick={() => openLightbox(i)}>
-                <img
-                  src={p.thumbnailSrc}
-                  alt={p.title || "Portrait"}
-                  loading="lazy"
-                  className="polaroid-img"
-                />
-                <div className="label">{p.title || "Untitled"}</div>
-              </div>
-            ))}
-          </Box>
-        )}
-
-        {/* Lightbox */}
-        {lightboxOpen && (
-          <CustomLightBox
-            photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
-            currentIndex={currentIndex}
-            onClose={() => setLightboxOpen(false)}
-            onPrev={handlePrev}
-            onNext={handleNext}
-          />
-        )}
-      </Box>
+      {/* Lightbox */}
+      {lightboxOpen && (
+        <CustomLightBox
+          photos={visiblePortraits.map(p => ({ src: p.fullSrc, title: p.title }))}
+          currentIndex={currentIndex}
+          onClose={() => setLightboxOpen(false)}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+      )}
     </div>
   );
 }
