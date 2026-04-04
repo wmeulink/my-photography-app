@@ -8,17 +8,14 @@ import "./Portraits.css";
 const API_URL = import.meta.env.VITE_API_URL || "";
 
 export default function Portraits() {
-  // Core state
   const [portraits, setPortraits] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Lightbox context
   const { lightboxOpen, setLightboxOpen } = useLightbox();
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Fetch portraits and tags
   useEffect(() => {
     const fetchPortraits = async () => {
       setLoading(true);
@@ -30,8 +27,10 @@ export default function Portraits() {
           ...p,
           thumbnailSrc: `${API_URL}/api/Portraits/${p.id}/thumb`,
           fullSrc: `${API_URL}/api/Portraits/${p.id}/full`,
-          // Fixed: tags are already strings from backend
-          tags: Array.isArray(p.tags) ? p.tags.map(t => t.trim()) : [],
+          // Keep tag objects, but normalize names
+          tags: Array.isArray(p.tags)
+            ? p.tags.map(t => t.name?.trim() || "")
+            : [],
         }));
 
         setPortraits(formatted);
@@ -47,7 +46,7 @@ export default function Portraits() {
       try {
         const res = await fetch(`${API_URL}/api/Tags`);
         const data = await res.json();
-        setTags(data.map(t => t.trim())); // assume backend returns strings
+        setTags(data.map(t => t.name.trim()));
       } catch (err) {
         console.error("Failed to fetch tags:", err);
       }
@@ -57,13 +56,11 @@ export default function Portraits() {
     fetchTags();
   }, []);
 
-  // Toggle tag selection
   const toggleTag = (tag) =>
     setSelectedTags(prev =>
       prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
     );
 
-  // Filter portraits by selected tags
   const visiblePortraits = useMemo(() => {
     if (!selectedTags.length) return portraits;
     return portraits.filter(p =>
@@ -73,11 +70,11 @@ export default function Portraits() {
     );
   }, [selectedTags, portraits]);
 
-  // Lightbox functions
   const openLightbox = (index) => {
     setCurrentIndex(index);
     setLightboxOpen(true);
   };
+
   const handlePrev = () =>
     setCurrentIndex((currentIndex + visiblePortraits.length - 1) % visiblePortraits.length);
   const handleNext = () =>
